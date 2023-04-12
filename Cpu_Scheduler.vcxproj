@@ -99,13 +99,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Process.cpp" />
+    <ClCompile Include="Processor.cpp" />
     <ClCompile Include="scheduler.cpp" />
+    <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="proccesormodule\process.h" />
-    <ClInclude Include="proccesormodule\processor.h" />
+    <ClInclude Include="Pair.h" />
+    <ClInclude Include="Process.h" />
+    <ClInclude Include="Processor.h" />
     <ClInclude Include="scheduler.h" />
     <ClInclude Include="staticlib\data.h" />
+    <ClInclude Include="UI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
