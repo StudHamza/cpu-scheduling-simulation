@@ -37,3 +37,6 @@
 
 #vs files
 *.vs
+
+#ignore lib for now
+/StaticLib/data
