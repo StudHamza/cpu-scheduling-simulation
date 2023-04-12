@@ -99,10 +99,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Process.cpp" />
-    <ClCompile Include="Processor.cpp" />
     <ClCompile Include="scheduler.cpp" />
-    <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Pair.h" />
