@@ -41,9 +41,9 @@ private:
 
 	void new_ready_scheduler(Process*);		//Shortest rdy queue of all processors
 
-	void RR_SJF_migration(); //if process in RR processor and (RT) < RTF move to SJF processor
+	void RR_SJF_migration(Processor&); //if process in RR processor and (RT) < RTF move to SJF processor
 
-	void FCFS_RR_migration(); //if process in FCFS and has WT>MaxW, move it to SJF
+	void FCFS_RR_migration(Processor&); //if process in FCFS and has WT>MaxW, move it to SJF
 
 	void kill_process(); // kill signal AND in run or ready state AND in FCFS
 
