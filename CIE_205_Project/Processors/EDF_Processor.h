@@ -10,19 +10,16 @@ public:
 
 	EDF_Processor() : Processor("SJF") {}
 
-	void Excute() override
-	{
-
-	}
-
 	void Update() override
 	{
 
 	}
 
-	void Add_Process_To_RDY(Processor* p) override
+	void Add_Process_To_RDY(Process* p) override
 	{
-		
+		RDY.enqueue(p);
+		int time; // = p->Get_Time_Till_Next_IO();
+		Length = Length + time;
 	}
 
 	void Remove_Process_From_RDY() override
