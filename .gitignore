@@ -23,6 +23,6 @@ ipch
 *sdf
 
 #Debugs
-x64/
-Debug/
+CIE_205_Project/x64/
+CIE_205_Project/Debug/
 *.vs

@@ -4,48 +4,36 @@
 
 class SJF_Processor : public Processor
 {
-	LinkedQueue<Processor*> RDY; // priorty queue
+	LinkedQueue<Process*> RDY; // priorty queue
 
 public:
 
 	SJF_Processor() : Processor("SJF") {}
 
-	void Excute() override
+	void Update() override
 	{
-		if (RunningProcess)
-		{
-			RunningProcessRemainingTime = RunningProcessRemainingTime - 1;
-			if (RunningProcessRemainingTime == 0)
-			{
-				//send it to termenate
-			}
-			if (true)//requested I O 
-			{
-				//send to BLK
-				RunningProcess = nullptr;
-				RunningProcessRemainingTime = 0;
-			}
-		}
-		else
-		{
-			RDY.dequeue(RunningProcess);
-			//RunningProcessRemainingTime = RunningProcess. get cpu time
-		}
+		RunningProcess->Update_Process();
 	}
 
-	void Update() override 
+	void Add_Process_To_RDY(Process* p) override
 	{
-
+		RDY.enqueue(p);
+		int time = p->Get_Time_Till_Next_IO();
+		Length = Length + time;
 	}
 
-	void Add_Process_To_RDY(Processor* p) override
+	void Add_Next_Process_To_Run() override
 	{
-
+		RDY.dequeue(RunningProcess);
 	}
 
-	void Remove_Process_From_RDY() override
+	void Remove_Process(int ID) override
 	{
-
+		//process* temp = Rdy.delete(ID);
+		int time; // = temp->Get_Time_Till_Next_IO();
+		Length = Length - time;
+		//delete temp;
+		//temp = nullptr;
 	}
 
 
