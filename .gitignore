@@ -26,4 +26,5 @@ ipch
 x64/
 Debug/
 *.vs
-CIE_205_Project/x64
+CIE_205_Project/x64/Debug
+*.log

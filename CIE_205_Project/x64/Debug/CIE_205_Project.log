@@ -1,10 +1,1 @@
-﻿  scheduler.cpp
-  main.cpp
-  Generating Code...
-  LINK : C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\x64\Debug\CIE_205_Project.exe not found or not built by the last incremental link; performing full link
-EDF_Processor.obj : warning LNK4099: PDB '' was not found with 'EDF_Processor.obj' or at ''; linking object as if no debug info
-FCFS_Processor.obj : warning LNK4099: PDB '' was not found with 'FCFS_Processor.obj' or at ''; linking object as if no debug info
-Processor.obj : warning LNK4099: PDB '' was not found with 'Processor.obj' or at ''; linking object as if no debug info
-RR_Processor.obj : warning LNK4099: PDB '' was not found with 'RR_Processor.obj' or at ''; linking object as if no debug info
-SJF_Processor.obj : warning LNK4099: PDB '' was not found with 'SJF_Processor.obj' or at ''; linking object as if no debug info
-  CIE_205_Project.vcxproj -> C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\x64\Debug\CIE_205_Project.exe
+﻿  CIE_205_Project.vcxproj -> C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\x64\Debug\CIE_205_Project.exe
