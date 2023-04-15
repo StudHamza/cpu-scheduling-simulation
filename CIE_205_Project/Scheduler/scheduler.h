@@ -3,6 +3,8 @@
 #include "../Process/Process.h" 
 #include "../Processors/Processor.h"
 #include "../Data_Structures/SharedClasses/Pair.h"
+#include "../Data_Structures/LinkedList.h"
+#include "../Data_Structures/LinkedQueue.h"
 
 
 #include <queue>
@@ -18,20 +20,35 @@ private:
 
 	int pro_n;	//no of processors
 	int time = 0;
+	int RRTimeSlice;
 
 
-	//std::list<Process*> NEW;
-	//std::list<Process*> TRM;
-	//std::queue<Process*> BLK;
-	//Process* RUN = new Process[pro_n];
-	//Processor * Processors = new Processor[pro_n];
-	//std::list<Pair<int, int>> SIGKILL;
+	LinkedList<Process*> NEW;
+	Process* TRM;
+	LinkedQueue<Process*> BLK;
 
+	Processor** Processors;
+	LinkedList<Pair<int, int>> SIGKILL;
+
+
+	// Constants //
 	int RTF;
 	int MaxW;
 	int STL;
+	
+	// Utility Functions for rad file//
 
-	int IO_counter;
+	void setProcessors(string &);
+
+	void setRRTimeSlice(string&);
+
+	void setConstants(string&);
+
+	void setProcesses(string&);
+
+	void setKillSignal(string&);
+
+
 
 	//Memebers//
 

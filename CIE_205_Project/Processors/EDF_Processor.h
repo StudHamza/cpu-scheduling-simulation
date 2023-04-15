@@ -2,7 +2,7 @@
 
 #include "Processor.h"
 
-class EDF_Processor : Processor
+class EDF_Processor : public Processor
 {
 	LinkedQueue<Processor*> RDY; // priorty queue
 

@@ -2,7 +2,7 @@
 
 #include "Processor.h"
 
-class FCFS_Processor : Processor
+class FCFS_Processor : public Processor
 {
 	LinkedQueue<Process*> RDY;
 

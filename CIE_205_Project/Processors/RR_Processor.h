@@ -2,7 +2,7 @@
 
 #include "Processor.h"
 
-class RR_Processor : Processor
+class RR_Processor : public Processor
 {
 	LinkedQueue<Process*> RDY;
 	int slice_time;

@@ -1,16 +1,22 @@
-//#include "Scheduler.h"
-//#define timestep  1
-//
-//Scheduler::Scheduler()
-//{
-//}
-//
-//void Scheduler::read_file(std::fstream&)
-//{
-//
-//}
-//
-//
+#include "Scheduler.h"
+#include <string>
+#include "../Processors/EDF_Processor.h"
+#include "../Processors/FCFS_Processor.h"
+#include "../Processors/SJF_Processor.h"
+#include "../Processors/RR_Processor.h"
+
+#define timestep  1
+
+Scheduler::Scheduler()
+{
+}
+
+void Scheduler::read_file(std::fstream&)
+{
+
+}
+
+
 //void Scheduler::new_ready_scheduler(Process* p)
 //{
 //	//for(Processor processor : Processors[pro_n])
@@ -104,4 +110,48 @@
 //	FCFS_RR_migration();
 //		
 //}
-//
+
+
+
+
+void Scheduler::setProcessors(string& myText)
+{
+	string var;
+	int p_count=0;
+
+	for (int i = 4; i != 0; i--)
+	{
+		var = myText.substr(0, myText.find(" "));
+
+		myText = myText.erase(0, var.size() + 1);
+
+
+		if(i==4){
+			for (int i = 0; i < std::stoi(var) ; i++) {
+				Processors[p_count] = new FCFS_Processor;
+				p_count++;
+			}
+		}
+
+		if(i==3){
+			for (int i = 0; i < std::stoi(var); i++) {
+				Processors[p_count] = new SJF_Processor;
+				p_count++;
+			}
+		}
+
+		if(i==2){
+			for (int i = 0; i < std::stoi(var); i++) {
+				Processors[p_count] = new RR_Processor(0);
+				p_count++;
+			}
+		}
+
+		if(i==1){
+			for (int i = 0; i < std::stoi(var); i++) {
+				//Processors[p_count] = new EDF_Processor;
+				p_count++;
+			}
+		}
+	}
+}
