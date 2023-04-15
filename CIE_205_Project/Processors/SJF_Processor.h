@@ -2,7 +2,7 @@
 
 #include "Processor.h"
 
-class SJF_Processor : Processor
+class SJF_Processor : public Processor
 {
 	LinkedQueue<Processor*> RDY; // priorty queue
 

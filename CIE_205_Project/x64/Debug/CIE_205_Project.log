@@ -1,2 +1,20 @@
-﻿  main.cpp
-  CIE_205_Project.vcxproj -> C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\x64\Debug\CIE_205_Project.exe
+﻿  scheduler.cpp
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\FCFS_Processor.h(41,7): error C3668: 'FCFS_Processor::Add_Process_To_RDY': method with override specifier 'override' did not override any base class methods
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\FCFS_Processor.h(15,7): error C2065: 'RunningProcess': undeclared identifier
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\FCFS_Processor.h(25,5): error C2065: 'RunningProcess': undeclared identifier
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\FCFS_Processor.h(31,16): error C2065: 'RunningProcess': undeclared identifier
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\EDF_Processor.h(23,7): error C3668: 'EDF_Processor::Add_Process_To_RDY': method with override specifier 'override' did not override any base class methods
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\RR_Processor.h(52,7): error C3668: 'RR_Processor::Add_Process_To_RDY': method with override specifier 'override' did not override any base class methods
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\RR_Processor.h(18,7): error C2065: 'RunningProcess': undeclared identifier
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\RR_Processor.h(21,4): error C2065: 'Reamaing_time_to_change': undeclared identifier
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\RR_Processor.h(26,8): error C2065: 'Reamaing_time_to_change': undeclared identifier
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\RR_Processor.h(28,17): error C2065: 'RunningProcess': undeclared identifier
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\RR_Processor.h(29,17): error C2065: 'RunningProcess': undeclared identifier
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\RR_Processor.h(30,5): error C2065: 'Reamaing_time_to_change': undeclared identifier
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\RR_Processor.h(35,5): error C2065: 'RunningProcess': undeclared identifier
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\RR_Processor.h(41,16): error C2065: 'RunningProcess': undeclared identifier
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\RR_Processor.h(42,4): error C2065: 'Reamaing_time_to_change': undeclared identifier
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\SJF_Processor.h(41,7): error C3668: 'SJF_Processor::Add_Process_To_RDY': method with override specifier 'override' did not override any base class methods
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\SJF_Processor.h(15,7): error C2065: 'RunningProcess': undeclared identifier
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\SJF_Processor.h(25,5): error C2065: 'RunningProcess': undeclared identifier
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\SJF_Processor.h(31,16): error C2065: 'RunningProcess': undeclared identifier

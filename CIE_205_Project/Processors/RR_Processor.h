@@ -2,11 +2,11 @@
 
 #include "Processor.h"
 
-class RR_Processor : Processor
+class RR_Processor : public Processor
 {
 	LinkedQueue<Processor*> RDY;
 	int slice_time;
-	int Reamaing_time_to_change;
+	int Remaing_time_to_change;
 
 
 public:

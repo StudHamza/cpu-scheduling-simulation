@@ -1,51 +1,36 @@
 
 
 #include <iostream>
-using namespace std;
 
-#include "Data_Structures/LinkedList.h"
-#include "Data_Structures/Array.h"
-#include "Data_Structures/LinkedQueue.h"
-#include "Data_Structures/Priority_Queue.h"
+
+#include "Scheduler/scheduler.h"
+#include "UI/UI.h"
 
 int main()
 {
-	cout << "Hello world"<<endl;
+	std::cout << "Hello world" << endl;
 
-	Priority_Queue<string> try1;
+	UI interface;
 
-    Pair<string, int> num1("Hamza", 6);
-    Pair<string, int> num2("Omar", 7);
-    Pair<string, int> num3("Doctor", 22);
+	// START PROGRAM //
+	interface.Start();
 
-    Pair<string, int> num4("staff", 2);
-    Pair<string, int> num5("father of doctor", 34);
+	// END PROGRAM	//
 
-    try1.enqueue(num1);
-    try1.enqueue(num2);
-    try1.enqueue(num3);
-    try1.enqueue(num4);
-    try1.enqueue(num5);
+	interface.End();	/*Genrates Output files and deallocates objects*/
 
-    string spare;
-
-    try1.dequeue(spare);
-
-    
-
-    try1.print();
-
-    std::cout << "Removed : " << spare << endl;;
-
-
-    try1.enqueue(Pair<string, int>("wow", 222));
-
-    try1.print();
-
-    try1.peek(spare);
-
-    cout << "spare is :" << spare;
 }
 
+/*
+	// Creating program objects //
+	Scheduler cpu;
 
+
+	// LOADING DATA //
+
+	std::ifstream load;
+
+	cpu.read_file(load);
+
+*/
 

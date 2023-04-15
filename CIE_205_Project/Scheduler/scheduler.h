@@ -2,11 +2,9 @@
 #include <iostream>
 #include "../Process/Process.h" 
 #include "../Processors/Processor.h"
+#include "../Data_Structures/LinkedList.h"
 #include "../Data_Structures/SharedClasses/Pair.h"
 
-
-#include <queue>
-#include <list>
 #include <fstream>
 
 
@@ -20,18 +18,33 @@ private:
 	int time = 0;
 
 
-	//std::list<Process*> NEW;
-	//std::list<Process*> TRM;
-	//std::queue<Process*> BLK;
-	//Process* RUN = new Process[pro_n];
-	//Processor * Processors = new Processor[pro_n];
-	//std::list<Pair<int, int>> SIGKILL;
+	LinkedList<Process*> NEW;
+	Process* TRM;
+	LinkedQueue<Process*> BLK;
+	Processor** Processors;		// = new Processor * [pro_n];		//dynamic array of processors
+	LinkedQueue<Pair<int, int>> SIGKILL;
 
+
+	// Constants //
+	int RR_TimeSlice;
 	int RTF;
 	int MaxW;
 	int STL;
 
 	int IO_counter;
+
+	// Utility Functions //
+
+	void setProcessors(string&);
+
+	void setRRTimeSlice(string &);
+
+	void setConstants(string &);
+
+	void setProcesses(string &);
+
+	void setKillSignal(string &);
+
 
 	//Memebers//
 
@@ -57,7 +70,7 @@ public:
 
 	Scheduler();
 
-	void read_file(std::fstream&); //populates data into objects of every type, intializes all attributes
+	void read_file(std::ifstream&); //populates data into objects of every type, intializes all attributes
 
 	void update_();		//contains the logic of all memeber functions
 

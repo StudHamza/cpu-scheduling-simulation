@@ -39,9 +39,9 @@ public:
 
 	virtual void Update() = 0;
 	
-	virtual void Add_Process_To_RDY(Processor* p) = 0;
+	virtual void Add_Process_To_RDY(Process* p) {};		//Change to pure later
 
-	virtual void Remove_Process_From_RDY() = 0;
+	virtual void Remove_Process_From_RDY() {};		//change to pure later
 
 	virtual void Get_Time_Expected_To_Finish()
 	{
@@ -67,5 +67,9 @@ public:
 	int getOverload()
 	{
 
+	}
+	int getLength()
+	{
+		return 0;
 	}
 };
