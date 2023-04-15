@@ -5,14 +5,35 @@
 #include "../Processors/SJF_Processor.h"
 #include "../Processors/RR_Processor.h"
 
-#define timestep  1
+#define timeStep 1
 
 Scheduler::Scheduler()
 {
 }
 
-void Scheduler::read_file(std::fstream&)
+void Scheduler::read_file(std::ifstream& myFile)
 {
+	myFile.open("Name.txt");
+	string myText;
+	int line = 0;
+	int p_number = 0;
+
+	while (getline(myFile, myText))
+	{
+		line++;
+
+		if (line == 1) { setProcessors(myText); }
+
+		else if (line == 2) { setRRTimeSlice(myText); }
+
+		else if (line == 3) { setConstants(myText); }
+
+		else if (line == 4) { p_number = stoi(myText); }
+
+		else if (line > 4 + p_number) { setKillSignal(myText); }
+
+		else { setProcesses(myText); }
+	}
 
 }
 
@@ -149,7 +170,7 @@ void Scheduler::setProcessors(string& myText)
 
 		if(i==1){
 			for (int i = 0; i < std::stoi(var); i++) {
-				//Processors[p_count] = new EDF_Processor;
+				Processors[p_count] = new EDF_Processor;
 				p_count++;
 			}
 		}

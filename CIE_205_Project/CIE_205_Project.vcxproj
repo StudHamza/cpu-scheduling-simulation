@@ -134,6 +134,7 @@
     <ClCompile Include="Processors\RR_Processor.cpp" />
     <ClCompile Include="Processors\SJF_Processor.cpp" />
     <ClCompile Include="Scheduler\scheduler.cpp" />
+    <ClCompile Include="UI\UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Data_Structures\Array.h" />
@@ -151,6 +152,8 @@
     <ClInclude Include="Processors\SJF_Processor.h" />
     <ClInclude Include="Process\Process.h" />
     <ClInclude Include="Scheduler\scheduler.h" />
+    <ClInclude Include="UI\Mode.h" />
+    <ClInclude Include="UI\UI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -74,7 +74,7 @@ public:
 
 	Scheduler();
 
-	void read_file(std::fstream&); //populates data into objects of every type, intializes all attributes
+	void read_file(std::ifstream&); //populates data into objects of every type, intializes all attributes
 
 	void update_();		//contains the logic of all memeber functions
 
