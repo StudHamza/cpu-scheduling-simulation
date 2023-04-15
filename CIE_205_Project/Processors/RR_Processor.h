@@ -4,61 +4,56 @@
 
 class RR_Processor : public Processor
 {
-	LinkedQueue<Processor*> RDY;
+	LinkedQueue<Process*> RDY;
 	int slice_time;
 	int Remaing_time_to_change;
 
 
 public:
 
-	RR_Processor(int slice_t) : Processor("RR") { slice_time = slice_t; }
+	RR_Processor(int slice_t) : Processor("RR") { slice_time = slice_t; Reamaing_time_to_change = slice_t; }
 
-	void Excute() override
+
+
+	void Update() override
 	{
 		if (RunningProcess)
 		{
-			RunningProcessRemainingTime = RunningProcessRemainingTime - 1;
+			RunningProcess->Update_Process();
 			Reamaing_time_to_change--;
-			if (RunningProcessRemainingTime == 0)
-			{
-				//send it to termenate
-			}
 			if (Reamaing_time_to_change == 0)
 			{
 				RDY.enqueue(RunningProcess);
 				RDY.dequeue(RunningProcess);
 				Reamaing_time_to_change = slice_time;
 			}
-			if (true)//requested I O 
-			{
-				//send to BLK
-				RunningProcess = nullptr;
-				RunningProcessRemainingTime = 0;
-			}
 		}
 		else
 		{
 			RDY.dequeue(RunningProcess);
 			Reamaing_time_to_change = slice_time;
-			//RunningProcessRemainingTime = RunningProcess. get cpu time
 		}
 	}
 	
-	void Update() override
+	void Add_Process_To_RDY(Process* p) override
 	{
-
-	}
-	
-	void Add_Process_To_RDY(Processor* p) override
-	{
-
+		RDY.enqueue(p);
+		int time = p->Get_Time_Till_Next_IO();
+		Length = Length + time;
 	}
 
-
-
-	void Get_Time_Expected_To_Finish() override
+	void Add_Next_Process_To_Run() override
 	{
+		RDY.dequeue(RunningProcess);
+	}
 
+	void Remove_Process(int ID) override
+	{
+		Process* temp;// = Rdy.delete(ID);
+		int time = temp->Get_Time_Till_Next_IO();
+		Length = Length - time;
+		delete temp;
+		temp = nullptr;
 	}
 	
 	~RR_Processor() 
