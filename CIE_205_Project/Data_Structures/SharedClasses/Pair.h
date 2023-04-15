@@ -1,8 +1,8 @@
 #pragma once
 template <typename U,typename T>
-struct Pairs {
+struct Pair {
 	U left;
 	T right;
-	Pairs(U l, T r) { left = l; right = r; }
-	Pairs() {};
+	Pair(U l, T r) { left = l; right = r; }
+	Pair() {};
 };

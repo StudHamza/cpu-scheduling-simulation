@@ -139,6 +139,8 @@
     <ClInclude Include="Data_Structures\Array.h" />
     <ClInclude Include="Data_Structures\LinkedList.h" />
     <ClInclude Include="Data_Structures\LinkedQueue.h" />
+    <ClInclude Include="Data_Structures\Priority_Queue.h" />
+    <ClInclude Include="Data_Structures\SharedClasses\MaxHeap.h" />
     <ClInclude Include="Data_Structures\SharedClasses\Node.h" />
     <ClInclude Include="Data_Structures\SharedClasses\Pair.h" />
     <ClInclude Include="Data_Structures\SharedClasses\QueueADT.h" />

@@ -20,12 +20,12 @@ private:
 	int time = 0;
 
 
-	std::list<Process*> NEW;
-	std::list<Process*> TRM;
-	std::queue<Process*> BLK;
-	Process* RUN = new Process[pro_n];
-	Processor * Processors = new Processor[pro_n];
-	std::list<Pairs<int, int>> SIGKILL;
+	//std::list<Process*> NEW;
+	//std::list<Process*> TRM;
+	//std::queue<Process*> BLK;
+	//Process* RUN = new Process[pro_n];
+	//Processor * Processors = new Processor[pro_n];
+	//std::list<Pair<int, int>> SIGKILL;
 
 	int RTF;
 	int MaxW;

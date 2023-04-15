@@ -6,33 +6,45 @@ using namespace std;
 #include "Data_Structures/LinkedList.h"
 #include "Data_Structures/Array.h"
 #include "Data_Structures/LinkedQueue.h"
+#include "Data_Structures/Priority_Queue.h"
 
 int main()
 {
-	
+	cout << "Hello world"<<endl;
 
-	LinkedQueue<int> c;
-	Array<int> r(5);
+	Priority_Queue<string> try1;
 
-	r.InsertEnd(1);
-	r.InsertEnd(2);
-	r.InsertEnd(3);
-	r.InsertEnd(4);
+    Pair<string, int> num1("Hamza", 6);
+    Pair<string, int> num2("Omar", 7);
+    Pair<string, int> num3("Doctor", 22);
 
-	c.enqueue(1);
-	c.enqueue(2);
-	c.enqueue(3);
-	c.enqueue(4);
-	c.enqueue(5);
-	c.enqueue(6);
-	c.enqueue(7);
-	c.enqueue(8);
-	c.enqueue(9);
-	c.enqueue(10);
+    Pair<string, int> num4("staff", 2);
+    Pair<string, int> num5("father of doctor", 34);
+
+    try1.enqueue(num1);
+    try1.enqueue(num2);
+    try1.enqueue(num3);
+    try1.enqueue(num4);
+    try1.enqueue(num5);
+
+    string spare;
+
+    try1.dequeue(spare);
+
+    
+
+    try1.print();
+
+    std::cout << "Removed : " << spare << endl;;
 
 
+    try1.enqueue(Pair<string, int>("wow", 222));
 
+    try1.print();
 
+    try1.peek(spare);
+
+    cout << "spare is :" << spare;
 }
 
 
