@@ -3,6 +3,7 @@
 #include "../Data_Structures/LinkedList.h"
 #include "../Data_Structures/Array.h"
 #include "../Data_Structures/LinkedQueue.h"
+#include "../Process/Process.h"
 
 
 #include <iostream>
@@ -11,16 +12,10 @@ using namespace std;
 class Processor {
 protected:
 	string type;
-	int BUSY_t;
-	int IDE_t;
+
 	int Length;
 
-	//Process* RunningProcess;
-	int RunningProcessRemainingTime;
-
-	//Process* Process_To_Be_Killed
-
-	int Overload;
+	Process* RunningProcess;
 
 
 	Processor(string type)
@@ -28,44 +23,63 @@ protected:
 		this->type = type;
 	}
 
-	void Set_process_to_be_killed(Processor* p)
-	{
-		//Process_To_Be_Killed = 
-	}
 
 public:
 
-	virtual void Excute() = 0;
+	Process* Check_IO(int Current_time)
+	{
+		Process* temp = RunningProcess;
+		if (RunningProcess)
+		{
+			if (RunningProcess->Need_IO_Now(Current_time))
+			{
+				Add_Next_Process_To_Run();
+				return temp;
+			}
+			return nullptr;
+		}
+		else
+		{
+			Add_Next_Process_To_Run();
+			return nullptr;
+		}
+	}
+
+	Process* Check_Runnuig_process_If_Finished()
+	{
+		Process* temp = RunningProcess;
+		if (RunningProcess)
+		{
+			if (RunningProcess->Get_Time_Left() == 0)
+			{
+				Add_Next_Process_To_Run();
+				return temp;
+			}
+			return nullptr;
+		}
+		else
+		{
+			Add_Next_Process_To_Run();
+			return nullptr;
+		}
+	}
+
+	int Get_Time_Expected_To_Finish()
+	{
+		return Length;
+	}
+
 
 	virtual void Update() = 0;
 	
-	virtual void Add_Process_To_RDY(Processor* p) = 0;
 
-	virtual void Remove_Process_From_RDY() = 0;
+	virtual void Add_Process_To_RDY(Process* p) = 0;
 
-	virtual void Get_Time_Expected_To_Finish()
-	{
-		int time = 0;
-		for (int i = 0;/* i < RDY.count*/; i++)
-		{
-			//time = time + RDY[i].get time
-		}
-		time = time + RunningProcessRemainingTime;
-	}
+	
+	virtual void Add_Next_Process_To_Run() = 0;
 
-	static void Kill_Process(int id)
-	{
-		//Processpr* temp = p.getprocessorID
-		//temp.set_Process_To_Be_Killed(p)
-	}
+	
+	virtual void Remove_Process(int ID) = 0;
 
-	void getRunningProcess()
-	{
 
-	}
-
-	int getOverload()
-	{
-
-	}
 };
