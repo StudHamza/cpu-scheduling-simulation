@@ -1,22 +1,89 @@
 ﻿  main.cpp
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Process\Process.h(15,12): error C2143: syntax error: missing ';' before '<'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Process\Process.h(15,12): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Process\Process.h(15,30): error C2238: unexpected token(s) preceding ';'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Process\Process.h(26,33): error C2061: syntax error: identifier 'LinkedList'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Process\Process.h(31,3): error C2065: 'IO_pairs': undeclared identifier
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Process\Process.h(31,14): error C2065: 'IO_Pairs': undeclared identifier
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(40,2): error C3646: 'Process': unknown override specifier
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(40,9): error C2143: syntax error: missing ';' before '*'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(40,9): error C2059: syntax error: '*'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(42,2): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(80,2): error C2556: 'int Processor::Get_Time_Expected_To_Finish(void)': overloaded function differs only by return type from 'void Processor::Get_Time_Expected_To_Finish(void)'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(38,15): message : see declaration of 'Processor::Get_Time_Expected_To_Finish'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(79,6): error C2371: 'Processor::Get_Time_Expected_To_Finish': redefinition; different basic types
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(38,15): message : see declaration of 'Processor::Get_Time_Expected_To_Finish'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(81,3): error C2059: syntax error: 'return'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(81,16): error C2238: unexpected token(s) preceding ';'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(85,10): error C2628: 'Processor' followed by 'void' is illegal (did you forget a ';'?)
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(85,15): error C2575: 'Update': only member functions and bases can be virtual
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(85,26): error C2059: syntax error: 'constant'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(67,5): error C3861: 'Add_Next_Process_To_Run': identifier not found
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(74,4): error C3861: 'Add_Next_Process_To_Run': identifier not found
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(88,15): error C2575: 'Add_Process_To_RDY': only member functions and bases can be virtual
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(88,48): error C2059: syntax error: 'constant'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(91,15): error C2575: 'Add_Next_Process_To_Run': only member functions and bases can be virtual
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(91,43): error C2059: syntax error: 'constant'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(94,15): error C2575: 'Remove_Process': only member functions and bases can be virtual
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(94,40): error C2059: syntax error: 'constant'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(97,1): error C2059: syntax error: '}'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(97,1): error C2143: syntax error: missing ';' before '}'
   scheduler.cpp
-C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\FCFS_Processor.h(41,7): error C3668: 'FCFS_Processor::Add_Process_To_RDY': method with override specifier 'override' did not override any base class methods
-C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\FCFS_Processor.h(15,7): error C2065: 'RunningProcess': undeclared identifier
-C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\FCFS_Processor.h(25,5): error C2065: 'RunningProcess': undeclared identifier
-C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\FCFS_Processor.h(31,16): error C2065: 'RunningProcess': undeclared identifier
-C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\EDF_Processor.h(23,7): error C3668: 'EDF_Processor::Add_Process_To_RDY': method with override specifier 'override' did not override any base class methods
-C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\RR_Processor.h(52,7): error C3668: 'RR_Processor::Add_Process_To_RDY': method with override specifier 'override' did not override any base class methods
-C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\RR_Processor.h(18,7): error C2065: 'RunningProcess': undeclared identifier
-C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\RR_Processor.h(21,4): error C2065: 'Reamaing_time_to_change': undeclared identifier
-C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\RR_Processor.h(26,8): error C2065: 'Reamaing_time_to_change': undeclared identifier
-C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\RR_Processor.h(28,17): error C2065: 'RunningProcess': undeclared identifier
-C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\RR_Processor.h(29,17): error C2065: 'RunningProcess': undeclared identifier
-C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\RR_Processor.h(30,5): error C2065: 'Reamaing_time_to_change': undeclared identifier
-C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\RR_Processor.h(35,5): error C2065: 'RunningProcess': undeclared identifier
-C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\RR_Processor.h(41,16): error C2065: 'RunningProcess': undeclared identifier
-C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\RR_Processor.h(42,4): error C2065: 'Reamaing_time_to_change': undeclared identifier
-C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\SJF_Processor.h(41,7): error C3668: 'SJF_Processor::Add_Process_To_RDY': method with override specifier 'override' did not override any base class methods
-C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\SJF_Processor.h(15,7): error C2065: 'RunningProcess': undeclared identifier
-C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\SJF_Processor.h(25,5): error C2065: 'RunningProcess': undeclared identifier
-C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\SJF_Processor.h(31,16): error C2065: 'RunningProcess': undeclared identifier
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Process\Process.h(15,12): error C2143: syntax error: missing ';' before '<'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Process\Process.h(15,12): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Process\Process.h(15,30): error C2238: unexpected token(s) preceding ';'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Process\Process.h(26,33): error C2061: syntax error: identifier 'LinkedList'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Process\Process.h(31,3): error C2065: 'IO_pairs': undeclared identifier
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Process\Process.h(31,14): error C2065: 'IO_Pairs': undeclared identifier
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(40,2): error C3646: 'Process': unknown override specifier
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(40,9): error C2143: syntax error: missing ';' before '*'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(40,9): error C2059: syntax error: '*'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(42,2): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(80,2): error C2556: 'int Processor::Get_Time_Expected_To_Finish(void)': overloaded function differs only by return type from 'void Processor::Get_Time_Expected_To_Finish(void)'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(38,15): message : see declaration of 'Processor::Get_Time_Expected_To_Finish'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(79,6): error C2371: 'Processor::Get_Time_Expected_To_Finish': redefinition; different basic types
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(38,15): message : see declaration of 'Processor::Get_Time_Expected_To_Finish'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(81,3): error C2059: syntax error: 'return'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(81,16): error C2238: unexpected token(s) preceding ';'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(85,10): error C2628: 'Processor' followed by 'void' is illegal (did you forget a ';'?)
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(85,15): error C2575: 'Update': only member functions and bases can be virtual
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(85,26): error C2059: syntax error: 'constant'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(67,5): error C3861: 'Add_Next_Process_To_Run': identifier not found
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(74,4): error C3861: 'Add_Next_Process_To_Run': identifier not found
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(88,15): error C2575: 'Add_Process_To_RDY': only member functions and bases can be virtual
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(88,48): error C2059: syntax error: 'constant'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(91,15): error C2575: 'Add_Next_Process_To_Run': only member functions and bases can be virtual
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(91,43): error C2059: syntax error: 'constant'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(94,15): error C2575: 'Remove_Process': only member functions and bases can be virtual
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(94,40): error C2059: syntax error: 'constant'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(97,1): error C2059: syntax error: '}'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(97,1): error C2143: syntax error: missing ';' before '}'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\FCFS_Processor.h(29,7): error C3668: 'FCFS_Processor::Add_Next_Process_To_Run': method with override specifier 'override' did not override any base class methods
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\FCFS_Processor.h(34,7): error C3668: 'FCFS_Processor::Remove_Process': method with override specifier 'override' did not override any base class methods
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\EDF_Processor.h(20,6): error C2664: 'bool LinkedQueue<Processor *>::enqueue(const T &)': cannot convert argument 1 from 'Process *' to 'const T &'
+          with
+          [
+              T=Processor *
+          ]
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\EDF_Processor.h(20,15): message : Reason: cannot convert from 'Process *' to 'const T'
+          with
+          [
+              T=Processor *
+          ]
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\EDF_Processor.h(20,15): message : Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or parenthesized function-style cast
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Data_Structures\LinkedQueue.h(56,7): message : see declaration of 'LinkedQueue<Processor *>::enqueue'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\EDF_Processor.h(20,6): message : while trying to match the argument list '(Process *)'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\RR_Processor.h(45,7): error C3668: 'RR_Processor::Add_Next_Process_To_Run': method with override specifier 'override' did not override any base class methods
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\RR_Processor.h(50,7): error C3668: 'RR_Processor::Remove_Process': method with override specifier 'override' did not override any base class methods
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\RR_Processor.h(14,70): error C2065: 'Reamaing_time_to_change': undeclared identifier
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\RR_Processor.h(23,4): error C2065: 'Reamaing_time_to_change': undeclared identifier
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\RR_Processor.h(24,8): error C2065: 'Reamaing_time_to_change': undeclared identifier
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\RR_Processor.h(28,5): error C2065: 'Reamaing_time_to_change': undeclared identifier
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\RR_Processor.h(34,4): error C2065: 'Reamaing_time_to_change': undeclared identifier
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\SJF_Processor.h(25,7): error C3668: 'SJF_Processor::Add_Next_Process_To_Run': method with override specifier 'override' did not override any base class methods
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\SJF_Processor.h(30,7): error C3668: 'SJF_Processor::Remove_Process': method with override specifier 'override' did not override any base class methods
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Scheduler\scheduler.cpp(47,33): error C2039: 'getLength': is not a member of 'Processor'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(12,7): message : see declaration of 'Processor'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Scheduler\scheduler.cpp(51,29): error C2039: 'getLength': is not a member of 'Processor'
+C:\Users\User\Documents\Zewail\Year 2\Semester2\Data Structure\Project\cpu-scheduling-simulation\CIE_205_Project\Processors\Processor.h(12,7): message : see declaration of 'Processor'
   Generating Code...
