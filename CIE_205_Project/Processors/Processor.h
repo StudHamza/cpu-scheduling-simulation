@@ -41,7 +41,7 @@ public:
 	
 	virtual void Add_Process_To_RDY(Process* p) {};		//Change to pure later
 
-	virtual void Remove_Process_From_RDY() {};		//change to pure later
+	virtual void Remove_Process_From_RDY() {};		//change to pure laterg
 
 	virtual void Get_Time_Expected_To_Finish()
 	{

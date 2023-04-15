@@ -30,7 +30,7 @@ void Scheduler::read_file(std::ifstream& load)
 
 		else if (line == 4) { processes = stoi(myText); }
 
-		else if(line> 4+processes){}
+		else if (line > 4 + processes) { setKillSignal(myText); }
 
 		else { setProcesses(myText); }
 	}

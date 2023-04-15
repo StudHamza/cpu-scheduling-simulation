@@ -31,7 +31,6 @@ private:
 	int MaxW;
 	int STL;
 
-	int IO_counter;
 
 	// Utility Functions //
 
