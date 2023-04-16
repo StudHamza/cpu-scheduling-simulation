@@ -49,11 +49,11 @@ public:
 
 	void Remove_Process(int ID) override
 	{
-		Process* temp;// = Rdy.delete(ID);
-		int time = temp->Get_Time_Till_Next_IO();
-		Length = Length - time;
-		delete temp;
-		temp = nullptr;
+		//Process* temp;// = Rdy.delete(ID);
+		//int time = temp->Get_Time_Till_Next_IO();
+		//Length = Length - time;
+		//delete temp;
+		//temp = nullptr;
 	}
 	
 	~RR_Processor() 

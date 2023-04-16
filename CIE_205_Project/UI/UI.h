@@ -6,7 +6,7 @@ class UI
 {
 private:
 	Mode MODE;
-	Scheduler cpu;
+	Scheduler *cpu;
 	int clock = 0;
 
 	void setMode();

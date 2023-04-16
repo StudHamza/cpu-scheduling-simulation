@@ -4,7 +4,7 @@
 
 class EDF_Processor : public Processor
 {
-	LinkedQueue<Processor*> RDY; // priorty queue
+	LinkedQueue<Process*> RDY; // priorty queue
 
 public:
 
@@ -15,18 +15,20 @@ public:
 
 	}
 
-	void Add_Process_To_RDY(Process* p) override
+	void Add_Process_To_RDY(Process * p) override
 	{
 		RDY.enqueue(p);
-		int time; // = p->Get_Time_Till_Next_IO();
-		Length = Length + time;
+		//int time; // = p->Get_Time_Till_Next_IO();
+		//Length = Length + time;
 	}
 
-	void Remove_Process_From_RDY() override
+	void Remove_Process(int id) override
 	{
 		
 	}
 
+	void Add_Next_Process_To_Run() override
+	{}
 
 	~EDF_Processor()
 	{

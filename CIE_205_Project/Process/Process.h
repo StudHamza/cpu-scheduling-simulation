@@ -1,4 +1,6 @@
 #pragma once
+#include "..\Data_Structures\LinkedList.h"
+
 
 struct IO_R_D
 {
@@ -8,6 +10,8 @@ struct IO_R_D
 
 
 class Process
+
+
 {
 	int PID;
 	int Arrival_Time;
@@ -41,7 +45,7 @@ public:
 
 	bool Need_IO_Now(int Current_Time)
 	{
-
+		return true;
 	}
 
 	int Get_PID()
@@ -70,7 +74,7 @@ public:
 
 	int Get_Time_Till_Next_IO()
 	{
-
+		return 0;
 	}
 
 	void Update_Process()

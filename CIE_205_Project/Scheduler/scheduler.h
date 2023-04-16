@@ -35,6 +35,7 @@ private:
 	int RTF;
 	int MaxW;
 	int STL;
+	int Fork_Probability;
 	
 	// Utility Functions for rad file//
 
@@ -80,6 +81,8 @@ public:
 
 
 	void steal_work(); //Performed every STL, moves shortest processor queue will steal from longest processor queue
+
+	bool End();
 
 
 };

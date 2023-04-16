@@ -30,8 +30,8 @@ public:
 	void Remove_Process(int ID) override
 	{
 		//process* temp = Rdy.delete(ID);
-		int time; // = temp->Get_Time_Till_Next_IO();
-		Length = Length - time;
+		//int time; // = temp->Get_Time_Till_Next_IO();
+		//Length = Length - time;
 		//delete temp;
 		//temp = nullptr;
 	}

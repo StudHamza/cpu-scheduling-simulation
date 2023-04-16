@@ -155,6 +155,9 @@
     <ClInclude Include="UI\Mode.h" />
     <ClInclude Include="UI\UI.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="myFile.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
