@@ -23,8 +23,13 @@ private:
 	int RRTimeSlice;
 
 
+	int FCFS;
+	int SJF;
+	int RR;
+	int EDF;
+
 	LinkedList<Process*> NEW;
-	Process* TRM;
+	LinkedList<Process*> TRM;
 	LinkedQueue<Process*> BLK;
 
 	Processor** Processors;
@@ -83,6 +88,10 @@ public:
 	void steal_work(); //Performed every STL, moves shortest processor queue will steal from longest processor queue
 
 	bool End();
+
+	void Ouput(ostream&);
+
+	~Scheduler();
 
 
 };

@@ -27,12 +27,12 @@ void UI::Start()
 	while (!cpu->End())
 	{
 		cout << "Clock : " << clock++ << endl;
-		if (MODE = INTERACTIVE)
-		{
-			cin.get();
-		}
-		if (MODE = STEP) Sleep(1);
-		if (MODE = SILENT);
+
+		if (MODE == INTERACTIVE) cin.get();
+
+		else if (MODE == STEP) sleep(1);
+
+		else if (MODE == SILENT);
 		
 		cpu->update_();
 	}
@@ -40,6 +40,8 @@ void UI::Start()
 
 void UI::End()
 {
+	// Creates output file //
+	// Destructs cpu //
 }
 
 void UI::setMode()
@@ -53,23 +55,32 @@ void UI::setMode()
 
 	std::cin >> mode;
 
+
 	switch (mode) {
 	case INTERACTIVE:
-		cout << "Interactive mode"<<endl;
+	{
+		cout << "Interactive mode" << endl;
 		MODE = INTERACTIVE;
 		break;
+	}
 	case STEP:
-		std::cout << "STEP mode"<<endl;
+	{
+		std::cout << "STEP mode" << endl;
 		MODE = STEP;
 		break;
+	}
 	case SILENT:
-		std::cout << "Silent mode"<<endl;
+	{
+		std::cout << "Silent mode" << endl;
 		MODE = SILENT;
 		break;
+	}
 	};
 }
 
 void UI::Output()
 {
 	//Logs info into cmd
+	ofstream cout;
+	cpu->Ouput(cout);
 }

@@ -38,24 +38,24 @@ void Scheduler::read_file(std::ifstream& myFile)
 }
 
 
-//void Scheduler::new_ready_scheduler(Process* p)
-//{
-//	//for(Processor processor : Processors[pro_n])
-//	int min_index = 0;
-//
-//	int min_num = Processors[0].getLenght();
-//
-//	for (int i = 0; i < pro_n; i++) {
-//
-//		int val = Processors[i].getLenght();
-//
-//		if (val < min_num) { min_num = val; min_index = i; }
-//	}
-//	Processors[min_index].addToRDY(p);
-//}
-//
-//
-//
+void Scheduler::new_ready_scheduler(Process* p)
+{
+	//for(Processor processor : Processors[pro_n])
+	int min_index = 0;
+
+	int min_num = Processors[0]->Get_Time_Expected_To_Finish();
+
+	for (int i = 1; i < pro_n; i++) {
+
+		int val = Processors[i]->Get_Time_Expected_To_Finish();
+
+		if (val < min_num) { min_num = val; min_index = i; }
+	}
+	Processors[min_index]->Add_Process_To_RDY(p);
+}
+
+
+
 //void Scheduler::checkIOs()
 //{
 //	for (int i = 0; i < pro_n; i++)
@@ -82,19 +82,27 @@ void Scheduler::read_file(std::ifstream& myFile)
 //
 //void Scheduler::RR_SJF_migration()
 //{
-//	//O(n^2)
-//	for (int i = 0; i < pro_n; i++)
-//	{
+//	//O(n^2) change my making 4 processors lists
 //
+//	// Brute force
+//
+//	for (int i = RR-1; i < EDF; i++)
+//	{
+//		if (Processors[i]->getType() == "RR")
+//		{
+//			//Loop over ready queue 
+//			//If Process.RT > RTF
+//			//Move to SJF
+//		}
 //	}
 //
 //}
-//
-//
-//
-//
-//
-//
+
+
+
+
+
+
 void Scheduler::update_()
 {
 	cout << "Updating cpu" << endl;
@@ -149,15 +157,17 @@ void Scheduler::setProcessors(string& myText)
 
 
 		if(i==0){
-			for (int i = 0; i < std::stoi(var) ; i++) {
-				//Processors[p_count] = new FCFS_Processor;
+			FCFS = std::stoi(var);
+			for (int i = 0; i < FCFS ; i++) {
+				Processors[p_count] = new FCFS_Processor();
 				cout << " FCFS Proccessors : " << i<<endl;
 				p_count++;
 			}
 		}
 
 		if(i==1){
-			for (int i = 0; i < std::stoi(var); i++) {
+			SJF = std::stoi(var);
+			for (int i = 0; i < SJF; i++) {
 				//Processors[p_count] = new SJF_Processor;
 				cout << " SJF Proccessors : " << i << endl;
 				p_count++;
@@ -165,7 +175,8 @@ void Scheduler::setProcessors(string& myText)
 		}
 
 		if(i==2){
-			for (int i = 0; i < std::stoi(var); i++) {
+			RR = std::stoi(var);
+			for (int i = 0; i < RR; i++) {
 				//Processors[p_count] = new RR_Processor(0);
 				cout << " RR Proccessors : " << i << endl;
 				p_count++;
@@ -173,7 +184,8 @@ void Scheduler::setProcessors(string& myText)
 		}
 
 		if(i==3){
-			for (int i = 0; i < std::stoi(var); i++) {
+			EDF = std::stoi(var);
+			for (int i = 0; i < EDF; i++) {
 				//Processors[p_count] = new EDF_Processor;
 				cout << " EDF Proccessors : " << i << endl;
 				p_count++;
@@ -253,3 +265,26 @@ void Scheduler::setRRTimeSlice(string &myText)
 
 
 bool Scheduler::End() { return false; }
+
+
+void Scheduler::Ouput(ostream&)
+{
+	//for (int i = 0; i < pro_n; i++)Processors[i]->Output();
+}
+
+Scheduler::~Scheduler()
+{
+	NEW.DeleteAll();
+
+	TRM.DeleteAll();
+
+	BLK.~LinkedQueue();
+
+	//for (int i = 0; i < pro_n; i++) Processors[i]->~Processor();
+
+	delete[] Processors;
+
+	SIGKILL.DeleteAll();
+
+
+}
