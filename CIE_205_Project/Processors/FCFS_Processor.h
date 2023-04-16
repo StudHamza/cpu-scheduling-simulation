@@ -10,7 +10,7 @@ public:
 
 
 
-	FCFS_Processor() : Processor("FCFS") { cout << "FCFS Processor" << endl; }
+	FCFS_Processor() : Processor("FCFS") { }
 
 
 

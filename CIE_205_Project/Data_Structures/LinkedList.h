@@ -17,12 +17,15 @@ private:
 	//You can add tail pointer too (depending on your problem)
 public:
 
+
 	LinkedList()
 	{
 		Last_Index = -1;
 		Head = nullptr;
 	}
 
+	template<class U>
+	friend ostream& operator<< (ostream& out, const LinkedList<U>&);
 
 	~LinkedList()
 	{
@@ -354,5 +357,29 @@ public:
 		Head = prevPtr;
 	}
 };
+
+
+
+template<typename T>
+ostream& operator << (ostream& out, const LinkedList<T>& List)
+{
+	if (List.Last_Index == -1)
+	{
+		cout << "there is no elements in the list";
+		return out;
+	}
+
+	Node<T>* p = List.Head;
+
+	while (p)
+	{
+		out << *(p->getItem());
+		if (p->getNext() != nullptr) out << ", ";
+		p = p->getNext();
+	}
+	return out;
+}
+
+
 
 #endif	

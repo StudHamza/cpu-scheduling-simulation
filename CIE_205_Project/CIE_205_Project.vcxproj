@@ -154,7 +154,6 @@
     <ClInclude Include="Scheduler\scheduler.h" />
     <ClInclude Include="UI\Mode.h" />
     <ClInclude Include="UI\UI.h" />
-
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
