@@ -38,9 +38,6 @@ public:
 		RDY.dequeue(RunningProcess);
 	}
 
-	void Add_Next_Process_To_Run() override
-	{}
-
 	~EDF_Processor()
 	{
 

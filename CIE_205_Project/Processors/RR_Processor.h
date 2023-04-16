@@ -59,4 +59,10 @@ public:
 	{
 	
 	}
+
+
+	void setSlice(int t) {
+		slice_time = t;
+		cout << "Setted time to " << t<<endl;
+	};
 };

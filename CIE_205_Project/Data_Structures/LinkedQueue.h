@@ -125,55 +125,12 @@ Adds newEntry at the back of this queue.
 
 /*
 Function: Queue()
-The constructor of the Queue class.
-
-*/
-
-template <typename T>
-LinkedQueue<T>::LinkedQueue()
-{
-	backPtr = nullptr;
-	frontPtr = nullptr;
-
-}
-/////////////////////////////////////////////////////////////////////////////////////////
-
-/*
-Function: isEmpty
-Sees whether this queue is empty.
-
-Input: None.
-Output: True if the queue is empty; otherwise false.
-*/
-template <typename T>
-bool LinkedQueue<T>::isEmpty() const
-{
-	return (frontPtr == nullptr);
-}
+The constructor of the Queue class
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /*Function:enqueue
 Adds newEntry at the back of this queue.
-
-Input: newEntry .
-Output: True if the operation is successful; otherwise false.
-*/
-
-template <typename T>
-bool LinkedQueue<T>::enqueue(const T& newEntry)
-{
-	Node<T>* newNodePtr = new Node<T>(newEntry);
-	// Insert the new node
-	if (isEmpty())	//special case if this is the first node to insert
-		frontPtr = newNodePtr; // The queue is empty
-	else
-		backPtr->setNext(newNodePtr); // The queue was not empty
-
-	backPtr = newNodePtr; // New node is the last node now
-	return true;
-} // end enqueue
-
 
 Input: newEntry .
 Output: True if the operation is successful; otherwise false.

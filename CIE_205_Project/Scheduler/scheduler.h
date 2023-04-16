@@ -15,31 +15,17 @@ class Scheduler
 {
 private:
 	//Variables//
-
-
 	int time;
-	bool Is_Finish;
+	int pro_n;
 
-	LinkedList<Process*> NEW;
-	LinkedQueue<Process*> BLK;
-	Process* TRM;
-
-	int pro_n;	//no of processors
-
-	Processor** Processors;		// = new Processor * [pro_n];		//dynamic array of processors
-
-	int time = 0;
 	int RRTimeSlice;
-
-
 
 	int FCFS;
 	int SJF;
 	int RR;
 	int EDF;
 
-	LinkedQueue<Pair<int, int>> SIGKILL;
-
+	// Lists //
 
 	LinkedList<Process*> NEW;
 	LinkedList<Process*> TRM;
@@ -53,8 +39,6 @@ private:
 	int RTF;
 	int MaxW;
 	int STL;
-
-
 	int Fork_Probability;
 
 
@@ -70,19 +54,6 @@ private:
 	void setProcesses(string&);
 
 	void setKillSignal(string&);
-
-
-
-
-	// Utility Functions //
-
-	void setProcessors(string&);
-
-	void setConstants(string &);
-
-	void setProcesses(string &);
-
-	void setKillSignal(string &);
 
 
 	//Memebers//
@@ -110,22 +81,19 @@ public:
 	Scheduler();
 
 
-	void read_file(std::ifstream&); //populates data into objects of every type, intializes all attributes
+	bool read_file(string); //populates data into objects of every type, intializes all attributes
 
 
-	void update_() {}		//contains the logic of all memeber functions
+	void update_();		//contains the logic of all memeber functions
 
 
 	void steal_work(); //Performed every STL, moves shortest processor queue will steal from longest processor queue
-
-
-	bool End();
-
-	void Ouput(ostream&);
+	
 
 	~Scheduler();
 
-	bool Is_Finished() { return Is_Finish; }
+
+	bool Is_Finished();
 
 
 	friend ostream& operator<< (ostream& out, const Scheduler& Sch);

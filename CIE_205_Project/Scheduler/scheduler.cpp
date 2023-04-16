@@ -4,20 +4,25 @@
 #include "../Processors/FCFS_Processor.h"
 #include "../Processors/EDF_Processor.h"
 #include "../Processors/RR_Processor.h"
+#include "../Processors/SJF_Processor.h"
 
-
-#define timestep 1
 
 Scheduler::Scheduler()
 {
 	cout << "Creating cpu" << endl;
 }
 
-void Scheduler::read_file(std::ifstream& myFile)
+bool Scheduler::read_file(string Fname)
 {
 	string myText;
 	int line = 0;
 	int p_number = 0;
+
+	ifstream myFile;
+
+	myFile.open(Fname + ".txt");
+
+	if (myFile.fail())return false;
 
 	while (getline(myFile, myText))
 	{
@@ -25,16 +30,19 @@ void Scheduler::read_file(std::ifstream& myFile)
 
 		if (line == 1) { setProcessors(myText); std::cout << "Instantiating Processors" << endl; }
 
-		else if (line == 2) { setRRTimeSlice(myText); std::cout << "RR slice time"<<endl; }
+		else if (line == 2) { setRRTimeSlice(myText); std::cout << "RR slice time" << endl; }
 
-		else if (line == 3) { setConstants(myText); std::cout << "Setting constants"<<endl; }
+		else if (line == 3) { setConstants(myText); std::cout << "Setting constants" << endl; }
 
 		else if (line == 4) { p_number = stoi(myText); std::cout << "Proccesses" << endl; }
 
 		else if (line > 4 + p_number) { setKillSignal(myText); std::cout << "Kill signal" << endl; }
 
 		else { setProcesses(myText); }
+		
 	}
+	return true;
+}
 
 
 
@@ -148,46 +156,63 @@ void Scheduler::update_()
 void Scheduler::setProcessors(string& myText)
 {
 	string var;
+	int p_num = 0;
+
+	var = myText.substr(0, myText.find(" "));
+
+	p_num += stoi(var);
+
+	var = myText.substr(0, myText.find(" "));
+
+	p_num += stoi(var);
+
+	var = myText.substr(0, myText.find(" "));
+
+	p_num += stoi(var);
+
+	Processors = new Processor*[p_num];
+
 	int p_count=0;
 
 	for (int i = 0; i < 4; i++)
 	{
 		var = myText.substr(0, myText.find(" "));
-		if(i==0){
-			FCFS = std::stoi(var);
-			for (int i = 0; i < FCFS ; i++) {
-				Processors[p_count] = new FCFS_Processor();
-				cout << " FCFS Proccessors : " << i<<endl;
+		if (i == 0) {
+			FCFS = stoi(var);
+			for (int i = 0; i < FCFS; i++) {
+				Processors[p_count] = new FCFS_Processor;
+				cout << " FCFS Proccessors : " << i << endl;
 				p_count++;
 			}
 		}
 
-		if(i==1){
+		if (i == 1) {
 			SJF = std::stoi(var);
 			for (int i = 0; i < SJF; i++) {
-				//Processors[p_count] = new SJF_Processor;
+				Processors[p_count] = new SJF_Processor;
 				cout << " SJF Proccessors : " << i << endl;
 				p_count++;
 			}
 		}
 
-		if(i==2){
+		if (i == 2) {
 			RR = std::stoi(var);
 			for (int i = 0; i < RR; i++) {
-				//Processors[p_count] = new RR_Processor(0);
+				Processors[p_count] = new RR_Processor(0);
 				cout << " RR Proccessors : " << i << endl;
 				p_count++;
 			}
 		}
 
-		if(i==3){
+		if (i == 3) {
 			EDF = std::stoi(var);
 			for (int i = 0; i < EDF; i++) {
-				//Processors[p_count] = new EDF_Processor;
+				Processors[p_count] = new EDF_Processor;
 				cout << " EDF Proccessors : " << i << endl;
 				p_count++;
 			}
 		}
+	}
 }
 
 
@@ -196,7 +221,7 @@ void Scheduler::setProcessors(string& myText)
 
 ostream& operator << (ostream& out, const Scheduler& Sch)
 {
-	out << "iam here";
+	out << "iam here" << endl;
 	/*out << "------------------------ RDY Processes -------------------------\n";
 	for (int i = 0; i < Sch.pro_n; i++)
 	{
@@ -276,15 +301,15 @@ void Scheduler::setProcesses(string &myText)
 void Scheduler::setRRTimeSlice(string &myText)
 {
 	RRTimeSlice = stoi(myText);
+
+	for (int i = SJF - 1; i <= RR; i++) static_cast<RR_Processor*>(Processors[i])->setSlice(RRTimeSlice);
 }
 
 
-bool Scheduler::End() { return false; }
 
-
-void Scheduler::Ouput(ostream&)
+bool Scheduler::Is_Finished()
 {
-	//for (int i = 0; i < pro_n; i++)Processors[i]->Output();
+	return 0;
 }
 
 Scheduler::~Scheduler()
@@ -303,3 +328,5 @@ Scheduler::~Scheduler()
 
 
 }
+
+
