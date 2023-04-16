@@ -17,29 +17,22 @@ public:
 
 	void Update() override
 	{
-		if (RunningProcess)
+		RunningProcess->Update_Process();
+		Reamaing_time_to_change--;
+		if (Reamaing_time_to_change == 0)
 		{
-			RunningProcess->Update_Process();
-			Reamaing_time_to_change--;
-			if (Reamaing_time_to_change == 0)
-			{
-				RDY.enqueue(RunningProcess);
-				RDY.dequeue(RunningProcess);
-				Reamaing_time_to_change = slice_time;
-			}
-		}
-		else
-		{
+			RDY.enqueue(RunningProcess);
 			RDY.dequeue(RunningProcess);
 			Reamaing_time_to_change = slice_time;
 		}
 	}
 	
-	void Add_Process_To_RDY(Process* p) override
+	bool Add_Process_To_RDY(Process* p) override
 	{
 		RDY.enqueue(p);
 		int time = p->Get_Time_Till_Next_IO();
 		Length = Length + time;
+		return true;
 	}
 
 	void Add_Next_Process_To_Run() override
@@ -47,21 +40,55 @@ public:
 		RDY.dequeue(RunningProcess);
 	}
 
-	void Remove_Process_From_RDY(int ID) override
+	bool Remove_process_From_RUN(Process* p)
 	{
-		//process* temp = Rdy.delete(ID);
-		//int time; // = temp->Get_Time_Till_Next_IO();
-		//Length = Length - time;
-		//delete temp;
-		//temp = nullptr;
+		Add_Next_Process_To_Run();
+		int time = p->Get_Time_Till_Next_IO();
+		Length = Length - time;
+		return true;
 	}
+
+	bool Remove_Process_From_RDY(Process* p)
+	{
+		//RDY.Delete(p)
+		int time = p->Get_Time_Till_Next_IO();
+		Length = Length - time;
+		return true;
+	}
+
+	Process* Remove_Process_On_Top()
+	{
+		Process* temp;
+		RDY.dequeue(temp);
+		int time = temp->Get_Time_Till_Next_IO();
+		Length = Length - time;
+		return temp;
+	}
+
+
+	bool Remove_Process_From_Processor(Process* p)
+	{
+		if (RunningProcess == p)
+		{
+			Remove_process_From_RUN(p);
+			return true;
+		}
+		else
+		{
+			Remove_Process_From_RDY(p);
+			return true;
+		}
+		return false;
+	}
+
 	~RR_Processor() 
 	{
 	
 	}
 
 
-	void setSlice(int t) {
+	void setSlice(int t)
+	{
 		slice_time = t;
 
 	};
