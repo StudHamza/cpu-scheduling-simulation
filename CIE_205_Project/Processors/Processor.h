@@ -14,10 +14,8 @@ using namespace std;
 class Processor {
 protected:
 	int ID;
-	int Length;
+	int Length = 0;
 	string type;
-
-
 	Process* RunningProcess;
 
 
@@ -30,29 +28,8 @@ protected:
 
 public:
 
-	int GetID() const
-	{
-		return ID;
-	}
-
-	string GetType() const
-	{
-		return type;
-	}
-
-	Process* GetRunningProcess() const
-	{
-		return RunningProcess;
-	}
-	
-	virtual void Add_Process_To_RDY(Process* p) {};		//Change to pure later
-
-	virtual void Remove_Process_From_RDY(int ID) {};		//change to pure later
-
-
-
-
 	virtual void Update() = 0;
+	virtual bool Add_Process_To_RDY(Process* p) = 0;
 
 	Process* Check_IO(int Current_time)
 	{

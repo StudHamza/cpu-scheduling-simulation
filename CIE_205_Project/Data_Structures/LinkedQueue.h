@@ -59,6 +59,9 @@ public:
 	bool isEmpty() const;
 	bool enqueue(const T& newEntry);
 	bool dequeue(T& frntEntry);
+	bool DeleteNode(const T& data);
+	Node<T>* GetNodeAt(int index);
+	T DeleteAt(int index);
 	bool peek(T& frntEntry)  const;
 	~LinkedQueue();
 };
@@ -84,6 +87,100 @@ ostream& operator << (ostream& out, const LinkedQueue<T>& queue)
 		}
 	}
 	return out;
+}
+
+template <typename T>
+Node<T>* LinkedQueue<T>::GetNodeAt(int index)
+{
+	if (Counter == 0)
+	{
+		cout << "there is no items in the list\n";
+		return nullptr;
+	}
+	if ((index < 0) || (index >= Counter))
+	{
+		cout << "index bigger than list\n";
+		return nullptr;
+	}
+
+	Node<T>* curPtr = frontPtr;
+	for (int i = 0; i < index; i++)
+	{
+		curPtr = curPtr->getNext();
+	}
+	return curPtr;
+}
+
+template <typename T>
+bool LinkedQueue<T>::DeleteNode(const T& data)
+{
+	for (int i = 0; i <= Counter; i++)
+	{
+		if (GetNodeAt(i)->getItem() == data)
+		{
+			DeleteAt(i);
+			return true;
+		}
+	}
+	return false;
+}
+
+template <typename T>
+T LinkedQueue<T>::DeleteAt(int index)
+{
+	if (index == 0)
+	{
+		if (Counter == 0)
+		{
+			cout << "there is no element to delete\n";
+			return NULL;
+		}
+		Node<T>* curPtr = frontPtr;
+		frontPtr = frontPtr->getNext();
+		T temp = curPtr->getItem();
+		delete curPtr;
+		Counter--;
+		return temp;
+	}
+	else if (index == Counter)
+	{
+		if (Counter == 0)
+		{
+			cout << "there is no element to delete\n";
+			return NULL;
+		}
+		if (Counter == 1)
+		{
+			T temp = frontPtr->getItem();
+			delete frontPtr;
+			frontPtr = nullptr;
+			Counter--;
+			return temp;
+		}
+
+		Node<T>* prevPtr = GetNodeAt(index - 1);
+		Node<T>* curPtr = prevPtr->getNext();
+		T temp = curPtr->getItem();
+		delete curPtr;
+		prevPtr->setNext(nullptr);
+		Counter--;
+		return temp;
+	}
+	else if ((index >= Counter) || (index < 0))
+	{
+		cout << "index out of range\n";
+		return NULL;
+	}
+	else
+	{
+		Node<T>* prevPtr = GetNodeAt(index - 1);
+		Node<T>* curPtr = prevPtr->getNext();
+		prevPtr->setNext(curPtr->getNext());
+		T temp = curPtr->getItem();
+		delete curPtr;
+		Counter--;
+		return temp;
+	}
 }
 
 
