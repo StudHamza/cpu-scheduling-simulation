@@ -11,9 +11,6 @@ int main()
 	// Start the Interface //
 	program.Start();
 
-
-	// End the Interface //
-	program.End();
 }
 
 

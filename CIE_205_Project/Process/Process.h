@@ -5,18 +5,12 @@
 #include "../Data_Structures/SharedClasses/Pair.h"
 #include "../Data_Structures/LinkedList.h"
 
-struct IO_R_D
-{
-	int IO_Request_Time;
-	int IO_Duration;
-};
-
 
 class Process
 
 
 {
-	//int PID;
+	int PID;
 	//int Arrival_Time;
 	//int CPU_Time;
 	LinkedList<Pair<int, int>>* IO_pairs;
@@ -30,9 +24,12 @@ class Process
 
 
 public:
+	friend ostream& operator << (ostream & ,const Process &);
+
 	Process(int ID, int AT,int CT, LinkedList<Pair<int, int>>* IO_Pairs)
 	{
-		/*PID = ID;
+		PID = ID;
+		/*
 		Arrival_Time = AT;
 		CPU_Time = CT;
 		IO_pairs = IO_Pairs;
@@ -61,8 +58,8 @@ public:
 		/*if (Current_Time == Arrival_Time)
 		{
 			return true;
-		}
-		return false;*/
+		}*/
+		return false;
 	}
 
 	int Get_CPU_Time()
@@ -73,6 +70,7 @@ public:
 	int Get_Time_Left()
 	{
 		/*return Time_Left;*/
+		return 1;
 	}
 
 	int Get_Time_Till_Next_IO()
@@ -98,3 +96,9 @@ public:
 	}
 };
 
+
+inline ostream& operator << (ostream& out, const Process& P)
+{
+	return out << P.PID;
+
+}

@@ -59,6 +59,9 @@ public:
 	bool isEmpty() const;
 	bool enqueue(const T& newEntry);
 	bool dequeue(T& frntEntry);
+	bool DeleteNode(const T& data);
+	Node<T>* GetNodeAt(int index);
+	T DeleteAt(int index);
 	bool peek(T& frntEntry)  const;
 	~LinkedQueue();
 };
@@ -67,15 +70,16 @@ public:
 template <typename T>
 ostream& operator << (ostream& out, const LinkedQueue<T>& queue)
 {
-	if (queue.Counter == 0)
+	if (queue.isEmpty())
 	{
-		out << "there is no elements in this list";
+		out << "0";
 		return out;
 	}
 	Node<T>* p = queue.frontPtr;
+	out << queue.Counter << ":";
 	while (p)
 	{
-		out << p->getItem();
+		out << *(p->getItem());
 		p = p->getNext();
 		if (p)
 		{
@@ -83,6 +87,100 @@ ostream& operator << (ostream& out, const LinkedQueue<T>& queue)
 		}
 	}
 	return out;
+}
+
+template <typename T>
+Node<T>* LinkedQueue<T>::GetNodeAt(int index)
+{
+	if (Counter == 0)
+	{
+		cout << "there is no items in the list\n";
+		return nullptr;
+	}
+	if ((index < 0) || (index >= Counter))
+	{
+		cout << "index bigger than list\n";
+		return nullptr;
+	}
+
+	Node<T>* curPtr = frontPtr;
+	for (int i = 0; i < index; i++)
+	{
+		curPtr = curPtr->getNext();
+	}
+	return curPtr;
+}
+
+template <typename T>
+bool LinkedQueue<T>::DeleteNode(const T& data)
+{
+	for (int i = 0; i <= Counter; i++)
+	{
+		if (GetNodeAt(i)->getItem() == data)
+		{
+			DeleteAt(i);
+			return true;
+		}
+	}
+	return false;
+}
+
+template <typename T>
+T LinkedQueue<T>::DeleteAt(int index)
+{
+	if (index == 0)
+	{
+		if (Counter == 0)
+		{
+			cout << "there is no element to delete\n";
+			return NULL;
+		}
+		Node<T>* curPtr = frontPtr;
+		frontPtr = frontPtr->getNext();
+		T temp = curPtr->getItem();
+		delete curPtr;
+		Counter--;
+		return temp;
+	}
+	else if (index == Counter)
+	{
+		if (Counter == 0)
+		{
+			cout << "there is no element to delete\n";
+			return NULL;
+		}
+		if (Counter == 1)
+		{
+			T temp = frontPtr->getItem();
+			delete frontPtr;
+			frontPtr = nullptr;
+			Counter--;
+			return temp;
+		}
+
+		Node<T>* prevPtr = GetNodeAt(index - 1);
+		Node<T>* curPtr = prevPtr->getNext();
+		T temp = curPtr->getItem();
+		delete curPtr;
+		prevPtr->setNext(nullptr);
+		Counter--;
+		return temp;
+	}
+	else if ((index >= Counter) || (index < 0))
+	{
+		cout << "index out of range\n";
+		return NULL;
+	}
+	else
+	{
+		Node<T>* prevPtr = GetNodeAt(index - 1);
+		Node<T>* curPtr = prevPtr->getNext();
+		prevPtr->setNext(curPtr->getNext());
+		T temp = curPtr->getItem();
+		delete curPtr;
+		Counter--;
+		return temp;
+	}
 }
 
 
@@ -125,55 +223,12 @@ Adds newEntry at the back of this queue.
 
 /*
 Function: Queue()
-The constructor of the Queue class.
-
-*/
-
-template <typename T>
-LinkedQueue<T>::LinkedQueue()
-{
-	backPtr = nullptr;
-	frontPtr = nullptr;
-
-}
-/////////////////////////////////////////////////////////////////////////////////////////
-
-/*
-Function: isEmpty
-Sees whether this queue is empty.
-
-Input: None.
-Output: True if the queue is empty; otherwise false.
-*/
-template <typename T>
-bool LinkedQueue<T>::isEmpty() const
-{
-	return (frontPtr == nullptr);
-}
+The constructor of the Queue class
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /*Function:enqueue
 Adds newEntry at the back of this queue.
-
-Input: newEntry .
-Output: True if the operation is successful; otherwise false.
-*/
-
-template <typename T>
-bool LinkedQueue<T>::enqueue(const T& newEntry)
-{
-	Node<T>* newNodePtr = new Node<T>(newEntry);
-	// Insert the new node
-	if (isEmpty())	//special case if this is the first node to insert
-		frontPtr = newNodePtr; // The queue is empty
-	else
-		backPtr->setNext(newNodePtr); // The queue was not empty
-
-	backPtr = newNodePtr; // New node is the last node now
-	return true;
-} // end enqueue
-
 
 Input: newEntry .
 Output: True if the operation is successful; otherwise false.
@@ -274,5 +329,7 @@ LinkedQueue<T>::~LinkedQueue()
 	T temp;
 	while (dequeue(temp));
 }
+
+
 
 #endif
