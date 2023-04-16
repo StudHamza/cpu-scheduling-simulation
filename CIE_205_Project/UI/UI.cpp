@@ -48,18 +48,18 @@ void UI::SetMode()
             }
             switch (m)
             {
-            case 1: {mode = INTERACTIVE; cout << "Interactive" << "....simulation starts";
+            case 1: {mode = INTERACTIVE; cout << "Interactive" << "....simulation starts"<<endl;
                 valid_input = true; break; }
-            case 2: {mode = STEP; cout << "Step" << "....simulation starts";
+            case 2: {mode = STEP; cout << "Step" << "....simulation starts"<<endl;
                 valid_input = true; break; }
-            case 3: {mode = SILENT; cout << "Silent" << "....simulation starts";
+            case 3: {mode = SILENT; cout << "Silent" << "....simulation starts"<<endl;
                 valid_input = true; break; }
             default: throw invalid_argument("Invalid input");
             }
         }
         catch (const exception& e)
         {
-            cout << e.what() << ". Please Enter A Valid Value From (1 , 2 , 3): ";
+            cout << e.what() << " Please Enter A Valid Value From (1 , 2 , 3): ";
         }
     }
 }
@@ -100,6 +100,9 @@ int UI::GetCurrentTimeFromUser()
 void UI::Print()
 {
     if (mode == SILENT) return;
+    cout << "####################################################################################\n";
+    cout << "Current Time Step: " << time <<endl;
+    cout << "//////////////////////////////  Processors  ////////////////////////////////"<<endl;
     cout << *cpu;
 }
 
@@ -109,19 +112,14 @@ void UI::Start()
     SetMode();
 
     GetFileName();
-
-    cout << "Got file name" << endl;
-
     
-
-    cout << " Mode is setted" << endl;
-
     while (!(cpu->Is_Finished()))
     {
 
         
         if (mode == INTERACTIVE)
         {
+            cout << "PRESS ANY KEY TO COUNTINUE";
             cin.get();
         }
         else if (mode == STEP)
@@ -131,8 +129,10 @@ void UI::Start()
         }
         else if (mode == SILENT){}
 
+        Print(); 
+
         cpu->update_();
-        Print();
+        
         time++;
     }
     cout << "Simulation Ends, Output file created";

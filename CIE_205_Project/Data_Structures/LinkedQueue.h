@@ -67,15 +67,16 @@ public:
 template <typename T>
 ostream& operator << (ostream& out, const LinkedQueue<T>& queue)
 {
-	if (queue.Counter == 0)
+	if (queue.isEmpty())
 	{
-		out << "there is no elements in this list";
+		out << "0";
 		return out;
 	}
 	Node<T>* p = queue.frontPtr;
+	out << queue.Counter << ":";
 	while (p)
 	{
-		out << p->getItem();
+		out << *(p->getItem());
 		p = p->getNext();
 		if (p)
 		{
@@ -231,5 +232,7 @@ LinkedQueue<T>::~LinkedQueue()
 	T temp;
 	while (dequeue(temp));
 }
+
+
 
 #endif

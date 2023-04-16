@@ -70,7 +70,7 @@ private:
 
 	void kill_process(); // kill signal AND in run or ready state AND in FCFS
 
-	void terminate(Process&); //CT is done (process is executed)
+	void terminate(Process*&); //CT is done (process is executed)
 
 	void write_statistics(); //called along with terminate function, will append to file
 
@@ -97,6 +97,9 @@ public:
 
 
 	friend ostream& operator<< (ostream& out, const Scheduler& Sch);
+
+
+
 };
 
 
