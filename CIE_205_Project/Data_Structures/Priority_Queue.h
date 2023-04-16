@@ -70,8 +70,10 @@ void Priority_Queue<T>::print() const
 template <typename T>
 Priority_Queue<T>::~Priority_Queue()
 {
+
 	T temp;
 	while (dequeue(temp));
+
 }
 
 #endif

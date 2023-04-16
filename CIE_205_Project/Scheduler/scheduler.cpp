@@ -170,38 +170,37 @@ bool Scheduler::read_file(string name)
 
 
 
-void Scheduler::new_ready_scheduler(Process* p)
-{
-
-	int min_index = 0;
-
-	int min_num = (Processors[0])->Get_Time_Expected_To_Finish();
-
-	for (int i = 0; i < pro_n; i++) {
-
-		int val = (Processors[i]->Get_Time_Expected_To_Finish());
-
-		if (val < min_num) { min_num = val; min_index = i; }
-	}
-	Processors[min_index]->Add_Process_To_RDY(p);
-}
-
-
-
-void Scheduler::checkIOs()
-{
-	for (int i = 0; i < pro_n; i++)
-	{
-		Process* p = Processors[i]->Check_IO(time);
-		if (p)
-		{
-			BLK.enqueue(p);
-			//move to blk list
-		}	
-	}
-}
-
-
+//void Scheduler::new_ready_scheduler(Process* p)
+//{
+//	//for(Processor processor : Processors[pro_n])
+//	int min_index = 0;
+//
+//	int min_num = Processors[0].getLenght();
+//
+//	for (int i = 0; i < pro_n; i++) {
+//
+//		int val = Processors[i].getLenght();
+//
+//		if (val < min_num) { min_num = val; min_index = i; }
+//	}
+//	Processors[min_index].addToRDY(p);
+//}
+//
+//
+//
+//void Scheduler::checkIOs()
+//{
+//	for (int i = 0; i < pro_n; i++)
+//	{
+//		if ((RUN[i].get_IOs()).left == time)
+//		{
+//			//move to blk list
+//			
+//		}
+//		
+//	}
+//}
+//
 //void Scheduler::updateIOs()
 //{
 //	if (BLK.front()->get_IOs().right == IO_counter)
@@ -211,8 +210,8 @@ void Scheduler::checkIOs()
 //	}
 //	else IO_counter + 1;
 //}
-
-
+//
+//
 //void Scheduler::RR_SJF_migration()
 //{
 //	//O(n^2)
@@ -222,15 +221,12 @@ void Scheduler::checkIOs()
 //	}
 //
 //}
-
-
-
-
-
-
- 
- 
-
+//
+//
+//
+//
+//
+//
 //void Scheduler::update_()
 //{
 //	time += timestep;
@@ -274,6 +270,12 @@ void Scheduler::checkIOs()
 
 
 
+
+
+
+
+
+
 ostream& operator << (ostream& out, const Scheduler& Sch)
 {
 	out << "iam here";
@@ -284,10 +286,6 @@ ostream& operator << (ostream& out, const Scheduler& Sch)
 	}
 	out << "------------------------ BLK Processes -------------------------\n";
 */
-
-
-
-
 
 	return out;
 }

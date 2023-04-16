@@ -53,13 +53,16 @@ private:
 	int Counter;
 public:
 	LinkedQueue();
+
 	friend ostream& operator<< <T>(ostream& out, const LinkedQueue<T>& queue);
+
 	bool isEmpty() const;
 	bool enqueue(const T& newEntry);
 	bool dequeue(T& frntEntry);
 	bool peek(T& frntEntry)  const;
 	~LinkedQueue();
 };
+
 
 template <typename T>
 ostream& operator << (ostream& out, const LinkedQueue<T>& queue)
@@ -117,6 +120,41 @@ bool LinkedQueue<T>::isEmpty() const
 
 /*Function:enqueue
 Adds newEntry at the back of this queue.
+=======
+/////////////////////////////////////////////////////////////////////////////////////////
+
+/*
+Function: Queue()
+The constructor of the Queue class.
+
+*/
+
+template <typename T>
+LinkedQueue<T>::LinkedQueue()
+{
+	backPtr = nullptr;
+	frontPtr = nullptr;
+
+}
+/////////////////////////////////////////////////////////////////////////////////////////
+
+/*
+Function: isEmpty
+Sees whether this queue is empty.
+
+Input: None.
+Output: True if the queue is empty; otherwise false.
+*/
+template <typename T>
+bool LinkedQueue<T>::isEmpty() const
+{
+	return (frontPtr == nullptr);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+/*Function:enqueue
+Adds newEntry at the back of this queue.
 
 Input: newEntry .
 Output: True if the operation is successful; otherwise false.
@@ -133,9 +171,40 @@ bool LinkedQueue<T>::enqueue(const T& newEntry)
 		backPtr->setNext(newNodePtr); // The queue was not empty
 
 	backPtr = newNodePtr; // New node is the last node now
+	return true;
+} // end enqueue
+
+
+Input: newEntry .
+Output: True if the operation is successful; otherwise false.
+*/
+
+
+template <typename T>
+bool LinkedQueue<T>::enqueue(const T& newEntry)
+{
+	Node<T>* newNodePtr = new Node<T>(newEntry);
+	// Insert the new node
+	if (isEmpty())	//special case if this is the first node to insert
+		frontPtr = newNodePtr; // The queue is empty
+	else
+		backPtr->setNext(newNodePtr); // The queue was not empty
+
+	backPtr = newNodePtr; // New node is the last node now
 	Counter++;
 	return true;
 } // end enqueue
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*Function: dequeue
+Removes the front of this queue. That is, removes the item that was added
+earliest.
+
+
+Input: None.
+Output: True if the operation is successful; otherwise false.
+*/
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -161,11 +230,13 @@ bool LinkedQueue<T>::dequeue(T& frntEntry)
 	if (nodeToDeletePtr == backPtr)	 // Special case: last node in the queue
 		backPtr = nullptr;
 
+
 	// Free memory reserved for the dequeued node
 	delete nodeToDeletePtr;
 	Counter--;
 	return true;
 }
+
 
 
 
@@ -194,7 +265,6 @@ bool LinkedQueue<T>::peek(T& frntEntry) const
 template <typename T>
 LinkedQueue<T>::~LinkedQueue()
 {
-
 
 	//Free all nodes in the queue
 	T temp;

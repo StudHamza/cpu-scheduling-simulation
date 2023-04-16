@@ -89,5 +89,11 @@
     <ClInclude Include="Process\Process.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Data_Structures\Priority_Queue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Data_Structures\SharedClasses\MaxHeap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
