@@ -71,6 +71,9 @@ template <typename T>
 Priority_Queue<T>::~Priority_Queue()
 {
 
+	T temp;
+	while (dequeue(temp));
+
 }
 
 #endif

@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Mode.h"
 #include "../Scheduler/scheduler.h"
 #include <iostream>
@@ -11,9 +12,11 @@
 #endif
 
 
+
 class UI
 {
 private:
+
 	Mode MODE;
 	Scheduler *cpu;
 	int clock = 0;
@@ -29,3 +32,19 @@ public:
 	void Output();
 
 };
+
+== == == =
+//              mode mode;
+// int time;
+// Scheduler scheduler;
+
+// // void GetFileName();
+// // void SetMode();
+// // int GetCurrentTimeFromUser();
+// // void Print();
+
+// public:
+// UI();
+// void Start();
+// }
+// ;

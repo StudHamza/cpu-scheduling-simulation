@@ -1,5 +1,3 @@
-
-
 #include <iostream>
 using namespace std;
 #include "UI/UI.h"
@@ -17,6 +15,5 @@ int main()
 	// End the Interface //
 	program.End();
 }
-
 
 

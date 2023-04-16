@@ -1,9 +1,10 @@
 #include "Scheduler.h"
 #include <string>
-#include "../Processors/EDF_Processor.h"
+#define timestep  1
 #include "../Processors/FCFS_Processor.h"
-#include "../Processors/SJF_Processor.h"
+#include "../Processors/EDF_Processor.h"
 #include "../Processors/RR_Processor.h"
+
 
 #define timestep 1
 
@@ -35,7 +36,6 @@ void Scheduler::read_file(std::ifstream& myFile)
 		else { setProcesses(myText); }
 	}
 
-}
 
 
 void Scheduler::new_ready_scheduler(Process* p)
@@ -103,6 +103,7 @@ void Scheduler::new_ready_scheduler(Process* p)
 
 
 
+
 void Scheduler::update_()
 {
 	cout << "Updating cpu" << endl;
@@ -152,10 +153,6 @@ void Scheduler::setProcessors(string& myText)
 	for (int i = 0; i < 4; i++)
 	{
 		var = myText.substr(0, myText.find(" "));
-
-		myText = myText.erase(0, var.size() + 1);
-
-
 		if(i==0){
 			FCFS = std::stoi(var);
 			for (int i = 0; i < FCFS ; i++) {
@@ -191,7 +188,25 @@ void Scheduler::setProcessors(string& myText)
 				p_count++;
 			}
 		}
+}
+
+
+
+
+
+ostream& operator << (ostream& out, const Scheduler& Sch)
+{
+	out << "iam here";
+	/*out << "------------------------ RDY Processes -------------------------\n";
+	for (int i = 0; i < Sch.pro_n; i++)
+	{
+		out << Sch.Processors[i] << "\n";
+
 	}
+	out << "------------------------ BLK Processes -------------------------\n";
+*/
+
+	return out;
 }
 
 void Scheduler::setConstants(string &myText)
