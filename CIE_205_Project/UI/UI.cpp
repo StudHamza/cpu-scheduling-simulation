@@ -1,5 +1,8 @@
 #include "UI.h"
 
+
+
+
 UI::UI()
 {
 	cpu = new Scheduler;
@@ -11,9 +14,10 @@ void UI::Start()
 
 	setMode();
 
-
 	std::ifstream myFile;
 	myFile.open("myFile.txt");
+	
+	cout << "Loading file: " << endl;
 
 	if (myFile.is_open())cpu->read_file(myFile);
 
@@ -22,6 +26,14 @@ void UI::Start()
 	/* Depending on the mode we will update the clock*/
 	while (!cpu->End())
 	{
+		cout << "Clock : " << clock++ << endl;
+		if (MODE = INTERACTIVE)
+		{
+			cin.get();
+		}
+		if (MODE = STEP) Sleep(1);
+		if (MODE = SILENT);
+		
 		cpu->update_();
 	}
 }
@@ -58,4 +70,6 @@ void UI::setMode()
 }
 
 void UI::Output()
-{}
+{
+	//Logs info into cmd
+}

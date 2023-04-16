@@ -1,6 +1,14 @@
 #pragma once
 #include "Mode.h"
 #include "../Scheduler/scheduler.h"
+#include <iostream>
+
+#ifdef __unix__
+# include <unistd.h>
+#elif defined _WIN32
+# include <windows.h>
+#define sleep(x) Sleep(1000 * (x))
+#endif
 
 class UI
 {

@@ -97,6 +97,7 @@ void Scheduler::read_file(std::ifstream& myFile)
 //
 void Scheduler::update_()
 {
+	cout << "Updating cpu" << endl;
 	//time += timestep;
 
 	//while (NEW.front()->getAT() == time)
