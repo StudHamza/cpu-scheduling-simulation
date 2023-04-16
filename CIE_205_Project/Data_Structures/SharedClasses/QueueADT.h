@@ -7,7 +7,7 @@ class QueueADT
 public:
     virtual bool isEmpty() const = 0;
 
-    virtual bool enqueue(const T& newEntry) = 0;
+    virtual bool enqueue(const T& newEntry) { return true; }
 
     virtual bool dequeue(T& FrontEntry) = 0;
 

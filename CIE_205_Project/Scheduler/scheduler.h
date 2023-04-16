@@ -2,11 +2,9 @@
 #include <iostream>
 #include "../Process/Process.h" 
 #include "../Processors/Processor.h"
+#include "../Data_Structures/LinkedList.h"
 #include "../Data_Structures/SharedClasses/Pair.h"
 
-
-#include <queue>
-#include <list>
 #include <fstream>
 
 
@@ -16,22 +14,38 @@ class Scheduler
 private:
 	//Variables//
 
+
+	int time;
+	bool Is_Finish;
+
+	LinkedList<Process*> NEW;
+	LinkedQueue<Process*> BLK;
+	Process* TRM;
+
 	int pro_n;	//no of processors
-	int time = 0;
+	Processor** Processors;		// = new Processor * [pro_n];		//dynamic array of processors
+
+	LinkedQueue<Pair<int, int>> SIGKILL;
 
 
-	std::list<Process*> NEW;
-	std::list<Process*> TRM;
-	std::queue<Process*> BLK;
-	Process* RUN = new Process[pro_n];
-	Processor * Processors = new Processor[pro_n];
-	std::list<Pairs<int, int>> SIGKILL;
-
+	// Constants //
 	int RTF;
 	int MaxW;
 	int STL;
+	int Fork_Probability;
 
 	int IO_counter;
+
+	// Utility Functions //
+
+	void setProcessors(string&);
+
+	void setConstants(string &);
+
+	void setProcesses(string &);
+
+	void setKillSignal(string &);
+
 
 	//Memebers//
 
@@ -57,13 +71,18 @@ public:
 
 	Scheduler();
 
-	void read_file(std::fstream&); //populates data into objects of every type, intializes all attributes
+	bool read_file(string name); //populates data into objects of every type, intializes all attributes
 
-	void update_();		//contains the logic of all memeber functions
+	void update_() {}		//contains the logic of all memeber functions
 
 
 	void steal_work(); //Performed every STL, moves shortest processor queue will steal from longest processor queue
 
+	bool Is_Finished() { return Is_Finish; }
 
+	friend ostream& operator<< (ostream& out, const Scheduler& Sch);
 };
+
+
+
 

@@ -2,7 +2,7 @@
 
 #include "Processor.h"
 
-class RR_Processor : Processor
+class RR_Processor : public Processor
 {
 	LinkedQueue<Process*> RDY;
 	int slice_time;
@@ -47,15 +47,14 @@ public:
 		RDY.dequeue(RunningProcess);
 	}
 
-	void Remove_Process(int ID) override
+	void Remove_Process_From_RDY(int ID) override
 	{
-		Process* temp;// = Rdy.delete(ID);
-		int time = temp->Get_Time_Till_Next_IO();
-		Length = Length - time;
-		delete temp;
-		temp = nullptr;
+		//process* temp = Rdy.delete(ID);
+		//int time; // = temp->Get_Time_Till_Next_IO();
+		//Length = Length - time;
+		//delete temp;
+		//temp = nullptr;
 	}
-	
 	~RR_Processor() 
 	{
 	

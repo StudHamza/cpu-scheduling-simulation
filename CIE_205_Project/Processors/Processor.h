@@ -3,6 +3,7 @@
 #include "../Data_Structures/LinkedList.h"
 #include "../Data_Structures/Array.h"
 #include "../Data_Structures/LinkedQueue.h"
+#include "../Data_Structures/Priority_Queue.h"
 #include "../Process/Process.h"
 
 
@@ -11,9 +12,10 @@ using namespace std;
 
 class Processor {
 protected:
+	int ID;
+	int Length;
 	string type;
 
-	int Length;
 
 	Process* RunningProcess;
 
@@ -23,8 +25,33 @@ protected:
 		this->type = type;
 	}
 
+	virtual void Add_Next_Process_To_Run() = 0;
 
 public:
+
+	int GetID() const
+	{
+		return ID;
+	}
+
+	string GetType() const
+	{
+		return type;
+	}
+
+	Process* GetRunningProcess() const
+	{
+		return RunningProcess;
+	}
+	
+	virtual void Add_Process_To_RDY(Process* p) {};		//Change to pure later
+
+	virtual void Remove_Process_From_RDY(int ID) {};		//change to pure later
+
+
+
+
+	virtual void Update() = 0;
 
 	Process* Check_IO(int Current_time)
 	{
@@ -64,22 +91,6 @@ public:
 		}
 	}
 
-	int Get_Time_Expected_To_Finish()
-	{
-		return Length;
-	}
-
-
-	virtual void Update() = 0;
-	
-
-	virtual void Add_Process_To_RDY(Process* p) = 0;
-
-	
-	virtual void Add_Next_Process_To_Run() = 0;
-
-	
-	virtual void Remove_Process(int ID) = 0;
-
+	int Get_Time_Expected_To_Finish() {	return Length; }
 
 };

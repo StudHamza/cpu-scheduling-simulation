@@ -1,7 +1,5 @@
 ﻿  main.cpp
-E:\Study\ZC\year 2\semester 2\CIE 205\project\cpu-scheduling-simulation\CIE_205_Project\Data_Structures\LinkedQueue.h(121,13): error C2563: mismatch in formal parameter list
-E:\Study\ZC\year 2\semester 2\CIE 205\project\cpu-scheduling-simulation\CIE_205_Project\Data_Structures\LinkedQueue.h(121,2): message : see reference to class template instantiation 'LinkedQueue<T>' being compiled
-E:\Study\ZC\year 2\semester 2\CIE 205\project\cpu-scheduling-simulation\CIE_205_Project\main.cpp(33,4): error C2039: 'PrintQueue': is not a member of 'LinkedQueue<int>'
-E:\Study\ZC\year 2\semester 2\CIE 205\project\cpu-scheduling-simulation\CIE_205_Project\main.cpp(14,2): message : see declaration of 'LinkedQueue<int>'
-E:\Study\ZC\year 2\semester 2\CIE 205\project\cpu-scheduling-simulation\CIE_205_Project\main.cpp(34,4): error C2039: 'PrintQueue': is not a member of 'LinkedQueue<int>'
-E:\Study\ZC\year 2\semester 2\CIE 205\project\cpu-scheduling-simulation\CIE_205_Project\main.cpp(14,2): message : see declaration of 'LinkedQueue<int>'
+  scheduler.cpp
+  UI.cpp
+  Generating Code...
+  CIE_205_Project.vcxproj -> E:\Study\ZC\year 2\semester 2\CIE 205\project\CIE_205_Project\x64\Debug\CIE_205_Project.exe

@@ -134,11 +134,14 @@
     <ClCompile Include="Processors\RR_Processor.cpp" />
     <ClCompile Include="Processors\SJF_Processor.cpp" />
     <ClCompile Include="Scheduler\scheduler.cpp" />
+    <ClCompile Include="UI\UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Data_Structures\Array.h" />
     <ClInclude Include="Data_Structures\LinkedList.h" />
     <ClInclude Include="Data_Structures\LinkedQueue.h" />
+    <ClInclude Include="Data_Structures\Priority_Queue.h" />
+    <ClInclude Include="Data_Structures\SharedClasses\MaxHeap.h" />
     <ClInclude Include="Data_Structures\SharedClasses\Node.h" />
     <ClInclude Include="Data_Structures\SharedClasses\Pair.h" />
     <ClInclude Include="Data_Structures\SharedClasses\QueueADT.h" />
@@ -149,6 +152,7 @@
     <ClInclude Include="Processors\SJF_Processor.h" />
     <ClInclude Include="Process\Process.h" />
     <ClInclude Include="Scheduler\scheduler.h" />
+    <ClInclude Include="UI\UI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
