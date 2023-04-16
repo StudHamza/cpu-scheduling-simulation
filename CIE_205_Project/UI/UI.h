@@ -33,7 +33,7 @@ public:
 
 };
 
-== == == =
+
 //              mode mode;
 // int time;
 // Scheduler scheduler;
