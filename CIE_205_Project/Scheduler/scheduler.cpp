@@ -1,20 +1,173 @@
 #include "Scheduler.h"
 #include <string>
-#include "../Processors/EDF_Processor.h"
-#include "../Processors/FCFS_Processor.h"
-#include "../Processors/SJF_Processor.h"
-#include "../Processors/RR_Processor.h"
-
 #define timestep  1
+#include "../Processors/FCFS_Processor.h"
+#include "../Processors/EDF_Processor.h"
+#include "../Processors/RR_Processor.h"
+#include "../Processors/SJF_Processor.h"
 
 Scheduler::Scheduler()
 {
+	time = 0;
+	Is_Finish = false;
 }
 
-void Scheduler::read_file(std::fstream&)
+
+// UTILITY FUNCTIONS for read file//
+void Scheduler::setProcessors(string& mytext)
 {
+	int line_values[5];
 
+	for (int i = 0; i < 5; i++)
+	{
+		string var = mytext.substr(0, mytext.find(" "));
+		mytext = mytext.erase(0, var.size() + 1);
+		line_values[i] = stoi(var);
+	}
+
+	int sum = line_values[0] + line_values[1] + line_values[2] + line_values[3];
+	Processors = new Processor * [sum];
+
+	string var;
+	int p_count = 0;
+	for (int i = 4; i != 0; i--)
+	{
+		if (i == 4) {
+			for (int i = 0; i < line_values[0]; i++) {
+				Processors[p_count] = new FCFS_Processor;
+				p_count++;
+			}
+		}
+		if (i == 3) {
+			for (int i = 0; i < line_values[1]; i++) {
+				Processors[p_count] = new SJF_Processor;
+				p_count++;
+			}
+		}
+		if (i == 2) {
+			for (int i = 0; i < line_values[2]; i++) {
+				Processors[p_count] = new RR_Processor(line_values[4]);
+				p_count++;
+			}
+		}
+		if (i == 1) {
+			for (int i = 0; i < line_values[3]; i++) {
+				Processors[p_count] = new EDF_Processor();
+				p_count++;
+			}
+		}
+	}
 }
+
+void Scheduler::setConstants(string& mytext)
+{
+	int line_values[4];
+
+	for (int i = 0; i < 4; i++)
+	{
+		string var = mytext.substr(0, mytext.find(" "));
+		mytext = mytext.erase(0, var.size() + 1);
+		line_values[i] = stoi(var);
+	}
+
+	RTF = line_values[0];
+	MaxW = line_values[1];
+	STL = line_values[2];
+	Fork_Probability = line_values[3];
+}
+
+void Scheduler::setProcesses(string& myText)
+{
+	string var = "";
+	string p;
+	string p2;
+	int AT, PID, CT, N;
+	LinkedList<Pair<int, int>>* IO_R_D = new LinkedList<Pair<int, int>>;
+
+	for (int i = 4; i != 0; i--)
+	{
+		var = myText.substr(0, myText.find(" "));
+
+		myText = myText.erase(0, var.size() + 1);
+		if (i == 4) { AT = stoi(var); }
+		if (i == 3) { PID = stoi(var); }
+		if (i == 2) { CT = stoi(var); }
+		if (i == 1) { N = stoi(var); }
+	}
+	while (myText.size())
+	{
+		var = myText.substr(1, myText.find(")") - 1);
+		myText = myText.erase(0, var.size() + 3);
+		p = var.substr(0, var.find(","));
+
+		p2 = var.substr(p.size() + 1, var.size());
+
+		Pair<int, int> I(stoi(p), stoi(p2));
+
+		(*IO_R_D).InsertBeg(I);
+	}
+	Process* R = new Process(PID, AT, CT, IO_R_D);		//Question Regarding using io_r_d as linked list (not dynamically allocated)
+
+	NEW.InsertEnd(R);
+}
+
+void Scheduler::setKillSignal(string& myText)
+{
+	string var;
+
+	var = myText.substr(0, myText.find(" "));
+
+	myText = myText.erase(0, var.size() + 1);
+
+	const Pair<int, int> KS(stoi(var), stoi(myText));
+
+	//SIGKILL.InsertEnd(KS);
+}
+
+bool Scheduler::read_file(string name)
+{
+	ifstream load;
+	load.open("input.txt");
+	if (load.fail())
+	{
+		return false;
+	}
+
+	string myText;
+
+	string var;
+	getline(load, myText);
+	var = myText;
+	getline(load, myText);
+	var += " ";
+	var += myText;
+	setProcessors(var);
+
+
+	getline(load, myText);
+	setConstants(myText);
+
+	getline(load, myText);
+	int processes = stoi(myText);
+	
+
+	for (int i = 0; i < processes; i++)
+	{
+		getline(load, myText);
+		setProcesses(myText);
+	}
+
+	while (getline(load, myText))
+	{
+		setKillSignal(myText);
+	}
+
+	load.close();
+	return true;
+}
+
+
+
 
 
 //void Scheduler::new_ready_scheduler(Process* p)
@@ -114,44 +267,25 @@ void Scheduler::read_file(std::fstream&)
 
 
 
-void Scheduler::setProcessors(string& myText)
+
+
+
+
+
+
+
+
+
+ostream& operator << (ostream& out, const Scheduler& Sch)
 {
-	string var;
-	int p_count=0;
-
-	for (int i = 4; i != 0; i--)
+	out << "iam here";
+	/*out << "------------------------ RDY Processes -------------------------\n";
+	for (int i = 0; i < Sch.pro_n; i++)
 	{
-		var = myText.substr(0, myText.find(" "));
-
-		myText = myText.erase(0, var.size() + 1);
-
-
-		if(i==4){
-			for (int i = 0; i < std::stoi(var) ; i++) {
-				Processors[p_count] = new FCFS_Processor;
-				p_count++;
-			}
-		}
-
-		if(i==3){
-			for (int i = 0; i < std::stoi(var); i++) {
-				Processors[p_count] = new SJF_Processor;
-				p_count++;
-			}
-		}
-
-		if(i==2){
-			for (int i = 0; i < std::stoi(var); i++) {
-				Processors[p_count] = new RR_Processor(0);
-				p_count++;
-			}
-		}
-
-		if(i==1){
-			for (int i = 0; i < std::stoi(var); i++) {
-				//Processors[p_count] = new EDF_Processor;
-				p_count++;
-			}
-		}
+		out << Sch.Processors[i] << "\n";
 	}
+	out << "------------------------ BLK Processes -------------------------\n";
+*/
+
+	return out;
 }

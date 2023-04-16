@@ -4,10 +4,10 @@
 
 class SJF_Processor : public Processor
 {
-	LinkedQueue<Process*> RDY; // priorty queue
+	Priority_Queue<Process*> RDY; // priorty queue
 
 public:
-
+	
 	SJF_Processor() : Processor("SJF") {}
 
 	void Update() override
@@ -17,7 +17,10 @@ public:
 
 	void Add_Process_To_RDY(Process* p) override
 	{
-		RDY.enqueue(p);
+		Pair<Process*, int> x;
+		x.left = p;
+		x.right = 4;
+		RDY.enqueue(x);
 		int time = p->Get_Time_Till_Next_IO();
 		Length = Length + time;
 	}
@@ -27,11 +30,11 @@ public:
 		RDY.dequeue(RunningProcess);
 	}
 
-	void Remove_Process(int ID) override
+	void Remove_Process_From_RDY(int ID) override
 	{
 		//process* temp = Rdy.delete(ID);
-		int time; // = temp->Get_Time_Till_Next_IO();
-		Length = Length - time;
+		//int time; // = temp->Get_Time_Till_Next_IO();
+		//Length = Length - time;
 		//delete temp;
 		//temp = nullptr;
 	}
