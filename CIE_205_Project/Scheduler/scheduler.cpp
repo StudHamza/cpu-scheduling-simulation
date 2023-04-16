@@ -205,9 +205,9 @@ void Scheduler::setKillSignal(string &myText)
 
 	myText = myText.erase(0, var.size() + 1);
 
-	Pair<int, int> KS(stoi(var), stoi(myText));
+	const Pair<int, int> KS(stoi(var), stoi(myText));
 
-	//SIGKILL.InsertEnd(KS);
+	SIGKILL.InsertEnd(KS);
 }
 
 void Scheduler::setProcesses(string &myText)
