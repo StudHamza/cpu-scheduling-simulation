@@ -5,6 +5,7 @@
 #include "../Data_Structures/LinkedQueue.h"
 #include "../Data_Structures/Priority_Queue.h"
 #include "../Process/Process.h"
+#include "../Process/Process.h"
 
 
 #include <iostream>

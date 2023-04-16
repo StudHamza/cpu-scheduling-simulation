@@ -95,5 +95,14 @@
     <ClInclude Include="Data_Structures\SharedClasses\MaxHeap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UI\Mode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="myFile.txt" />
   </ItemGroup>
 </Project>

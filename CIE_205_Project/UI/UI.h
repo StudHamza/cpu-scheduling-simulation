@@ -1,32 +1,50 @@
 #pragma once
 
-#include <chrono>
-#include <thread>
-#include <iostream>
+#include "Mode.h"
 #include "../Scheduler/scheduler.h"
-using namespace std;
+#include <iostream>
 
-enum mode
-{
-	INTERACTIVE = 1,
-	STEP_BY_STEP = 2,
-	SILENT = 3
-};
+#ifdef __unix__
+# include <unistd.h>
+#elif defined _WIN32
+# include <windows.h>
+#define sleep(x) Sleep(1000 * (x))
+#endif
+
+
 
 class UI
 {
 private:
-	mode mode;
-    int time;
-    Scheduler scheduler;
 
-    void GetFileName();
-    void SetMode();
-    int GetCurrentTimeFromUser();
-    void Print();
+	Mode MODE;
+	Scheduler *cpu;
+	int clock = 0;
 
+	void setMode();
 public:
+	UI();
 
-    UI();
-    void Start();
+	void Start();
+
+	void End();
+
+	void Output();
+
 };
+
+== == == =
+//              mode mode;
+// int time;
+// Scheduler scheduler;
+
+// // void GetFileName();
+// // void SetMode();
+// // int GetCurrentTimeFromUser();
+// // void Print();
+
+// public:
+// UI();
+// void Start();
+// }
+// ;

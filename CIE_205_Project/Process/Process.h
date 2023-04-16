@@ -1,4 +1,6 @@
 #pragma once
+#include "..\Data_Structures\LinkedList.h"
+
 
 #include "../Data_Structures/SharedClasses/Pair.h"
 #include "../Data_Structures/LinkedList.h"
@@ -11,6 +13,8 @@ struct IO_R_D
 
 
 class Process
+
+
 {
 	//int PID;
 	//int Arrival_Time;
@@ -73,7 +77,9 @@ public:
 
 	int Get_Time_Till_Next_IO()
 	{
-		return 5;
+
+		return 0;
+
 	}
 
 	void Update_Process()

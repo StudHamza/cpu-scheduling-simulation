@@ -32,11 +32,17 @@ private:
 	int RRTimeSlice;
 
 
+
+	int FCFS;
+	int SJF;
+	int RR;
+	int EDF;
+
 	LinkedQueue<Pair<int, int>> SIGKILL;
 
 
 	LinkedList<Process*> NEW;
-	Process* TRM;
+	LinkedList<Process*> TRM;
 	LinkedQueue<Process*> BLK;
 
 	Processor** Processors;
@@ -48,7 +54,9 @@ private:
 	int MaxW;
 	int STL;
 
+
 	int Fork_Probability;
+
 
 	
 	// Utility Functions for rad file//
@@ -101,14 +109,24 @@ public:
 
 	Scheduler();
 
-	bool read_file(string name); //populates data into objects of every type, intializes all attributes
+
+	void read_file(std::ifstream&); //populates data into objects of every type, intializes all attributes
+
 
 	void update_() {}		//contains the logic of all memeber functions
 
 
 	void steal_work(); //Performed every STL, moves shortest processor queue will steal from longest processor queue
 
+
+	bool End();
+
+	void Ouput(ostream&);
+
+	~Scheduler();
+
 	bool Is_Finished() { return Is_Finish; }
+
 
 	friend ostream& operator<< (ostream& out, const Scheduler& Sch);
 };

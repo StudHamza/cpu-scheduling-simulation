@@ -266,6 +266,10 @@ template <typename T>
 LinkedQueue<T>::~LinkedQueue()
 {
 
+	//Note that the cout statements here is just for learning purpose
+	//They should be normally removed from the destructor
+
+
 	//Free all nodes in the queue
 	T temp;
 	while (dequeue(temp));
