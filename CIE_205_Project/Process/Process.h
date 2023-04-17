@@ -8,6 +8,7 @@ class Process
 {
 	int PID;
 	int Arrival_Time;
+
 	int CPU_Time;
 	int CPU_Time_Left;
 	int Termination_Time = 0;
@@ -24,7 +25,7 @@ class Process
 public:
 	friend ostream& operator << (ostream & ,const Process &);
 
-	Process(int ID, int AT,int CT, LinkedList<Pair<int, int>>* IO_Pairs)
+Process(int ID, int AT,int CT, LinkedList<Pair<int, int>>* IO_Pairs)
 	{
 		PID = ID;
 		Arrival_Time = AT;
@@ -138,6 +139,25 @@ public:
 	~Process()
 	{
 
+	}
+
+
+
+
+	int get_remaining_IO()
+	{
+		return IO_pairs[0][0].left;
+	}
+
+	bool remove_last_IO()
+	{
+		
+		return IO_pairs[0].DeleteFirst();
+	}
+
+	int getWT()
+	{
+		return Waiting_Time;
 	}
 };
 

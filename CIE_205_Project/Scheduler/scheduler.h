@@ -32,7 +32,7 @@ private:
 	LinkedQueue<Process*> BLK;
 
 	Processor** Processors;
-	LinkedList<Pair<int, int>> SIGKILL;
+	LinkedQueue<Pair<int, int>> SIGKILL;
 
 
 	// Constants //

@@ -87,5 +87,9 @@ public:
 	{
 
 	}
+
+
+	LinkedQueue<Process*> getRDY()
+	{ return RDY; }
 };
 
