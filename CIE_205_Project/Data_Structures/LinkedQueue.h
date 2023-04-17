@@ -55,8 +55,10 @@ public:
 	LinkedQueue();
 
 	friend ostream& operator<< <T>(ostream& out, const LinkedQueue<T>& queue);
+	T operator[](int index);
 
 	bool isEmpty() const;
+	int GetSize() const;
 	bool enqueue(const T& newEntry);
 	bool dequeue(T& frntEntry);
 	bool DeleteNode(const T& data);
@@ -66,6 +68,20 @@ public:
 	~LinkedQueue();
 };
 
+template <typename T>
+T LinkedQueue<T>::operator[](int index)
+{
+	if (index < 0 || index >(Counter - 1)) {
+		throw out_of_range("Index out of range");
+	}
+	return GetNodeAt(index)->getItem();
+}
+
+template <typename T>
+int LinkedQueue<T>::GetSize() const
+{
+	return Counter;
+}
 
 template <typename T>
 ostream& operator << (ostream& out, const LinkedQueue<T>& queue)
@@ -79,7 +95,7 @@ ostream& operator << (ostream& out, const LinkedQueue<T>& queue)
 	out << queue.Counter << ":";
 	while (p)
 	{
-		out << *(p->getItem());
+		out << p->getItem();
 		p = p->getNext();
 		if (p)
 		{
@@ -142,7 +158,7 @@ T LinkedQueue<T>::DeleteAt(int index)
 		Counter--;
 		return temp;
 	}
-	else if (index == Counter)
+	else if (index == Counter - 1)
 	{
 		if (Counter == 0)
 		{
@@ -154,19 +170,21 @@ T LinkedQueue<T>::DeleteAt(int index)
 			T temp = frontPtr->getItem();
 			delete frontPtr;
 			frontPtr = nullptr;
+			backPtr = nullptr;
 			Counter--;
 			return temp;
 		}
 
-		Node<T>* prevPtr = GetNodeAt(index - 1);
+		Node<T>* prevPtr = GetNodeAt(Counter - 2);
 		Node<T>* curPtr = prevPtr->getNext();
 		T temp = curPtr->getItem();
 		delete curPtr;
 		prevPtr->setNext(nullptr);
+		backPtr = prevPtr;
 		Counter--;
 		return temp;
 	}
-	else if ((index >= Counter) || (index < 0))
+	else if (index > (Counter - 1) || (index < 0))
 	{
 		cout << "index out of range\n";
 		return NULL;

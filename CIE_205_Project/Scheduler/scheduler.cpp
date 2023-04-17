@@ -251,6 +251,16 @@ void Scheduler::update_()
 
 	//// IO movments \\
 
+
+	//  Updating Processors		//
+	for (int i=0 ; i < pro_n ; i++)
+	{
+		Processors[i]->Update(time);
+		//Process from RUN to TRM list
+		Process* p = Processors[i]->Check_Runnuig_process_If_Finished();
+		if (p != nullptr) terminate(p);
+	}
+
 	//checkIOs();		
 
 	//if (!BLK.isEmpty()) updateIOs();
@@ -344,6 +354,30 @@ void Scheduler::setProcessors(string& myText)
 	}
 }
 
+
+
+
+
+
+ostream& operator << (ostream& out, const Scheduler& Sch)
+{
+	
+	out << "----------------------------- NEW ------------------------------\n";
+	out << "NEW " << Sch.NEW << endl;
+	out << "------------------------ RDY Processes -------------------------\n";
+	for (int i = 0; i < Sch.pro_n; i++)
+	{
+		out << *(Sch.Processors[i]) << "\n";
+	}
+	out << "------------------------ BLK Processes -------------------------\n";
+	out << "BLK " << Sch.BLK << endl;
+	out << "----------------------------- RUN ------------------------------\n";
+	out << "RUN "<<endl;
+	out << "----------------------------- TRM ------------------------------\n";
+	out << "TRM : " << Sch.TRM << endl;//<< Sch.TRM; 
+
+	return out;
+}
 
 
 void Scheduler::setConstants(string &myText)

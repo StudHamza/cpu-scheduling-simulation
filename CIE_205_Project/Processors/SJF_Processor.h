@@ -5,14 +5,21 @@
 class SJF_Processor : public Processor
 {
 	Priority_Queue<Process*> RDY; // priorty queue
-
+	void Print_Processor(ostream& out)  const override
+	{
+		out << "I Am SJF";
+	}
 public:
 	
 	SJF_Processor() : Processor("SJF") {}
 
-	void Update() override
+	void Update(const int& time) override
 	{
-		RunningProcess->Update_Process();
+		RunningProcess->Update_Process(time , true);
+		//for (int i = 0; i < RDY.GetSize(); i++)
+		//{
+		//	RDY[i]->Update_Process(time, false);
+		//}
 	}
 
 	bool Add_Process_To_RDY(Process* p) override

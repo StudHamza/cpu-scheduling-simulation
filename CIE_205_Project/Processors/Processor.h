@@ -25,10 +25,12 @@ protected:
 	}
 
 	virtual void Add_Next_Process_To_Run() = 0;
+	virtual void Print_Processor(ostream&) const = 0;
 
 public:
+	friend ostream& operator << (ostream&, const Processor&);
 
-	virtual void Update() = 0;
+	virtual void Update(const int& time) = 0;
 	virtual bool Add_Process_To_RDY(Process* p) = 0;
 
 	Process* Check_IO(int Current_time)
@@ -55,7 +57,7 @@ public:
 		Process* temp = RunningProcess;
 		if (RunningProcess)
 		{
-			if (RunningProcess->Get_Time_Left() == 0)
+			if (RunningProcess->Is_Finished())
 			{
 				Add_Next_Process_To_Run();
 				return temp;
@@ -70,13 +72,18 @@ public:
 	}
 
 	int Get_Time_Expected_To_Finish() {	return Length; }
+};
 
 
-	Process* getRunning()
-	{
-		return RunningProcess;
-	}
+inline ostream& operator << (ostream& out, const Processor& P)
+{
+	P.Print_Processor(out);
+	return out;
+}
+
+
 
 	string getType() { return this->type; }
 
 };
+

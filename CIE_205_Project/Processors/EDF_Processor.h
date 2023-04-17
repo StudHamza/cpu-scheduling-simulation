@@ -5,12 +5,15 @@
 class EDF_Processor : public Processor
 {
 	Priority_Queue<Process*> RDY; // priorty queue
-
+	void Print_Processor(ostream& out)  const override
+	{
+		out << "I Am EDF";
+	}
 public:
 
 	EDF_Processor() : Processor("SJF") {}
 
-	void Update() override
+	void Update(const int& time) override
 	{
 
 	}
