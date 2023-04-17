@@ -74,8 +74,16 @@ public:
 	int Get_Time_Expected_To_Finish() {	return Length; }
 };
 
+
 inline ostream& operator << (ostream& out, const Processor& P)
 {
 	P.Print_Processor(out);
 	return out;
 }
+
+
+
+	string getType() { return this->type; }
+
+};
+
