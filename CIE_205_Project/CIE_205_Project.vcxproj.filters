@@ -101,5 +101,8 @@
     <ClInclude Include="UI\UI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Data_Structures\HashTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

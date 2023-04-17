@@ -6,6 +6,7 @@
 #include "../Data_Structures/SharedClasses/Pair.h"
 #include "../Data_Structures/LinkedList.h"
 #include "../Data_Structures/LinkedQueue.h"
+#include "../Data_Structures/HashTable.h"
 
 #include <fstream>
 
@@ -33,6 +34,9 @@ private:
 
 	Processor** Processors;
 	LinkedQueue<Pair<int, int>> SIGKILL;
+
+
+	HashTable *processes;
 
 
 	// Constants //
