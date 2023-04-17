@@ -5,7 +5,10 @@
 class FCFS_Processor : public Processor
 {
 	LinkedQueue<Process*> RDY;
-
+	void Print_Processor(ostream& out) const override
+	{
+		out << "I Am FCFS";
+	}
 public:
 
 
@@ -14,9 +17,13 @@ public:
 
 
 
-	void Update() override
+	void Update(const int& time) override
 	{
-		RunningProcess->Update_Process();
+		RunningProcess->Update_Process(time , true);
+		for (int i = 0; i < RDY.GetSize(); i++)
+		{
+			RDY[i]->Update_Process(time, false);
+		}
 	}
 	
 
@@ -44,9 +51,9 @@ public:
 
 	bool Remove_Process_From_RDY(Process* p)
 	{
-		//RDY.Delete(p)
 		int time = p->Get_Time_Till_Next_IO();
 		Length = Length - time;
+		RDY.DeleteNode(p);
 		return true;
 	}
 

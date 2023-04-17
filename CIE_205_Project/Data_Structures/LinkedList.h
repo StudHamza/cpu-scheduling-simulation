@@ -40,9 +40,9 @@ public:
 		return GetNodeAt(index)->getItem();
 	}
 
-	int GetCount()
+	int GetSize()
 	{
-		return Last_Index;
+		return Last_Index + 1;
 	}
 
 	bool isEmpty() const
@@ -221,7 +221,7 @@ public:
 			Last_Index--;
 			return temp;
 		}
-		else if (index == Last_Index + 1)
+		else if (index == Last_Index)
 		{
 			if (Last_Index == -1)
 			{
