@@ -205,75 +205,72 @@ public:
 
 
 
-	T DeleteAt(int index)
+	bool DeleteAt(int index, T & data)
 	{
 		if (index == 0)
 		{
 			if (Last_Index == -1)
 			{
 				cout << "there is no element to delete\n";
-				return NULL;
+				return false;
 			}
 			Node<T>* curPtr = Head;
 			Head = Head->getNext();
-			T temp = curPtr->getItem();
+			data = curPtr->getItem();
 			delete curPtr;
 			Last_Index--;
-			return temp;
+			return true;
 		}
 		else if (index == Last_Index + 1)
 		{
 			if (Last_Index == -1)
 			{
 				cout << "there is no element to delete\n";
-				return NULL;
+				return false;
 			}
-			if (Last_Index == 0)
-			{
-				T temp = Head->getItem();
+			if (Last_Index == 0){
+				data = Head->getItem();
 				delete Head;
 				Head = nullptr;
 				Last_Index--;
-				return temp;
+				return true;
 			}
 
 			Node<T>* prevPtr = GetNodeAt(Last_Index - 1);
 			Node<T>* curPtr = prevPtr->getNext();
-			T temp = curPtr->getItem();
+			data = curPtr->getItem();
 			delete curPtr;
 			prevPtr->setNext(nullptr);
 			Last_Index--;
-			return temp;
+			return true;
 		}
 		else if ((index > Last_Index) || (index < 0))
 		{
-			cout << "index out of range\n";
-			return NULL;
+			return false;
 		}
 		else
 		{
 			Node<T>* prevPtr = GetNodeAt(index - 1);
 			Node<T>* curPtr = prevPtr->getNext();
 			prevPtr->setNext(curPtr->getNext());
-			T temp = curPtr->getItem();
+			data = curPtr->getItem();
 			delete curPtr;
 			Last_Index--;
-			return temp;
+			return true;
 		}
 	}
+	
 
-
-	T DeleteFirst()
+	bool DeleteFirst()
 	{
-		T temp = DeleteAt(0);
-		return temp;
+		T data;
+		return DeleteAt(0, data);
 	}
 
 
 	T DeleteLast()
 	{
-		T temp = DeleteAt(Last_Index);
-		return temp;
+		return DeleteAt(Last_Index, data);
 	}
 
 	
@@ -284,7 +281,7 @@ public:
 		{
 			if (GetNodeAt(i)->getItem() == data)
 			{
-				DeleteAt(i);
+				DeleteAt(i , data);
 				return true;
 			}
 		}
@@ -298,7 +295,8 @@ public:
 		{
 			if (GetNodeAt(i)->getItem() == data)
 			{
-				DeleteAt(i);
+				T d2;
+				DeleteAt(i,d2);
 				deleted_count++;
 				i--;
 			}

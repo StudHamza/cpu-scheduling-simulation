@@ -92,4 +92,7 @@ public:
 		slice_time = t;
 
 	};
+
+	LinkedQueue<Process*> getRDY()
+	{ return RDY; }
 };

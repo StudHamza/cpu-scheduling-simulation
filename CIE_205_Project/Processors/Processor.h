@@ -71,4 +71,12 @@ public:
 
 	int Get_Time_Expected_To_Finish() {	return Length; }
 
+
+	Process* getRunning()
+	{
+		return RunningProcess;
+	}
+
+	string getType() { return this->type; }
+
 };

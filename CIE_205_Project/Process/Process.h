@@ -11,14 +11,14 @@ class Process
 
 {
 	int PID;
-	//int Arrival_Time;
+	int Arrival_Time;
 	//int CPU_Time;
 	LinkedList<Pair<int, int>>* IO_pairs;
 	//int Termination_Time;
 	//int Time_Left;
 	//int Respose_Time;
 	//int Turn_Around_Time;
-	//int Waiting_Time;
+	int Waiting_Time;
 	//bool Is_Running;
 	//Process* Child;
 
@@ -29,8 +29,9 @@ public:
 	Process(int ID, int AT,int CT, LinkedList<Pair<int, int>>* IO_Pairs)
 	{
 		PID = ID;
-		/*
+		
 		Arrival_Time = AT;
+		/*
 		CPU_Time = CT;
 		IO_pairs = IO_Pairs;
 		Time_Left = CPU_Time;
@@ -40,6 +41,7 @@ public:
 		Respose_Time = NULL;
 		Turn_Around_Time = NULL;
 		Waiting_Time = NULL;*/
+		IO_pairs = IO_Pairs;
 
 	}
 
@@ -55,10 +57,10 @@ public:
 
 	bool Is_Arrived(int Current_Time)
 	{
-		/*if (Current_Time == Arrival_Time)
+		if (Current_Time == Arrival_Time)
 		{
 			return true;
-		}*/
+		}
 		return false;
 	}
 
@@ -93,6 +95,25 @@ public:
 	~Process()
 	{
 
+	}
+
+
+
+
+	int get_remaining_IO()
+	{
+		return IO_pairs[0][0].left;
+	}
+
+	bool remove_last_IO()
+	{
+		
+		return IO_pairs[0].DeleteFirst();
+	}
+
+	int getWT()
+	{
+		return Waiting_Time;
 	}
 };
 

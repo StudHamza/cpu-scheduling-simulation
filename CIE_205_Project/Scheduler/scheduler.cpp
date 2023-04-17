@@ -66,29 +66,30 @@ void Scheduler::new_ready_scheduler(Process* p)
 
 
 
-//void Scheduler::checkIOs()
-//{
-//	for (int i = 0; i < pro_n; i++)
-//	{
-//		if ((RUN[i].get_IOs()).left == time)
-//		{
-//			//move to blk list
-//			
-//		}
-//		
-//	}
-//}
+void Scheduler::checkIOs()
+{
+	for (int i = 0; i < pro_n; i++)
+	{
+		Process* temp = Processors[i]->Check_IO(time);
+		if (temp != nullptr)
+		{
+			BLK.enqueue(temp);
+			
+		}
+		
+	}
+}
 //
 void Scheduler::updateIOs()
 {
 	Process* p;
 	BLK.peek(p);
-	//if (p->get.right == IO_counter)
-	//{
-	//	new_ready_scheduler(BLK.front());
-	//	BLK.pop();
-	//}
-	//else IO_counter + 1;
+	if (!p->get_remaining_IO())
+	{
+		BLK.dequeue(p);
+		new_ready_scheduler(p);
+		p->remove_last_IO();
+	}
 }
 
 
@@ -110,30 +111,95 @@ void Scheduler::steal_work()
 
 	if (((max_num - min_num) / max_num) * 100 > (int)stealLimit)
 	{
-		//Process* p;
-			//= (Processors[max_index]->Remove_On_Top());
-		//Processors[min_index]->Add_Process_To_RDY(p);
+		Process* p= (static_cast<FCFS_Processor*>(Processors[max_index])->Remove_Process_On_Top());
+		Processors[min_index]->Add_Process_To_RDY(p);
 	}
 
 }
 
-//void Scheduler::RR_SJF_migration()
-//{
-//	//O(n^2) change my making 4 processors lists
-//
-//	// Brute force
-//
-//	for (int i = RR-1; i < EDF; i++)
-//	{
-//		if (Processors[i]->getType() == "RR")
-//		{
-//			//Loop over ready queue 
-//			//If Process.RT > RTF
-//			//Move to SJF
-//		}
-//	}
-//
-//}
+
+/*Loop over HASH get process*and then pop it
+If Process.RT > RTF
+Move to SJF 
+O(n^3)*/
+void Scheduler::RR_SJF_migration()
+{
+	//O(n^3) change my making 4 processors lists
+
+	// Brute force
+
+	for (int i = SJF-1; i < RR; i++)
+	{
+		if (Processors[i]->getType() == "RR")
+		{
+
+			LinkedQueue<Process*> P = static_cast<RR_Processor*>(Processors[i])->getRDY();
+			while (!P.isEmpty())
+			{
+				Process* temp;
+				P.dequeue(temp);
+				if (temp->Get_Time_Left() < RTF) {
+
+					int min_index = 0;
+
+					int min_num = Processors[FCFS-1]->Get_Time_Expected_To_Finish();
+
+					for (int i = FCFS; i < SJF; i++) {
+
+						if ((Processors[i]->getType()) == "SJF")
+						{
+						int val = Processors[i]->Get_Time_Expected_To_Finish();
+
+						if (val < min_num) { min_num = val; min_index = i; }
+						}
+					}
+					Processors[min_index]->Add_Process_To_RDY(temp);
+				}
+
+			}
+		}
+	}
+}
+
+
+
+void Scheduler::FCFS_RR_migration()
+{
+	for (int i = 0; i < FCFS; i++)
+	{
+		if (Processors[i]->getType() == "FCFS")
+		{
+
+			LinkedQueue<Process*> P = static_cast<FCFS_Processor*>(Processors[i])->getRDY();
+			while (!P.isEmpty())
+			{
+				Process* temp;
+				P.dequeue(temp);
+				if (temp->getWT() > MaxW) {
+
+					int min_index = 0;
+
+					int min_num = Processors[SJF - 1]->Get_Time_Expected_To_Finish();
+
+					for (int i = SJF; i < RR; i++) {
+
+						if ((Processors[i]->getType()) == "RR")
+						{
+							int val = Processors[i]->Get_Time_Expected_To_Finish();
+
+							if (val < min_num) { min_num = val; min_index = i; }
+						}
+					}
+					Processors[min_index]->Add_Process_To_RDY(temp);
+				}
+
+			}
+		}
+	}
+}
+
+
+
 
 
 
@@ -142,46 +208,72 @@ void Scheduler::terminate(Process*& p)
 	TRM.InsertEnd(p);
 }
 
+void Scheduler::kill_process()
+{
+	Pair<int, int> t;
+	SIGKILL.peek(t);
+	if (t.right == time)
+	{
+		SIGKILL.dequeue(t);
 
+		//Need to get a pointer to process 
+
+		for (int i = 0; i < FCFS; i++)
+		{
+			//static_cast<FCFS_Processor*>(Processors[i])->Remove_Process_From_Processor();
+		}
+	}
+
+}
 
 
 void Scheduler::update_()
 {
 	time += timestep;
 
-	if (!NEW.isEmpty())
+	//	NEW to RDY movments \\
+
+	if (!(NEW.isEmpty()))
 	{
 		while (NEW[0]->Is_Arrived(time))
 		{
-			new_ready_scheduler(NEW[0]);	//moving process of new to rdy
+			new_ready_scheduler(NEW[0]);
 			NEW.DeleteFirst();
 		}
 	}
 
 
 
-	//  Kill signal check  \\
+	////  Kill signal check  \\
 
 	//kill_process();
 
-	//checkIOs();		//From RUN to BLK
 
-	//if (!BLK.isEmpty()) updateIOs();	//From BLK to RDY
+	//// IO movments \\
 
-	//  Updating Processors		//
-	for (int i=0 ; i < pro_n ; i++)
-	{
-		Processors[i]->Update();
-		//Process from RUN to TRM list
-		Process* p = Processors[i]->Check_Runnuig_process_If_Finished();
-		if (p != nullptr) terminate(p);
-	}
+	//checkIOs();		
 
-	//steal work
-	if (time % STL == 0) steal_work();
+	//if (!BLK.isEmpty()) updateIOs();
 
 
-	//Migrations
+
+	////  Updating Processors		//
+
+	//for (int i=0 ; i < pro_n ; i++)
+	//{
+	//	Processors[i]->Update();
+	//	
+	//	Process* p = Processors[i]->Check_Runnuig_process_If_Finished();
+
+	//	if (p != nullptr) terminate(p);
+	//}
+
+	//// steal work //
+
+	//if (time % STL == 0) steal_work();
+
+
+	////		Migrations		//
 
 	//RR_SJF_migration();
 
@@ -254,30 +346,6 @@ void Scheduler::setProcessors(string& myText)
 
 
 
-
-
-ostream& operator << (ostream& out, const Scheduler& Sch)
-{
-	
-	out << "----------------------------- NEW ------------------------------\n";
-	out << "NEW " << Sch.NEW << endl;
-	out << "------------------------ RDY Processes -------------------------\n";
-	for (int i = 0; i < Sch.pro_n; i++)
-	{
-		out << Sch.Processors[i] << "\n";
-
-	}
-	out << "------------------------ BLK Processes -------------------------\n";
-	out << "BLK " << Sch.BLK << endl;
-	out << "----------------------------- RUN ------------------------------\n";
-	out << "RUN "<<endl;
-	out << "----------------------------- TRM ------------------------------\n";
-	out << "TRM : " << Sch.TRM << endl;//<< Sch.TRM; 
-
-
-	return out;
-}
-
 void Scheduler::setConstants(string &myText)
 {
 	string var;
@@ -303,7 +371,7 @@ void Scheduler::setKillSignal(string &myText)
 
 	const Pair<int, int> KS(stoi(var), stoi(myText));
 
-	SIGKILL.InsertEnd(KS);
+	SIGKILL.enqueue(KS);
 }
 
 void Scheduler::setProcesses(string &myText)
@@ -311,8 +379,11 @@ void Scheduler::setProcesses(string &myText)
 	string var = "";
 	string p;
 	string p2;
-	int AT, PID, CT, N;
-	LinkedList<Pair<int, int>>*IO_R_D = new LinkedList<Pair<int, int>>;
+	int AT = 0;
+	int PID = 0;
+	int CT = 0;
+	int N = 0;
+	LinkedList<Pair<int, int>>* IO_R_D = new LinkedList<Pair<int, int>>;
 
 	for (int i = 4; i != 0; i--)
 	{
@@ -335,7 +406,9 @@ void Scheduler::setProcesses(string &myText)
 		Pair<int, int> I(stoi(p), stoi(p2));
 
 		IO_R_D->InsertEnd(I);
+		
 	}
+
 	Process *R = new Process(PID, AT, CT,IO_R_D );		//Question Regarding using io_r_d as linked list (not dynamically allocated)
 
 	NEW.InsertEnd(R);
@@ -355,6 +428,32 @@ bool Scheduler::Is_Finished()
 	return 0;
 }
 
+
+ostream& operator << (ostream& out, const Scheduler& Sch)
+{
+
+	out << "----------------------------- NEW ------------------------------\n";
+	out << "NEW " << Sch.NEW << endl;
+	out << "------------------------ RDY Processes -------------------------\n";
+	for (int i = 0; i < Sch.pro_n; i++)
+	{
+		out << Sch.Processors[i] << "\n";
+	}
+	out << "------------------------ BLK Processes -------------------------\n";
+	out << "BLK " << Sch.BLK << endl;
+	out << "----------------------------- RUN ------------------------------\n";
+	out << "RUN: N";
+	for (int i = 0; i < Sch.pro_n; i++)
+	{
+		out << (Sch.Processors[i]->getRunning()) << ",";
+	}
+	out << "----------------------------- TRM ------------------------------\n";
+	out << "TRM : " << Sch.TRM << endl;
+
+	return out;
+}
+
+
 Scheduler::~Scheduler()
 {
 	NEW.DeleteAll();
@@ -367,7 +466,7 @@ Scheduler::~Scheduler()
 
 	delete[] Processors;
 
-	SIGKILL.DeleteAll();
+	SIGKILL.~LinkedQueue();
 
 
 }
