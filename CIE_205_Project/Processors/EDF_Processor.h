@@ -18,14 +18,14 @@ public:
 
 	}
 
-	bool Add_Process_To_RDY(Process * p) override
+	bool Add_Process_To_RDY(Process * p, const int & time) override
 	{
-		int time = p->Get_Time_Till_Next_IO();
+		int t = p->Get_Time_Till_Next_IO(time);
 		Pair<Process*, int> x;
 		x.left = p;
-		x.right = time * -1;
+		x.right = t * -1;
 		RDY.enqueue(x);
-		Length = Length + time;
+		Length = Length + t;
 		return true;
 	}
 

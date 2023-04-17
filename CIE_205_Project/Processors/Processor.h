@@ -31,7 +31,7 @@ public:
 	friend ostream& operator << (ostream&, const Processor&);
 
 	virtual void Update(const int& time) = 0;
-	virtual bool Add_Process_To_RDY(Process* p) = 0;
+	virtual bool Add_Process_To_RDY(Process* p, const int&) = 0;
 
 	Process* Check_IO(int Current_time)
 	{
@@ -71,6 +71,8 @@ public:
 		}
 	}
 
+	string getType() { return this->type; }
+
 	int Get_Time_Expected_To_Finish() {	return Length; }
 };
 
@@ -82,8 +84,4 @@ inline ostream& operator << (ostream& out, const Processor& P)
 }
 
 
-
-	string getType() { return this->type; }
-
-};
 

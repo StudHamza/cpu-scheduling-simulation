@@ -10,7 +10,7 @@ class RR_Processor : public Processor
 
 	void Print_Processor(ostream& out)  const override
 	{
-		out << "I Am RR";
+		out << RDY;
 	}
 public:
 
@@ -34,11 +34,11 @@ public:
 		}
 	}
 	
-	bool Add_Process_To_RDY(Process* p) override
+	bool Add_Process_To_RDY(Process* p, const int & time) override
 	{
 		RDY.enqueue(p);
-		int time = p->Get_Time_Till_Next_IO();
-		Length = Length + time;
+		int t = p->Get_Time_Till_Next_IO(time);
+		Length = Length + t;
 		return true;
 	}
 
@@ -47,42 +47,42 @@ public:
 		RDY.dequeue(RunningProcess);
 	}
 
-	bool Remove_process_From_RUN(Process* p)
+	bool Remove_process_From_RUN(Process* p, const int & time)
 	{
 		Add_Next_Process_To_Run();
-		int time = p->Get_Time_Till_Next_IO();
-		Length = Length - time;
+		int t = p->Get_Time_Till_Next_IO(time);
+		Length = Length - t;
 		return true;
 	}
 
-	bool Remove_Process_From_RDY(Process* p)
+	bool Remove_Process_From_RDY(Process* p, const int& time)
 	{
-		int time = p->Get_Time_Till_Next_IO();
-		Length = Length - time;
+		int t = p->Get_Time_Till_Next_IO(time);
+		Length = Length - t;
 		RDY.DeleteNode(p);
 		return true;
 	}
 
-	Process* Remove_Process_On_Top()
+	Process* Remove_Process_On_Top(const int& time)
 	{
 		Process* temp;
 		RDY.dequeue(temp);
-		int time = temp->Get_Time_Till_Next_IO();
-		Length = Length - time;
+		int t = temp->Get_Time_Till_Next_IO(time);
+		Length = Length - t;
 		return temp;
 	}
 
 
-	bool Remove_Process_From_Processor(Process* p)
+	bool Remove_Process_From_Processor(Process* p, const int& time)
 	{
 		if (RunningProcess == p)
 		{
-			Remove_process_From_RUN(p);
+			Remove_process_From_RUN(p, time);
 			return true;
 		}
 		else
 		{
-			Remove_Process_From_RDY(p);
+			Remove_Process_From_RDY(p, time);
 			return true;
 		}
 		return false;

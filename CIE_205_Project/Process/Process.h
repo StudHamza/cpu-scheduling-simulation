@@ -71,7 +71,7 @@ Process(int ID, int AT,int CT, LinkedList<Pair<int, int>>* IO_Pairs)
 		return 0;
 	}
 
-	int Get_Time_Till_Next_IO(int& Current_Time)
+	int Get_Time_Till_Next_IO(const int& Current_Time)
 	{
 		int temp = IO_pairs->GetNodeAt(0)->getItem().left - Current_Time;
 		return temp;
@@ -79,7 +79,8 @@ Process(int ID, int AT,int CT, LinkedList<Pair<int, int>>* IO_Pairs)
 
 	Pair<int, int> Get_Next_IO_Pair()
 	{
-		Pair<int,int> temp = IO_pairs->DeleteFirst();
+		Pair<int, int> temp;
+		IO_pairs->DeleteFirst(temp);
 		return temp;
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////
@@ -149,16 +150,17 @@ Process(int ID, int AT,int CT, LinkedList<Pair<int, int>>* IO_Pairs)
 		return IO_pairs[0][0].left;
 	}
 
-	bool remove_last_IO()
+	bool remove_first_IO()
 	{
-		
-		return IO_pairs[0].DeleteFirst();
+		Pair<int, int> temp;
+		return IO_pairs[0].DeleteFirst(temp);
 	}
 
 	int getWT()
 	{
 		return Waiting_Time;
 	}
+
 };
 
 

@@ -261,9 +261,8 @@ public:
 	}
 	
 
-	bool DeleteFirst()
+	bool DeleteFirst(T & data)
 	{
-		T data;
 		return DeleteAt(0, data);
 	}
 
