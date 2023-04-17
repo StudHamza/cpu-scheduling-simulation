@@ -171,7 +171,7 @@ void Scheduler::update_()
 	//  Updating Processors		//
 	for (int i=0 ; i < pro_n ; i++)
 	{
-		Processors[i]->Update();
+		Processors[i]->Update(time);
 		//Process from RUN to TRM list
 		Process* p = Processors[i]->Check_Runnuig_process_If_Finished();
 		if (p != nullptr) terminate(p);
@@ -264,8 +264,7 @@ ostream& operator << (ostream& out, const Scheduler& Sch)
 	out << "------------------------ RDY Processes -------------------------\n";
 	for (int i = 0; i < Sch.pro_n; i++)
 	{
-		out << Sch.Processors[i] << "\n";
-
+		out << *(Sch.Processors[i]) << "\n";
 	}
 	out << "------------------------ BLK Processes -------------------------\n";
 	out << "BLK " << Sch.BLK << endl;
@@ -273,7 +272,6 @@ ostream& operator << (ostream& out, const Scheduler& Sch)
 	out << "RUN "<<endl;
 	out << "----------------------------- TRM ------------------------------\n";
 	out << "TRM : " << Sch.TRM << endl;//<< Sch.TRM; 
-
 
 	return out;
 }

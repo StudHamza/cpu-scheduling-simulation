@@ -8,16 +8,23 @@ class RR_Processor : public Processor
 	int slice_time;
 	int Reamaing_time_to_change;
 
-
+	void Print_Processor(ostream& out)  const override
+	{
+		out << "I Am RR";
+	}
 public:
 
 	RR_Processor(int slice_t) : Processor("RR") { slice_time = slice_t; Reamaing_time_to_change = slice_t; }
 
 
 
-	void Update() override
+	void Update(const int& time) override
 	{
-		RunningProcess->Update_Process();
+		RunningProcess->Update_Process(time , true);
+		for (int i = 0; i < RDY.GetSize(); i++)
+		{
+			RDY[i]->Update_Process(time, false);
+		}
 		Reamaing_time_to_change--;
 		if (Reamaing_time_to_change == 0)
 		{
@@ -50,9 +57,9 @@ public:
 
 	bool Remove_Process_From_RDY(Process* p)
 	{
-		//RDY.Delete(p)
 		int time = p->Get_Time_Till_Next_IO();
 		Length = Length - time;
+		RDY.DeleteNode(p);
 		return true;
 	}
 
