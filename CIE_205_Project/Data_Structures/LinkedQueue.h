@@ -92,10 +92,9 @@ ostream& operator << (ostream& out, const LinkedQueue<T>& queue)
 		return out;
 	}
 	Node<T>* p = queue.frontPtr;
-	out << queue.Counter << ":";
 	while (p)
 	{
-		out << p->getItem();
+		out << *(p->getItem());
 		p = p->getNext();
 		if (p)
 		{

@@ -63,6 +63,13 @@ void FCFS_Processor::Update()
 
 
 
+bool const FCFS_Processor::isIDE()
+{
+	if (RunningProcess == nullptr && RDY.isEmpty()) return true;
+
+	return false;
+}
+
 bool FCFS_Processor::Fork()
 {
 	srand(time(0));
@@ -97,6 +104,8 @@ bool FCFS_Processor::Remove_process_From_RUN(Process * & p)
 	if (RunningProcess)
 	{
 		p = RunningProcess;
+
+		p->setExecuting(false);
 
 		RunningProcess = nullptr;
 

@@ -26,6 +26,8 @@ private:
 	int RR;
 	int EDF;
 
+	bool DONE;
+
 	// Lists //
 
 	LinkedList<Process*> NEW;
@@ -66,7 +68,7 @@ private:
 
 	void updateIOs();	//If Process in blk list, check its progress (if blk ! empty)
 
-	void new_ready_scheduler(Process*);		//Shortest rdy queue of all processors
+	void new_ready_scheduler(Process*&);		//Shortest rdy queue of all processors
 
 	void RR_SJF_migration(); //if process in RR processor and (RT) < RTF move to SJF processor
 
@@ -101,6 +103,8 @@ public:
 
 	bool Is_Finished();
 
+
+	bool Done();
 
 	friend ostream& operator<< (ostream& out, const Scheduler& Sch);
 

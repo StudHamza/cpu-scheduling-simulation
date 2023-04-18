@@ -32,6 +32,10 @@ public:
 	
 
 
+	//Checks if Processor is IDE
+	virtual bool const isIDE() override;
+
+
 	// Called by Scheduler to create //
 	bool Fork();
 

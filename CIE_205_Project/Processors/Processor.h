@@ -47,6 +47,8 @@ public:
 
 	virtual void Update() = 0;
 
+	virtual bool const isIDE() = 0; 
+
 	virtual bool Add_Process_To_RDY(Process* &p) = 0;
 
 	// Memeber functions //
@@ -60,6 +62,8 @@ public:
 	int getLength();
 
 	bool getRunning(Process * &);
+
+
 };
 
 

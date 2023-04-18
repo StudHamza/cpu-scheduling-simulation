@@ -23,11 +23,14 @@ bool Processor::Check_IO(Process * & p)
 	{
 		if (RunningProcess->checkIO())
 		{
-			RunningProcess->popIO();
+			p = RunningProcess; 
+			
+			RunningProcess = nullptr;
 
-			p = RunningProcess;
+			p->popIO();
 
 			p->setExecuting(false);
+
 			return true;
 		}
 	}
@@ -46,11 +49,13 @@ bool Processor::Check_Running_process_If_Finished(Process* & p)
 		if (RunningProcess->getRT() == 0)
 		{
 			p = RunningProcess;
+
+			RunningProcess = nullptr;
+
 			return true;
 		}	
 	}
 
-	p = nullptr;
 
 	return false;
 }

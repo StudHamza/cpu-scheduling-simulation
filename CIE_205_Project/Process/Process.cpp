@@ -15,7 +15,7 @@ Process::Process(int ID, int AT, int CT, LinkedQueue<Pair<int, int>> IO_Pairs)
 	Response_Time = -1;
 	Turn_Around_Time = 0;
 	Waiting_Time = 0;
-	ProcessorID = 0;
+	ProcessorID = -1;
 	Executing_Time = 0;
 	IOCounter = 0;
 	executing = false;
@@ -116,14 +116,16 @@ bool Process::popIO()
 		//Pops IO
 
 		Pair<int, int> temp;
+
 		IO_pairs.dequeue(temp);
 		
 
 		//Sets Counter
 
-		temp.right = IOCounter;
+		IOCounter = temp.right;
 
 		return true;
+
 		throw false;
 	}
 	catch (bool t)

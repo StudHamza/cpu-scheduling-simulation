@@ -10,6 +10,8 @@
 
 Scheduler::Scheduler()
 {
+	DONE = false;
+
 }
 
 bool Scheduler::read_file(string Fname)
@@ -38,7 +40,7 @@ bool Scheduler::read_file(string Fname)
 
 		else if (line == 4) { p_number = stoi(myText); allProcesses = new Process*[p_number]; }
 
-		else if (line > 6 + p_number) { setKillSignal(myText);  }
+		else if (line >  4 + p_number) { setKillSignal(myText);  }
 
 		else { setProcesses(myText, process_counter); process_counter++; }
 		
@@ -48,7 +50,7 @@ bool Scheduler::read_file(string Fname)
 
 
 
-void Scheduler::new_ready_scheduler(Process* p)
+void Scheduler::new_ready_scheduler(Process*& p)
 {
 	//for(Processor processor : Processors[pro_n])
 	int min_index = 0;
@@ -57,9 +59,12 @@ void Scheduler::new_ready_scheduler(Process* p)
 
 	for (int i = 1; i < pro_n; i++) {
 
-		int val = Processors[i]->getLength();
+		if (Processors[i])
+		{
+			int val = Processors[i]->getLength();
 
-		if (val < min_num) { min_num = val; min_index = i; }
+			if (val < min_num) { min_num = val; min_index = i; }
+		}
 	}
 	Processors[min_index]->Add_Process_To_RDY(p);
 }
@@ -77,6 +82,7 @@ void Scheduler::checkIOs()
 			if (Processors[i]->Check_IO(p))
 			{
 				p->setProcessorID(-1);
+
 				BLK.enqueue(p);
 			}
 		}
@@ -90,7 +96,7 @@ void Scheduler::updateIOs()
 {
 	Process* p;
 	BLK.peek(p);
-	if (!p->updateIO())
+	if (!(p->updateIO()))
 	{
 		BLK.dequeue(p);
 
@@ -168,21 +174,39 @@ void Scheduler::terminate(Process*& p)
 
 void Scheduler::kill_process()
 {
-	Pair<int, int> t;
-	SIGKILL.peek(t);
-	while(t.right == time)
+	if (!SIGKILL.isEmpty()) {
+		Pair<int, int> t;
+		SIGKILL.peek(t);
+
+
+		while (t.right == time)
 		{
 			SIGKILL.dequeue(t);
 
-			Process * p = allProcesses[t.left];
+			try
+			{
+				Process* p = allProcesses[t.left];
 
-			int id = p->getProcessorID();
 
-			FCFS_Processor * temp = static_cast<FCFS_Processor*>(Processors[id]);
-			
-			temp->Remove_Process_From_Processor(p);
+				int id = p->getProcessorID();
 
-			SIGKILL.peek(t);
+				if (id != -1)
+				{
+					FCFS_Processor* temp = static_cast<FCFS_Processor*>(Processors[id]);
+
+					temp->Remove_Process_From_Processor(p);
+
+					TRM.InsertBeg(p);
+
+					SIGKILL.peek(t);
+				}
+			}
+			catch (exception&)
+			{
+				cout << " Error in Kill signal" << endl;
+			}
+
+		}
 	}
 }
 
@@ -192,6 +216,12 @@ void Scheduler::update_()
 {
 	time += timestep;
 
+	// IO movments \\
+
+	checkIOs();
+
+	if (!BLK.isEmpty()) updateIOs();
+
 	//	NEW to RDY movments \\
 
 	if (!(NEW.isEmpty()))
@@ -199,28 +229,18 @@ void Scheduler::update_()
 		while (NEW[0]->getAT() == time)
 		{
 
-			Process* temp;
+			Process* temp = nullptr;
 
 			NEW.DeleteFirst(temp);
 
 			new_ready_scheduler(temp);
 
+			if ((NEW.isEmpty())) break;
+
 		}
 	}
 
 
-
-
-	//  Kill signal check  \\
-
-	kill_process();
-
-
-	// IO movments \\
-
-	checkIOs();
-
-	if (!BLK.isEmpty()) updateIOs();
 
 
 	//  Updating Processors		//
@@ -233,8 +253,6 @@ void Scheduler::update_()
 		/* Only on FCFS*/
 		//fork(Processors[i]);
 
-
-
 		// Termination //
 
 		Process* p;
@@ -246,8 +264,19 @@ void Scheduler::update_()
 
 	}
 
+	//  Kill signal check  \\
+
+	kill_process();
+
+
 
 	// Migrations //
+
+
+
+	//Check if DONE //
+
+	//DONE = Done();
 }
 
 
@@ -351,7 +380,10 @@ void Scheduler::setProcessors(string& myText)
 ostream& operator << (ostream& out, const Scheduler& Sch)
 {
 	out << "----------------------------- NEW ------------------------------\n";
-	out << "NEW " << Sch.NEW << endl;
+	if (!(Sch.NEW.isEmpty()))
+	{
+		out << "NEW " << Sch.NEW << endl;
+	}
 	out << "------------------------ RDY Processes -------------------------\n";
 	for (int i = 0; i < Sch.pro_n; i++)
 	{
@@ -363,7 +395,24 @@ ostream& operator << (ostream& out, const Scheduler& Sch)
 	out << "------------------------ BLK Processes -------------------------\n";
 	out << "BLK " << Sch.BLK << endl;
 	out << "----------------------------- RUN ------------------------------\n";
-	out << "RUN "<<endl;
+	for (int i = 0; i < Sch.pro_n; i++)
+	{
+		if (Sch.Processors[i] != nullptr)
+		{
+			Process* T;
+			if (Sch.Processors[i]->getRunning(T))
+			{
+				out << "PROCESSOR " << i + 1 << ": ID->" << *T << "\n";
+			
+			}
+			else
+			{
+				out << "PROCESSOR " << i + 1 << ": EMPTY" << "\n";
+			}
+			
+			
+		}
+	}
 	out << "----------------------------- TRM ------------------------------\n";
 	out << "TRM : " << Sch.TRM << endl;//<< Sch.TRM; 
 
@@ -453,7 +502,20 @@ void Scheduler::setRRTimeSlice(string &myText)
 
 bool Scheduler::Is_Finished()
 {
-	return false;
+	return DONE;
+}
+
+bool Scheduler::Done()
+{
+	if (NEW.isEmpty())
+	{
+		for (int i = 0; i < pro_n; i++)
+		{
+			if (!Processors[i]->isIDE()) return false;
+		}
+	}
+
+	return true;
 }
 
 
