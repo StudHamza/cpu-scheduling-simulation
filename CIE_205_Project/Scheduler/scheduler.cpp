@@ -18,6 +18,7 @@ bool Scheduler::read_file(string Fname)
 	string myText;
 	int line = 0;
 	int p_number = 0;
+	int process_counter= 0;
 
 	ifstream myFile;
 
@@ -29,17 +30,17 @@ bool Scheduler::read_file(string Fname)
 	{
 		line++;
 
-		if (line == 1) { setProcessors(myText); std::cout << "Instantiating Processors....." << endl; }
+		if (line == 1) { setProcessors(myText); }
 
-		else if (line == 2) { setRRTimeSlice(myText); std::cout << "RR slice time...." << endl; }
+		else if (line == 2) { setRRTimeSlice(myText);  }
 
-		else if (line == 3) { setConstants(myText); std::cout << "Setting constants..." << endl; }
+		else if (line == 3) { setConstants(myText);  }
 
-		else if (line == 4) { p_number = stoi(myText); processes = new HashTable(p_number); std::cout << "Proccesses...." << endl; }
+		else if (line == 4) { p_number = stoi(myText); allProcesses = new Process*[p_number]; }
 
-		else if (line > 4 + p_number) { setKillSignal(myText); std::cout << "Kill signal...." << endl; }
+		else if (line > 4 + p_number) { setKillSignal(myText);  }
 
-		else { setProcesses(myText); }
+		else { setProcesses(myText); process_counter++; }
 		
 	}
 	return true;
@@ -71,26 +72,29 @@ void Scheduler::checkIOs()
 {
 	for (int i = 0; i < pro_n; i++)
 	{
-		Process* temp = Processors[i]->Check_IO(time);
-		if (temp != nullptr)
+		Process* p;
+		if (Processors[i]->Check_IO(p))
 		{
-			BLK.enqueue(temp);
-			
-		}
-		
+			BLK.enqueue(p);
+		}		
 	}
 }
-//
+
+
+
 void Scheduler::updateIOs()
 {
 	Process* p;
 	BLK.peek(p);
-	if (!p->get_remaining_IO())
+	if (!p->updateIO())
 	{
 		BLK.dequeue(p);
+
 		new_ready_scheduler(p);
-		p->remove_first_IO();
 	}
+	return;
+
+
 }
 
 
@@ -218,12 +222,13 @@ void Scheduler::kill_process()
 		{
 			SIGKILL.dequeue(t);
 
-			Processor * p =processes->Find(t.left);
+			Process * p = allProcesses[t.left];
 
-			for (int i = 0; i < FCFS; i++)
-			{
-				//static_cast<FCFS_Processor*>(Processors[i])->Remove_Process_From_Processor();
-			}
+			int id = p->getProcessorID();
+
+			FCFS_Processor * temp = static_cast<FCFS_Processor*>(Processors[id]);
+			
+			temp->Remove_Process_From_Processor(p);
 		}
 	}
 
@@ -238,36 +243,59 @@ void Scheduler::update_()
 
 	if (!(NEW.isEmpty()))
 	{
-		while ((NEW[0]->Is_Arrived(time)))
+		while (NEW[0]->getAT() == time)
 		{
-			new_ready_scheduler(NEW[0]);
+
 			Process* temp;
+
 			NEW.DeleteFirst(temp);
+
+			new_ready_scheduler(temp);
+
 		}
 	}
 
 
 
-	////  Kill signal check  \\
+
+	//  Kill signal check  \\
 
 	kill_process();
 
 
-	//// IO movments \\
+	// IO movments \\
+
+	checkIOs();
+
+	if (!BLK.isEmpty()) updateIOs();
 
 
 	//  Updating Processors		//
-	for (int i=0 ; i < pro_n ; i++)
+	for (int i = 0; i < pro_n; i++)
 	{
-		//Processors[i]->Update(time);
-		//Process from RUN to TRM list
-		Process* p = Processors[i]->Check_Runnuig_process_If_Finished();
-		//if (p != nullptr) terminate(p);
+		Processors[i]->Update();
+
+		// Forking // 
+		/* Only on FCFS*/
+		fork(Processors[i]);
+
+
+
+		// Termination //
+
+		Process* p;
+
+		if (Processors[i]->Check_Running_process_If_Finished(p))
+		{
+			terminate(p);
+		}
+
 	}
 
-	//checkIOs();		
 
-	//if (!BLK.isEmpty()) updateIOs();
+	// Migrations //
+}
+
 
 
 
@@ -293,7 +321,7 @@ void Scheduler::update_()
 
 	//FCFS_RR_migration();
 		
-}
+
 
 
 
@@ -414,7 +442,7 @@ void Scheduler::setKillSignal(string &myText)
 	SIGKILL.enqueue(KS);
 }
 
-void Scheduler::setProcesses(string &myText)
+void Scheduler::setProcesses(string &myText , int process_counter)
 {
 	string var = "";
 	string p;
@@ -423,7 +451,7 @@ void Scheduler::setProcesses(string &myText)
 	int PID = 0;
 	int CT = 0;
 	int N = 0;
-	LinkedList<Pair<int, int>>* IO_R_D = new LinkedList<Pair<int, int>>;
+	LinkedQueue<Pair<int, int>> IO_R_D;
 
 	for (int i = 4; i != 0; i--)
 	{
@@ -445,13 +473,14 @@ void Scheduler::setProcesses(string &myText)
 		
 		Pair<int, int> I(stoi(p), stoi(p2));
 
-		IO_R_D->InsertEnd(I);
+		IO_R_D.enqueue(I);
 		
 	}
 
-	Process *R = new Process(PID, AT, CT,IO_R_D );		//Question Regarding using io_r_d as linked list (not dynamically allocated)
+	Process *R = new Process(PID, AT, CT, IO_R_D);		//Question Regarding using io_r_d as linked list (not dynamically allocated)
 
-	NEW.InsertEnd(R);
+	allProcesses[process_counter] = R;
+	NEW.InsertEnd(allProcesses[process_counter]);
 }
 
 void Scheduler::setRRTimeSlice(string &myText)
@@ -470,6 +499,21 @@ bool Scheduler::Is_Finished()
 
 
 
+
+void Scheduler::fork(Processor * & p)
+{
+	if (dynamic_cast<FCFS_Processor*>(p))
+	{
+		bool fork = static_cast<FCFS_Processor*>(p)->Fork();
+
+		if (fork)
+		{
+			Process* P = (p->getRunning())->fork_process(time);
+
+			new_ready_scheduler(P);
+		}
+	}
+}
 
 
 Scheduler::~Scheduler()

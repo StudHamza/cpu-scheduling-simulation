@@ -20,17 +20,20 @@ public:
 
 	void Update(const int& time) override
 	{
-		RunningProcess->Update_Process(time , true);
-		for (int i = 0; i < RDY.GetSize(); i++)
+		if (RunningProcess != nullptr)
 		{
-			RDY[i]->Update_Process(time, false);
-		}
-		Reamaing_time_to_change--;
-		if (Reamaing_time_to_change == 0)
-		{
-			RDY.enqueue(RunningProcess);
-			RDY.dequeue(RunningProcess);
-			Reamaing_time_to_change = slice_time;
+			RunningProcess->Update_Process(time, true);
+			for (int i = 0; i < RDY.GetSize(); i++)
+			{
+				RDY[i]->Update_Process(time, false);
+			}
+			Reamaing_time_to_change--;
+			if (Reamaing_time_to_change == 0)
+			{
+				RDY.enqueue(RunningProcess);
+				RDY.dequeue(RunningProcess);
+				Reamaing_time_to_change = slice_time;
+			}
 		}
 	}
 	

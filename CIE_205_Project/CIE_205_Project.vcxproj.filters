@@ -39,6 +39,9 @@
     <ClCompile Include="Processors\SJF_Processor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Process\Process.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="UI\UI.h">

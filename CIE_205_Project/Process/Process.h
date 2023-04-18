@@ -1,170 +1,105 @@
 #pragma once
-#include "..\Data_Structures\LinkedList.h"
+#include <iostream>
 #include "../Data_Structures/SharedClasses/Pair.h"
-#include "../Data_Structures/LinkedList.h"
+#include "../Data_Structures/LinkedQueue.h"
 
 
 class Process
 {
+	// Constants //
+
 	int PID;
+
+	int ProcessorID;
+
 	int Arrival_Time;
 
 	int CPU_Time;
-	int CPU_Time_Left;
-	int Termination_Time = 0;
-	int Respose_Time = 0;
-	int Turn_Around_Time = 0;
-	int Waiting_Time = 0;
 
-	LinkedList<Pair<int, int>>* IO_pairs;
+	
 
-	bool Started = false;
+	// Variables //
+
+	int IOCounter;
+
+	int Remaining_Time;
+
+	int Executing_Time;
+
+
+	int Termination_Time;
+	int Response_Time;
+	int Turn_Around_Time;
+	int Waiting_Time;
+
+	LinkedQueue<Pair<int,int>> IO_pairs;
+
+	bool executing;
 	Process* Child;
 
 
 public:
-	friend ostream& operator << (ostream & ,const Process &);
 
-Process(int ID, int AT,int CT, LinkedList<Pair<int, int>>* IO_Pairs)
-	{
-		PID = ID;
-		Arrival_Time = AT;
-		CPU_Time = CT;
-		IO_pairs = IO_Pairs;
-		CPU_Time_Left = CPU_Time;
-	}
-	/////////////////////////////////////////////////////////////////////////////////////////
-	int Get_PID()
-	{
-		return PID;
-	}
+	//  Operator //
+	friend std::ostream& operator << (std::ostream & ,const Process &);
 
-	int Get_Arrival_time()
-	{
-		return Arrival_Time;
-	}
 
-	bool Check_CPU_Time_Left(int STL)
-	{
-		if (CPU_Time_Left < STL)
-		{
-			return true;
-		}
-		return false;
-	}
 
-	bool Check_Waiting_Time(int MaxW)
-	{
-		if (Waiting_Time > MaxW)
-		{
-			return true;
-		}
-		return false;
-	}
+	// Constructor //
 
-	int Get_Turn_Arround_Time()
-	{
-		if (Is_Finished())
-		{
-			return Termination_Time - Arrival_Time;
-		}
-		return 0;
-	}
+	Process(int, int, int, LinkedQueue<Pair<int, int>> );
 
-	int Get_Time_Till_Next_IO(const int& Current_Time)
-	{
-		int temp = IO_pairs->GetNodeAt(0)->getItem().left - Current_Time;
-		return temp;
-	}
 
-	Pair<int, int> Get_Next_IO_Pair()
-	{
-		Pair<int, int> temp;
-		IO_pairs->DeleteFirst(temp);
-		return temp;
-	}
+	// Getters //
+	const int getID();
+
+	const int getAT();	//Arrival time
+
+	const int getRT(); //Remaining Time if==0 process is done
+
+	const int getWT();  //Waiting time
+
+	const bool checkIO();	//Gets recent IO 
+
+	const int getCT();  //returns cpu time
+
+	const int getProcessorID();
+
+	// Setters //
+
+	void setTRT();
+
+	void setTT(int);  //Termination time
+
+	void setExecuting( bool);
+
+	void setResponseT(  int clock); // Response time
+
+	void setProcessorID( int);
+
+	
+
+	// Updaters
+
+	bool popIO();
+
+	bool updateIO();	//pops from pair and handels the counter
+
+	Process* fork_process(const int &);
+
+	void updateWT();		//updates waiting time
+
+	void update_();
+
 	///////////////////////////////////////////////////////////////////////////////////////////
-	bool Need_IO_Now(int Current_Time)
-	{
-		if (IO_pairs->GetNodeAt(0)->getItem().left == Current_Time)
-		{
-			return true;
-		}
-		return false;
-	}
-
-	bool Is_Finished()
-	{
-		if (CPU_Time_Left == 0)
-		{
-			return true;
-		}
-		return false;
-	}
-
-	bool Is_Arrived(int Current_Time)
-	{
-		if (Current_Time == Arrival_Time)
-		{
-			return true;
-		}
-		return false;
-	}
-	//////////////////////////////////////////////////////////////////////////////////////////////
-	void Update_Process(const int& time , bool running)
-	{
-		if (!Started)
-		{
-			Respose_Time = time - Arrival_Time;
-			Started = true;
-		}
-		if (running)
-		{
-			CPU_Time_Left--;
-			if (Is_Finished())
-			{
-				Termination_Time = time;
-			}
-		}
-		else
-		{
-			Waiting_Time++;
-		}
-	}
-
-	void Fork_Process()
-	{
-
-	}
-
-	~Process()
-	{
-
-	}
 
 
-
-
-	int get_remaining_IO()
-	{
-		return IO_pairs[0][0].left;
-	}
-
-	bool remove_first_IO()
-	{
-		Pair<int, int> temp;
-		return IO_pairs[0].DeleteFirst(temp);
-	}
-
-	int getWT()
-	{
-		return Waiting_Time;
-	}
+	~Process();
 
 };
 
 
-inline ostream& operator << (ostream& out, const Process& P)
+inline std::ostream& operator << (std::ostream& out, const Process& P)
 {
 	out << P.PID;
 	return out;

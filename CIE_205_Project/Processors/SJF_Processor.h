@@ -15,7 +15,11 @@ public:
 
 	void Update(const int& time) override
 	{
-		RunningProcess->Update_Process(time , true);
+		if (RunningProcess != nullptr)
+		{
+			RunningProcess->Update_Process(time, true);
+		}
+		
 		//for (int i = 0; i < RDY.GetSize(); i++)
 		//{
 		//	RDY[i]->Update_Process(time, false);

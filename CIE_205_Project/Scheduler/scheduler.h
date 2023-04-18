@@ -36,7 +36,7 @@ private:
 	LinkedQueue<Pair<int, int>> SIGKILL;
 
 
-	HashTable *processes;
+	Process** allProcesses;
 
 
 	// Constants //
@@ -49,13 +49,13 @@ private:
 	
 	// Utility Functions for rad file//
 
-	void setProcessors(string &);
+	void setProcessors(string & );
 
 	void setRRTimeSlice(string&);
 
 	void setConstants(string&);
 
-	void setProcesses(string&);
+	void setProcesses(string& , int);
 
 	void setKillSignal(string&);
 
@@ -77,6 +77,8 @@ private:
 	void terminate(Process*&); //CT is done (process is executed)
 
 	void write_statistics(); //called along with terminate function, will append to file
+
+	void fork(Processor * &);
 
 	
 
