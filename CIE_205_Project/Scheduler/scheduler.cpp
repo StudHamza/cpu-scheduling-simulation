@@ -276,7 +276,7 @@ void Scheduler::update_()
 
 	//Check if DONE //
 
-	//DONE = Done();
+	DONE = Done();
 }
 
 
@@ -507,15 +507,10 @@ bool Scheduler::Is_Finished()
 
 bool Scheduler::Done()
 {
-	if (NEW.isEmpty())
-	{
-		for (int i = 0; i < pro_n; i++)
-		{
-			if (!Processors[i]->isIDE()) return false;
-		}
-	}
 
-	return true;
+	// Check in ALL processes done 
+
+	return false;
 }
 
 
