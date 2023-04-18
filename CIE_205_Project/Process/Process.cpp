@@ -93,6 +93,11 @@ void Process::setResponseT(const int tclock)
 	
 }
 
+void Process::setProcessorID(int id)
+{
+	ProcessorID = id;
+}
+
 
 void Process::setExecuting(const bool t)
 {

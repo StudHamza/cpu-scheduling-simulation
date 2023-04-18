@@ -27,6 +27,7 @@ void FCFS_Processor::Update()
 	clock++;
 
 	//Update Running Process
+	if (RDY.isEmpty() && RunningProcess == nullptr) return;
 
 	if (RunningProcess != nullptr)
 	{
@@ -45,10 +46,14 @@ void FCFS_Processor::Update()
 
 	//Updating RDY
 
-	for (int i = 0; i < RDY.GetSize(); i++)
+	if (!RDY.isEmpty())
 	{
-		RDY[i]->update_();
+		for (int i = 0; i < RDY.GetSize(); i++)
+		{
+			RDY[i]->update_();
+		}
 	}
+
 
 	// Forking is performed in Scheduler //
 
@@ -79,7 +84,7 @@ bool FCFS_Processor::Add_Process_To_RDY(Process* &p)
 		
 	Length += p->getRT();
 
-	RDY.enqueue(p);
+	return (RDY.enqueue(p));
 }
 
 
@@ -139,7 +144,7 @@ FCFS_Processor::~FCFS_Processor()
 
 }
 
-LinkedQueue<Process*> getRDY()
+LinkedQueue<Process*> FCFS_Processor::getRDY()
 {
-	return RDY;
+	return this->RDY;
 };

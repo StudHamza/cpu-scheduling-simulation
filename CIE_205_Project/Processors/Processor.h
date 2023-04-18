@@ -59,7 +59,7 @@ public:
 
 	int getLength();
 
-	Process*& getRunning();
+	bool getRunning(Process * &);
 };
 
 

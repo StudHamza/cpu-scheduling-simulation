@@ -12,7 +12,11 @@ class FCFS_Processor : public Processor
 
 	void Print_Processor(ostream& out) const override
 	{
-		out << RDY;
+		if (RDY.isEmpty()) out << " EMPTY";
+		else {
+			out << RDY;
+		}
+		
 	}
 
 

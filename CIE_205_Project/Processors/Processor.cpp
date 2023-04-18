@@ -19,15 +19,19 @@ Processor::Processor(string t ,int id)
 
 bool Processor::Check_IO(Process * & p)
 {
-	if (RunningProcess->checkIO())
+	if (RunningProcess)
 	{
-		RunningProcess->popIO();
+		if (RunningProcess->checkIO())
+		{
+			RunningProcess->popIO();
 
-		p = RunningProcess;
+			p = RunningProcess;
 
-		p->setExecuting(false);
-		return true;
+			p->setExecuting(false);
+			return true;
+		}
 	}
+
 	return false;
 }
 
@@ -67,7 +71,13 @@ int Processor::getLength()
 }
 
 
-Process*& Processor::getRunning()
+bool Processor::getRunning(Process * &p)
 {
-	return RunningProcess;
+	if (RunningProcess)
+	{
+		p = RunningProcess;
+		return true;
+	}
+	
+	else return false;
 }
