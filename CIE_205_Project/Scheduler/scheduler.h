@@ -18,6 +18,7 @@ private:
 	//Variables//
 	int time;
 	int pro_n;
+	int processes_number;
 
 	int RRTimeSlice;
 

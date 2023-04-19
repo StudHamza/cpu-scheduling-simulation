@@ -22,6 +22,7 @@ class FCFS_Processor : public Processor
 
 	int fork_p ;
 
+
 public:
 
 	FCFS_Processor(int , int);
@@ -30,10 +31,6 @@ public:
 
 	void Update() override;
 	
-
-
-	//Checks if Processor is IDE
-	virtual bool const isIDE() override;
 
 
 	// Called by Scheduler to create //

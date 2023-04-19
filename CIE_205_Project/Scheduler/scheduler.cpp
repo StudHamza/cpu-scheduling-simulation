@@ -38,7 +38,7 @@ bool Scheduler::read_file(string Fname)
 
 		else if (line == 3) { setConstants(myText);  }
 
-		else if (line == 4) { p_number = stoi(myText); allProcesses = new Process*[p_number]; }
+		else if (line == 4) { p_number = stoi(myText); allProcesses = new Process * [p_number]; processes_number = p_number; }
 
 		else if (line >  4 + p_number) { setKillSignal(myText);  }
 
@@ -169,6 +169,8 @@ void Scheduler::FCFS_RR_migration()
 
 void Scheduler::terminate(Process*& p)
 {
+	p->setTT(time);
+	p->setTRT();
 	TRM.InsertEnd(p);
 }
 
@@ -177,28 +179,27 @@ void Scheduler::kill_process()
 	if (!SIGKILL.isEmpty()) {
 		Pair<int, int> t;
 		SIGKILL.peek(t);
-
-
 		while (t.right == time)
 		{
 			SIGKILL.dequeue(t);
-
 			try
 			{
 				Process* p = allProcesses[t.left];
-
 
 				int id = p->getProcessorID();
 
 				if (id != -1)
 				{
-					FCFS_Processor* temp = static_cast<FCFS_Processor*>(Processors[id]);
+					if (Processors[id]->getType() == "FCFS")
+					{
+						FCFS_Processor* temp = static_cast<FCFS_Processor*>(Processors[id]);
 
-					temp->Remove_Process_From_Processor(p);
+						temp->Remove_Process_From_Processor(p);
 
-					TRM.InsertBeg(p);
-
-					SIGKILL.peek(t);
+						TRM.InsertBeg(p);
+					}
+						
+					if(!SIGKILL.peek(t))break;
 				}
 			}
 			catch (exception&)
@@ -231,10 +232,11 @@ void Scheduler::update_()
 
 			Process* temp = nullptr;
 
-			NEW.DeleteFirst(temp);
-
-			new_ready_scheduler(temp);
-
+			if (NEW.DeleteFirst(temp))
+			{
+				new_ready_scheduler(temp);
+			
+			}
 			if ((NEW.isEmpty())) break;
 
 		}
@@ -282,27 +284,6 @@ void Scheduler::update_()
 
 
 
-	////  Updating Processors		//
-
-	//for (int i=0 ; i < pro_n ; i++)
-	//{
-	//	Processors[i]->Update();
-	//	
-	//	Process* p = Processors[i]->Check_Runnuig_process_If_Finished();
-
-	//	if (p != nullptr) terminate(p);
-	//}
-
-	//// steal work //
-
-	//if (time % STL == 0) steal_work();
-
-
-	////		Migrations		//
-
-	//RR_SJF_migration();
-
-	//FCFS_RR_migration();
 		
 
 
@@ -341,7 +322,7 @@ void Scheduler::setProcessors(string& myText)
 		if (i == 0) {
 			FCFS = stoi(var);
 			for (int i = 0; i < FCFS; i++) {
-				Processors[p_count] = new FCFS_Processor(i , Fork_Probability);
+				Processors[p_count] = new FCFS_Processor(p_count , Fork_Probability);
 				p_count++;
 			}
 		}
@@ -349,7 +330,7 @@ void Scheduler::setProcessors(string& myText)
 		if (i == 1) {
 			SJF = std::stoi(var);
 			for (int i = 0; i < SJF; i++) {
-				//Processors[p_count] = new SJF_Processor;
+				Processors[p_count] = new SJF_Processor(p_count);
 				p_count++;
 			}
 		}
@@ -357,7 +338,7 @@ void Scheduler::setProcessors(string& myText)
 		if (i == 2) {
 			RR = std::stoi(var);
 			for (int i = 0; i < RR; i++) {
-				//Processors[p_count] = new RR_Processor(0);
+				Processors[p_count] = new RR_Processor(p_count);
 				p_count++;
 			}
 		}
@@ -380,16 +361,17 @@ void Scheduler::setProcessors(string& myText)
 ostream& operator << (ostream& out, const Scheduler& Sch)
 {
 	out << "----------------------------- NEW ------------------------------\n";
-	if (!(Sch.NEW.isEmpty()))
-	{
-		out << "NEW " << Sch.NEW << endl;
-	}
+
+	out << "NEW " << Sch.NEW << endl;
+
 	out << "------------------------ RDY Processes -------------------------\n";
 	for (int i = 0; i < Sch.pro_n; i++)
 	{
 		if (Sch.Processors[i] != nullptr)
 		{
-			out << "PROCESSOR " << i + 1 << ": " << *(Sch.Processors[i]) << "\n";
+			out << "PROCESSOR " 
+				<< Sch.Processors[i]->getType()
+				<<i + 1 << ": " << *(Sch.Processors[i]) << "\n";
 		}
 	}
 	out << "------------------------ BLK Processes -------------------------\n";
@@ -402,12 +384,15 @@ ostream& operator << (ostream& out, const Scheduler& Sch)
 			Process* T;
 			if (Sch.Processors[i]->getRunning(T))
 			{
-				out << "PROCESSOR " << i + 1 << ": ID->" << *T << "\n";
+				out << "PROCESSOR "<< Sch.Processors[i]->getType()
+					<< i + 1 << ": ID->" << *T << "\n";
 			
 			}
 			else
 			{
-				out << "PROCESSOR " << i + 1 << ": EMPTY" << "\n";
+				out << "PROCESSOR " 
+					<< Sch.Processors[i]->getType() 
+					<<i + 1 << ": EMPTY" << "\n";
 			}
 			
 			
@@ -437,15 +422,19 @@ void Scheduler::setConstants(string &myText)
 
 void Scheduler::setKillSignal(string &myText)
 {
-	string var;
+	if (myText.size() > 0)
+	{
+		string var;
 
-	var = myText.substr(0, myText.find(" "));
+		var = myText.substr(0, myText.find(" "));
 
-	myText = myText.erase(0, var.size() + 1);
+		myText = myText.erase(0, var.size() + 1);
 
-	const Pair<int, int> KS(stoi(var), stoi(myText));
+		const Pair<int, int> KS(stoi(var), stoi(myText));
 
-	SIGKILL.enqueue(KS);
+		SIGKILL.enqueue(KS);
+	}
+
 }
 
 void Scheduler::setProcesses(string &myText , int process_counter)
@@ -495,7 +484,14 @@ void Scheduler::setRRTimeSlice(string &myText)
 {
 	RRTimeSlice = stoi(myText);
 
-	//for (int i = SJF - 1; i <= RR; i++) static_cast<RR_Processor*>(Processors[i])->setSlice(RRTimeSlice);
+	for (int i = 0; i < pro_n; i++)
+	{
+		if (Processors[i]->getType() == "RR")
+		{
+			static_cast<RR_Processor*>(Processors[i])->setTimeSlice(RRTimeSlice);
+		}
+		
+	}
 }
 
 
@@ -507,10 +503,14 @@ bool Scheduler::Is_Finished()
 
 bool Scheduler::Done()
 {
+	for (int i = 0; i < processes_number; i++)
+	{
+		if(allProcesses[i]->getRT() != 0) return false;
+	}
 
-	// Check in ALL processes done 
+	// Check in ALL processes done  TT //
 
-	return false;
+	return true;
 }
 
 

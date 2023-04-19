@@ -31,7 +31,14 @@ public:
 
 	template<class U>
 	friend ostream& operator<<(ostream& os, const Priority_Queue<U>& L);
+
+	T operator[](int index);
 };
+
+
+
+
+
 
 template <typename T>
 Priority_Queue<T>::Priority_Queue()
@@ -104,5 +111,14 @@ ostream& operator<<(ostream& os, const Priority_Queue<T>& L) {
 }
 
 
+template<typename U>
+inline U Priority_Queue<U>::operator[](int index)
+{
+	return heap[index];
+}
+
+
 
 #endif
+
+

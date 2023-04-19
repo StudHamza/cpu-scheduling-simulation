@@ -55,8 +55,6 @@ bool Processor::Check_Running_process_If_Finished(Process* & p)
 			return true;
 		}	
 	}
-
-
 	return false;
 }
 

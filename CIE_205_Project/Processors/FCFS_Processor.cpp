@@ -11,11 +11,12 @@ FCFS_Processor::FCFS_Processor(int id , int fp) : Processor("FCFS", id)
 
 void FCFS_Processor::Add_Next_Process_To_Run()
 {
-	RDY.dequeue(RunningProcess);
+	if (RDY.dequeue(RunningProcess))
+	{
+		RunningProcess->setResponseT(clock);	//Happens only once in the Process (if statment used)
 
-	RunningProcess->setResponseT(clock);	//Happens only once in the Process (if statment used)
-
-	RunningProcess->setExecuting(true);
+		RunningProcess->setExecuting(true);
+	}
 
 }
 
@@ -61,14 +62,6 @@ void FCFS_Processor::Update()
 	
 }
 
-
-
-bool const FCFS_Processor::isIDE()
-{
-	if (RunningProcess == nullptr && RDY.isEmpty()) return true;
-
-	return false;
-}
 
 bool FCFS_Processor::Fork()
 {
