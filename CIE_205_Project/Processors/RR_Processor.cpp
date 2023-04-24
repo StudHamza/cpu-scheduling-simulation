@@ -19,7 +19,7 @@ void RR_Processor::Update()
 	}
 
 	// Slice time is not done yet and process is still running //
-	if (RunningProcess != nullptr && slice_counter !=0)
+	else if (RunningProcess != nullptr && slice_counter !=0)
 	{
 		this->BUSY++;
 
@@ -32,7 +32,7 @@ void RR_Processor::Update()
 	}
 
 	// Slice time is up during process running //
-	else if (RunningProcess)
+	else if (RunningProcess != nullptr && slice_counter==0)
 	{
 		Process* P;
 		if (Remove_process_From_RUN(P))

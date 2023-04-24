@@ -114,10 +114,7 @@ void Scheduler::steal_work()
 }
 
 
-/*Loop over HASH get process*and then pop it
-If Process.RT > RTF
-Move to SJF 
-O(n^3)*/
+
 void Scheduler::RR_SJF_migration()
 {
 	//O(n^3) change my making 4 processors lists
@@ -169,6 +166,7 @@ void Scheduler::FCFS_RR_migration()
 
 void Scheduler::terminate(Process*& p)
 {
+	p->setProcessorID(-1);
 	p->setTT(time);
 	p->setTRT();
 	TRM.InsertEnd(p);
@@ -176,37 +174,29 @@ void Scheduler::terminate(Process*& p)
 
 void Scheduler::kill_process()
 {
-	if (!SIGKILL.isEmpty()) {
-		Pair<int, int> t;
-		SIGKILL.peek(t);
-		while (t.right == time)
+	if (SIGKILL.isEmpty()) return;
+
+	Pair<int, int> t;
+	SIGKILL.peek(t);
+
+	while (t.right == time)
+	{
+		SIGKILL.dequeue(t);
+		Process* p = allProcesses[t.left];	//Get process
+
+		int id = p->getProcessorID();	//get processor ID
+
+		if (id != -1)
 		{
-			SIGKILL.dequeue(t);
-			try
+			if (Processors[id]->getType() == "FCFS")
 			{
-				Process* p = allProcesses[t.left];
+				FCFS_Processor* temp = static_cast<FCFS_Processor*>(Processors[id]);
 
-				int id = p->getProcessorID();
+				temp->Remove_Process_From_Processor(p);
 
-				if (id != -1)
-				{
-					if (Processors[id]->getType() == "FCFS")
-					{
-						FCFS_Processor* temp = static_cast<FCFS_Processor*>(Processors[id]);
-
-						temp->Remove_Process_From_Processor(p);
-
-						TRM.InsertBeg(p);
-					}
-						
-					if(!SIGKILL.peek(t))break;
-				}
+				TRM.InsertBeg(p);
 			}
-			catch (exception&)
-			{
-				cout << " Error in Kill signal" << endl;
-			}
-
+			if (!SIGKILL.peek(t))break;
 		}
 	}
 }
@@ -216,6 +206,11 @@ void Scheduler::kill_process()
 void Scheduler::update_()
 {
 	time += timestep;
+
+
+	//Check if DONE //
+
+	DONE = Done();
 
 	// IO movments \\
 
@@ -268,17 +263,12 @@ void Scheduler::update_()
 
 	//  Kill signal check  \\
 
-	kill_process();
+	//kill_process();
 
 
 
 	// Migrations //
 
-
-
-	//Check if DONE //
-
-	DONE = Done();
 }
 
 

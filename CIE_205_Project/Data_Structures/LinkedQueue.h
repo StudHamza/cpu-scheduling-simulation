@@ -88,7 +88,7 @@ ostream& operator << (ostream& out, const LinkedQueue<T>& queue)
 {
 	if (queue.isEmpty())
 	{
-		out << "0";
+		out << "EMPTY";
 		return out;
 	}
 	Node<T>* p = queue.frontPtr;
