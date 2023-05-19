@@ -12,46 +12,32 @@ void RR_Processor::Update()
 
 	// Update Running Process //
 
-	if (RDY.isEmpty() && RunningProcess == nullptr)
-	{
-		this->IDE++;
-		return;
-	}
-
 	// Slice time is not done yet and process is still running //
-	else if (RunningProcess != nullptr && slice_counter !=0)
+	if (RunningProcess != nullptr && slice_counter!=0)
 	{
 		this->BUSY++;
-
-		//IO checking is in Scheduler
-		/* if(RunningProcess->checkIO() then popIO and Remove form running  */
-
 		RunningProcess->update_();
-
 		slice_counter--;
 	}
-
 	// Slice time is up during process running //
-	else if (RunningProcess != nullptr && slice_counter==0)
+	else if (RunningProcess !=nullptr && slice_counter==0)
 	{
+		this->BUSY++;
 		Process* P;
 		if (Remove_process_From_RUN(P))
 		{
 			Add_Process_To_RDY(P);
 		}
-
 	}
 	// Nothing is running at this current time step //
 	else
 	{
 		this->IDE++;
-		if (slice_counter == 0)
-		{
-			Add_Next_Process_To_Run();
-		}
-		else
-		slice_counter--;
 	}
+
+
+	// Add process to run //
+	Add_Next_Process_To_Run();
 
 	// Updating RDY //
 
@@ -76,6 +62,7 @@ bool RR_Processor::Add_Process_To_RDY(Process*& p)
 
 void RR_Processor::Add_Next_Process_To_Run()
 {
+	if (RunningProcess != nullptr) return;
 	if (RDY.dequeue(RunningProcess))
 	{
 		RunningProcess->setResponseT(clock);	//Happens only once in the Process (if statment used)

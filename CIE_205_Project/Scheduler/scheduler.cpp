@@ -32,17 +32,25 @@ bool Scheduler::read_file(string Fname)
 	{
 		line++;
 
-		if (line == 1) { setProcessors(myText); }
+		try
+		{
+			if (line == 1) { setProcessors(myText); }
 
-		else if (line == 2) { setRRTimeSlice(myText);  }
+			else if (line == 2) { setRRTimeSlice(myText); }
 
-		else if (line == 3) { setConstants(myText);  }
+			else if (line == 3) { setConstants(myText); }
 
-		else if (line == 4) { p_number = stoi(myText); allProcesses = new Process * [p_number]; processes_number = p_number; }
+			else if (line == 4) { p_number = stoi(myText); allProcesses = new Process * [p_number]; processes_number = p_number; }
 
-		else if (line >  4 + p_number) { setKillSignal(myText);  }
+			else if (line > 4 + p_number) { setKillSignal(myText); }
 
-		else { setProcesses(myText, process_counter); process_counter++; }
+			else { setProcesses(myText, process_counter); process_counter++; }
+		}
+		catch (const std::exception& exc)
+		{
+			cout << endl<<"File format is wrong "<<endl<<exc.what();
+			exit(0);
+		}
 		
 	}
 	return true;
@@ -398,7 +406,7 @@ ostream& operator << (ostream& out, const Scheduler& Sch)
 void Scheduler::setConstants(string &myText)
 {
 	string var;
-	for(int i =1 ; i<=4 ; i++){
+	for(int i =1 ; i<5 ; i++){
 		var = myText.substr(0, myText.find(" "));
 
 		myText = myText.erase(0, var.size() + 1);
