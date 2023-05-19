@@ -114,7 +114,7 @@ void UI::Start()
     
     while (!(cpu->Is_Finished()))
     {
-
+        time++;
         
         if (mode == INTERACTIVE)
         {
@@ -131,9 +131,8 @@ void UI::Start()
         Print(); 
 
         cpu->update_();
-        
-        time++;
+       
     }
-    cout << "Simulation Ends, Output file created";
+    cout <<endl <<" // Simulation Ends, Output file created  //"<<endl;
 
 }

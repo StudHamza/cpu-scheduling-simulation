@@ -15,6 +15,8 @@ private:
 
     void expand();
 
+    void heapify(Pair<T, int>*, int, int);
+
 public:
     maxHeap();
 
@@ -34,21 +36,79 @@ public:
 
     void print() const;
 
+    template<class U>
+    friend ostream& operator<<(ostream& os, const maxHeap<U>& L);
+
+    T operator[](int index);
+
     ~maxHeap();
 };
+
+// [] Overloading   //
+
+
+template <typename U>
+inline U maxHeap<U>::operator[](int index)
+{
+    return heap[index].left;
+}
+
+
+
+
+
+
 
 // Utility Functions //
 template <typename T>
 void maxHeap<T>::expand()
 {
     Pair<T, int>* resized = new Pair<T, int>[capacity * 2];
+
     for (int i = 0; i < capacity; i++)
+    {
         resized[i] = heap[i];
+    }
     delete[] heap;
     heap = resized;
 
+
     capacity = capacity * 2;
 }
+
+template <typename T>
+void maxHeap<T> ::heapify(Pair<T, int>* h, int size, int index)
+{
+    int root  = index;
+
+
+    // If left child is larger than root
+    int lc = lchild(root);
+    int rc = rchild(root);
+
+    if (lc < size && h[lc].right > h[root].right)
+        root = lc;
+
+    // If right child is larger than largest so far
+    if (rc < size && h[rc].right > h[root].right)
+        root = rc;
+
+    // If largest is not root
+    if (root != index) {
+        
+        Pair<T, int> temp = h[index];
+
+        h[index] = h[root];
+
+        h[root] = temp;
+        
+
+       
+        heapify(h, size, index);
+    }
+}
+
+
 
 //      //
 
@@ -70,26 +130,29 @@ bool maxHeap<T>::isEmpty() const
 template <typename T>
 int maxHeap<T>::parent(int i)
 {
-    return (int)i / 2;
+
+    return ((i-1) / 2);
 }
 
 template <typename T>
 int maxHeap<T>::rchild(int i)
 {
-    return (2 * i + 1);
+    i++;
+    return ((2 * i) + 2);
 }
 
 template <typename T>
 int maxHeap<T>::lchild(int i)
 {
-    return (2 * i);
+    i++;
+    return ((2 * i) +1);
 }
 
 template <typename T>
 void maxHeap<T>::insert(const Pair<T, int>& item)
 {
     if (leaf == capacity - 1)expand();
-    leaf += 1;
+    leaf ++ ;
     heap[leaf] = item;
 
     int index = leaf;
@@ -115,38 +178,16 @@ void maxHeap<T>::remove(T & item)
 
     int index = 0;
 
-    while (heap[index].right < heap[lchild(index)].right || heap[index].right < heap[rchild(index)].right)
-    {
-        if (heap[index].right < heap[lchild(index)].right)
-        {
-            Pair<T, int> temp = heap[lchild(index)];
-
-            heap[lchild(index)] = heap[index];
-
-            heap[index] = temp;
-
-            index = lchild(index);
-        }
-        else
-        {
-            Pair<T, int> temp = heap[rchild(index)];
-
-            heap[rchild(index)] = heap[index];
-
-            heap[index] = temp;
-
-            index = rchild(index);
-        }
-    }
-
-
     leaf--;
+
+    heapify(heap, leaf, 0);
+        
 }
 
 template <typename T>
 void maxHeap<T>::print() const
 {
-    for (int i = 0; i < leaf; i++)
+    for (int i = 0; i <= leaf; i++)
     {
         std::cout << heap[i].left << " : " << heap[i].right << endl;
     }
@@ -164,5 +205,23 @@ void maxHeap<T>::getRoot(T& frntEntry) const {
 }
 
 
+
+template<class T>
+ostream& operator<<(ostream& os, const maxHeap<T>& L) {
+
+    if(L.isEmpty())
+    { 
+        os << "Empty";
+        return os;
+    }
+    else
+    {
+        for (int i = 0; i <= L.leaf; i++)
+        {
+            os << L.heap[i].left << ", ";
+        }
+        return os;
+    }
+}
 
 #endif

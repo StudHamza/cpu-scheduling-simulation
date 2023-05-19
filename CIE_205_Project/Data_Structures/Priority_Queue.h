@@ -14,6 +14,7 @@ class Priority_Queue : public QueueADT<T>
 {
 private:
 	maxHeap<T> heap;
+	int s;
 	
 public:
 	Priority_Queue();
@@ -24,8 +25,20 @@ public:
 
 	void print() const;
 
+	int size() const;
+
 	~Priority_Queue();
+
+	template<class U>
+	friend ostream& operator<<(ostream& os, const Priority_Queue<U>& L);
+
+	T operator[](int index);
 };
+
+
+
+
+
 
 template <typename T>
 Priority_Queue<T>::Priority_Queue()
@@ -43,6 +56,7 @@ bool Priority_Queue<T>::isEmpty() const
 template <typename T>
 bool Priority_Queue<T>::enqueue(const Pair<T, int>& newEntry)
 {
+	s++;
 	heap.insert(newEntry);
 	return true;
 }
@@ -50,8 +64,14 @@ bool Priority_Queue<T>::enqueue(const Pair<T, int>& newEntry)
 template <typename T>
 bool Priority_Queue<T>::dequeue(T & frntEntry)
 {
-	heap.remove(frntEntry);
-	return true;
+	if (s > -1)
+	{
+		s--;
+		heap.remove(frntEntry);
+		return true;
+	}
+	return false;
+
 }
 
 template <typename T>
@@ -67,13 +87,38 @@ void Priority_Queue<T>::print() const
 	heap.print();
 }
 
+template<typename T>
+inline int Priority_Queue<T>::size() const
+{
+	return s;
+}
+
 template <typename T>
 Priority_Queue<T>::~Priority_Queue()
 {
 
 	T temp;
-	while (dequeue(temp));
+	while (peek(temp)) dequeue(temp);
 
 }
 
+
+template<class T>
+ostream& operator<<(ostream& os, const Priority_Queue<T>& L) {
+		
+	os << L.heap;
+	return os;
+}
+
+
+template<typename U>
+inline U Priority_Queue<U>::operator[](int index)
+{
+	return heap[index];
+}
+
+
+
 #endif
+
+

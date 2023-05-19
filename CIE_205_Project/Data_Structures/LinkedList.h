@@ -51,6 +51,7 @@ public:
 		{
 			return true;
 		}
+
 		return false;
 	}
 
@@ -370,9 +371,12 @@ ostream& operator << (ostream& out, const LinkedList<T>& List)
 
 	while (p)
 	{
-		out << *(p->getItem());
-		if (p->getNext() != nullptr) out << ", ";
-		p = p->getNext();
+		if (p != nullptr)
+		{
+			out << *(p->getItem());
+			if (p->getNext() != nullptr) out << ", ";
+			p = p->getNext();
+		}
 	}
 	return out;
 }

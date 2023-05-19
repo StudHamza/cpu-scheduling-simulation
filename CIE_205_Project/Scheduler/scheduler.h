@@ -18,6 +18,7 @@ private:
 	//Variables//
 	int time;
 	int pro_n;
+	int processes_number;
 
 	int RRTimeSlice;
 
@@ -25,6 +26,8 @@ private:
 	int SJF;
 	int RR;
 	int EDF;
+
+	bool DONE;
 
 	// Lists //
 
@@ -36,7 +39,7 @@ private:
 	LinkedQueue<Pair<int, int>> SIGKILL;
 
 
-	HashTable *processes;
+	Process** allProcesses;
 
 
 	// Constants //
@@ -49,13 +52,13 @@ private:
 	
 	// Utility Functions for rad file//
 
-	void setProcessors(string &);
+	void setProcessors(string & );
 
 	void setRRTimeSlice(string&);
 
 	void setConstants(string&);
 
-	void setProcesses(string&);
+	void setProcesses(string& , int);
 
 	void setKillSignal(string&);
 
@@ -66,7 +69,7 @@ private:
 
 	void updateIOs();	//If Process in blk list, check its progress (if blk ! empty)
 
-	void new_ready_scheduler(Process*);		//Shortest rdy queue of all processors
+	void new_ready_scheduler(Process*&);		//Shortest rdy queue of all processors
 
 	void RR_SJF_migration(); //if process in RR processor and (RT) < RTF move to SJF processor
 
@@ -77,6 +80,8 @@ private:
 	void terminate(Process*&); //CT is done (process is executed)
 
 	void write_statistics(); //called along with terminate function, will append to file
+
+	void fork(Processor * &);
 
 	
 
@@ -99,6 +104,8 @@ public:
 
 	bool Is_Finished();
 
+
+	bool Done();
 
 	friend ostream& operator<< (ostream& out, const Scheduler& Sch);
 

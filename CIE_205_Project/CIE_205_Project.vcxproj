@@ -133,6 +133,7 @@
     <ClCompile Include="Processors\Processor.cpp" />
     <ClCompile Include="Processors\RR_Processor.cpp" />
     <ClCompile Include="Processors\SJF_Processor.cpp" />
+    <ClCompile Include="Process\Process.cpp" />
     <ClCompile Include="Scheduler\scheduler.cpp" />
     <ClCompile Include="UI\UI.cpp" />
   </ItemGroup>

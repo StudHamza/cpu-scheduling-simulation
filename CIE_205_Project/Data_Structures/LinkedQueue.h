@@ -39,8 +39,8 @@ Single Node Case:
 
 #ifndef LINKED_QUEUE_
 #define LINKED_QUEUE_
-
-
+#include <iostream>
+using namespace std;
 #include "SharedClasses/Node.h"
 #include "SharedClasses/QueueADT.h"
 
@@ -88,14 +88,13 @@ ostream& operator << (ostream& out, const LinkedQueue<T>& queue)
 {
 	if (queue.isEmpty())
 	{
-		out << "0";
+		out << "EMPTY";
 		return out;
 	}
 	Node<T>* p = queue.frontPtr;
-	out << queue.Counter << ":";
 	while (p)
 	{
-		out << p->getItem();
+		out << *(p->getItem());
 		p = p->getNext();
 		if (p)
 		{
@@ -344,8 +343,8 @@ LinkedQueue<T>::~LinkedQueue()
 
 
 	//Free all nodes in the queue
-	T temp;
-	while (dequeue(temp));
+	/*T temp;
+	while (dequeue(temp));*/
 }
 
 

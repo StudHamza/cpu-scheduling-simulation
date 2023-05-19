@@ -1,5 +1,7 @@
 #pragma once
 
+
+
 #include "../Data_Structures/LinkedList.h"
 #include "../Data_Structures/Array.h"
 #include "../Data_Structures/LinkedQueue.h"
@@ -13,69 +15,58 @@ using namespace std;
 
 class Processor {
 protected:
+
+
+	// Variables //
 	int ID;
-	int Length = 0;
+
+	int Length ;
+
 	string type;
+
 	Process* RunningProcess;
 
+	int clock;
 
-	Processor(string type)
-	{
-		this->type = type;
-	}
+	int BUSY;
+	int IDE; 
+
+
+	Processor(string, int ID);
 
 	virtual void Add_Next_Process_To_Run() = 0;
+
 	virtual void Print_Processor(ostream&) const = 0;
 
 public:
+
+	//    Over loader   //
 	friend ostream& operator << (ostream&, const Processor&);
 
-	virtual void Update(const int& time) = 0;
-	virtual bool Add_Process_To_RDY(Process* p, const int&) = 0;
+	// Pure virual Functions //
 
-	Process* Check_IO(int Current_time)
-	{
-		Process* temp = RunningProcess;
-		if (RunningProcess)
-		{
-			if (RunningProcess->Need_IO_Now(Current_time))
-			{
-				Add_Next_Process_To_Run();
-				return temp;
-			}
-			return nullptr;
-		}
-		else
-		{
-			Add_Next_Process_To_Run();
-			return nullptr;
-		}
-	}
+	virtual void Update() = 0;
 
-	Process* Check_Runnuig_process_If_Finished()
-	{
-		Process* temp = RunningProcess;
-		if (RunningProcess)
-		{
-			if (RunningProcess->Is_Finished())
-			{
-				Add_Next_Process_To_Run();
-				return temp;
-			}
-			return nullptr;
-		}
-		else
-		{
-			Add_Next_Process_To_Run();
-			return nullptr;
-		}
-	}
 
-	string getType() { return this->type; }
+	virtual bool Add_Process_To_RDY(Process* &p) = 0;
 
-	int Get_Time_Expected_To_Finish() {	return Length; }
+	// Memeber functions //
+
+	bool Check_IO(Process * &);		//Only checks Io
+
+	bool Check_Running_process_If_Finished(Process * &);
+
+	string getType();
+
+	int getLength();
+
+	bool getRunning(Process * &);
+
 };
 
+
+
+// Overloading
 
 inline ostream& operator << (ostream& out, const Processor& P)
 {
