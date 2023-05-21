@@ -1,2 +1,8 @@
 myFile5 ----> Kill signal in FCFS
 myFile4 ----> Forking Process
+myFile3 ----> EDF
+myFile2 ----> I/O
+
+
+// Guide //
+AT ID CT IO DL

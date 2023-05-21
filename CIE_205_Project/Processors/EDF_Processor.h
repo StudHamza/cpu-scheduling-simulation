@@ -8,8 +8,13 @@ class EDF_Processor : public Processor
 
 	void Print_Processor(ostream& out)  const override
 	{
-		out << RDY;
+		if (RDY.isEmpty()) out << " EMPTY";
+		else {
+			out << RDY;
+		}
 	}
+
+	bool CompareDeadline();
 public:
 
 	EDF_Processor(int ID);
@@ -17,6 +22,11 @@ public:
 	void Add_Next_Process_To_Run() override;
 
 	bool Add_Process_To_RDY(Process*& p) override;
+
+
+	// ONLY used by RR, EDF and Scheduler //
+
+	bool Remove_process_From_RUN(Process*& p);
 
 	void Update() override;
 

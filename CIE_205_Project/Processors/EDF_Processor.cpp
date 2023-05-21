@@ -21,11 +21,11 @@ bool EDF_Processor::Add_Process_To_RDY(Process*& p)
 
 	Length += p->getRT();
 
-	return true; //for now
-	// Remaining Time * -1, highest priority goes to less RT //
-	//Pair< Process*, int> P(p, ((p->getRT())));
 
-	//return (RDY.enqueue(P));
+	// DeadLine * -1, highest priority goes to closest Deadline //
+	Pair< Process*, int> P(p, (-1 * (p->getDeadLine())));
+
+	return (RDY.enqueue(P));
 }
 
 
@@ -35,10 +35,21 @@ void EDF_Processor::Update()
 	clock++;
 
 	// Update Running Process //
+
+	
 	if (RDY.isEmpty() && RunningProcess == nullptr) return;
 
+	
 	if (RunningProcess != nullptr)
 	{
+		// Check DeadLines
+		if(CompareDeadline());
+		{
+			Process* P = nullptr;
+			Remove_process_From_RUN(P);
+			Add_Process_To_RDY(P);
+			Add_Next_Process_To_Run();
+		}
 		this->BUSY++;
 
 		//IO checking is in Scheduler
@@ -62,4 +73,48 @@ void EDF_Processor::Update()
 		}
 	}
 
+
+	// Check OverHeating // 
+
+
+
+
+}
+
+
+bool EDF_Processor::CompareDeadline()
+{
+	Process* temp = nullptr;
+	RDY.peek(temp);
+	if (temp->getDeadLine() < RunningProcess->getDeadLine()) return true;
+	return false;
+}
+
+
+
+
+
+
+
+
+
+
+//Pops from RUN //
+/* Used by RR, Scheduler and EDF ONLY ...... No other processor should use it*/
+
+bool EDF_Processor::Remove_process_From_RUN(Process*& p)
+{
+	if (RunningProcess)
+	{
+		p = RunningProcess;
+
+		p->setExecuting(false);
+
+		RunningProcess = nullptr;
+
+		Length = Length - p->getRT();
+
+		return true;
+	}
+	return false;
 }

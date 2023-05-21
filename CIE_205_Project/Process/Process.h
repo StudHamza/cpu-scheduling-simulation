@@ -16,6 +16,7 @@ class Process
 
 	int CPU_Time;
 
+	int DeadLine;
 	
 
 	// Variables //
@@ -48,25 +49,27 @@ public:
 
 	// Constructor //
 
-	Process(int, int, int, LinkedQueue<Pair<int, int>> );
+	Process(int, int, int,int, LinkedQueue<Pair<int, int>> );
 
 
 	// Getters //
-	const int getID();
+	int getID() const;
 
-	const int getAT();	//Arrival time
+	int getAT()const;	//Arrival time
 
-	const int getRT(); //Remaining Time if==0 process is done
+	int getRT() const; //Remaining Time if==0 process is done
 
-	const int getWT();  //Waiting time
+	int getWT() const;  //Waiting time
 
-	const bool checkIO();	//Gets recent IO 
+	bool checkIO() const;	//Gets recent IO 
 
-	const int getCT();  //returns cpu time
+	int getCT() const;  //returns cpu time
 
-	const int getProcessorID();
+	int getProcessorID() const;
 
-	const bool isDone();
+	int getDeadLine() const;
+
+	bool isDone() const;
 
 	// Setters //
 

@@ -25,7 +25,7 @@ void FCFS_Processor::Add_Next_Process_To_Run()
 void FCFS_Processor::Update()
 {
 	clock++;
-
+	// 
 	//Update Running Process
 	if (RDY.isEmpty() && RunningProcess == nullptr) return;
 
@@ -137,6 +137,9 @@ bool FCFS_Processor::Remove_Process_From_Processor(Process * &p)
 	}
 	return false;
 }
+
+
+
 
 
 FCFS_Processor::~FCFS_Processor()

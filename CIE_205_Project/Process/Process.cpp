@@ -2,12 +2,13 @@
 
 
 
-Process::Process(int ID, int AT, int CT, LinkedQueue<Pair<int, int>> IO_Pairs)
+Process::Process(int ID, int AT, int CT,int DL, LinkedQueue<Pair<int, int>> IO_Pairs)
 {
 	PID = ID;
 	Arrival_Time = AT;
 	CPU_Time = CT;
 	IO_pairs = IO_Pairs;
+	DeadLine = DL;
 
 	//  //
 	Remaining_Time = CT;
@@ -28,44 +29,49 @@ Process::Process(int ID, int AT, int CT, LinkedQueue<Pair<int, int>> IO_Pairs)
 
 /*     Getters and setters to variables  */
 
-int const Process::getID() 
+int Process::getID()  const
 {
 	return PID;
 }
 
 
-int const Process::getAT()
+int Process::getAT() const
 {
 	return Arrival_Time;
 }
 
-int const Process::getCT()
+int Process::getCT() const
 {
 	return CPU_Time;
 }
 
-int const Process::getRT()
+int Process::getRT() const
 {
 	return Remaining_Time;
 }
 
-int const Process::getWT()
+int Process::getWT() const
 {
 	return Waiting_Time;
 }
 
-int const Process::getProcessorID()
+int Process::getProcessorID() const
 {
 
 	return ProcessorID;
 }
 
-bool const Process::isDone()
+int Process::getDeadLine() const
+{
+	return this->DeadLine;
+}
+
+bool Process::isDone() const
 {
 	return done;
 }
 
-bool const Process::checkIO()
+bool Process::checkIO() const
 {
 	Pair<int, int> IO;
 	if (IO_pairs.isEmpty())return false;
@@ -162,10 +168,11 @@ Process* Process::fork_process(const int & clock, int &Id)
 	int id = Id ;
 	int ct = Remaining_Time;
 	int at = clock;
-	
+	srand(time(0));
+	int dl = (rand() % at) + clock;
 	LinkedQueue<Pair<int, int>> IO;
 
-	Process* P = new Process(id, at, ct, IO);
+	Process* P = new Process(id, at, dl,ct, IO);
 
 	Child = P;
 

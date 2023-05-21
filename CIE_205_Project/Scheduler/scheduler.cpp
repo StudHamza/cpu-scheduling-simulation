@@ -383,7 +383,7 @@ void Scheduler::setProcessors(string& myText)
 		if (i == 3) {
 			EDF = std::stoi(var);
 			for (int i = 0; i < EDF; i++) {
-				//Processors[p_count] = new EDF_Processor;
+				Processors[p_count] = new EDF_Processor(p_count);
 				p_count++;
 			}
 		}
@@ -487,17 +487,19 @@ void Scheduler::setProcesses(string &myText , int process_counter)
 	int PID = 0;
 	int CT = 0;
 	int N = 0;
+	int DL = 0;
 	LinkedQueue<Pair<int, int>> IO_R_D;
 
-	for (int i = 4; i != 0; i--)
+	for (int i = 5; i != 0; i--)
 	{
 		var = myText.substr(0, myText.find(" "));
 
 		myText = myText.erase(0, var.size() + 1);
-		if (i == 4) { AT = stoi(var); }
-		if (i == 3) { PID = stoi(var); }
-		if (i == 2) { CT = stoi(var); }
-		if (i == 1) { N = stoi(var); }
+		if (i == 5) { AT = stoi(var); }
+		if (i == 4) { PID = stoi(var); }
+		if (i == 3) { CT = stoi(var); }
+		if (i == 2) { N = stoi(var); }
+		if (i == 1) { DL = stoi(var); }
 	}
 	while (myText.size())
 	{
@@ -513,7 +515,7 @@ void Scheduler::setProcesses(string &myText , int process_counter)
 		
 	}
 
-	Process *R = new Process(PID, AT, CT, IO_R_D);		//Question Regarding using io_r_d as linked list (not dynamically allocated)
+	Process *R = new Process(PID, AT, CT,DL, IO_R_D);		//Question Regarding using io_r_d as linked list (not dynamically allocated)
 
 	allProcesses[process_counter] = R;
 

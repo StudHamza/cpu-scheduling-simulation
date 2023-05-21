@@ -24,6 +24,9 @@ protected:
 
 	string type;
 
+	// OverHeating //
+
+	
 	Process* RunningProcess;
 
 	int clock;
