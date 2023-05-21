@@ -196,21 +196,35 @@ void Scheduler::terminate(Process*& p)
 	{
 
 
-		Process* P = p->terminate(time);	//Kills orphans
+		Process* LP = nullptr;
+		Process* RP = nullptr;
+
+
+		p->terminate(time, LP,RP);	//Kills orphans
+
 		TRM.InsertEnd(p);
 
 		//Remove child
-		if (P != nullptr)
+		if (LP != nullptr)
 		{
-			int processor_id = P->getProcessorID();
+			int processor_id = LP->getProcessorID();
 
 			FCFS_Processor* processor = static_cast<FCFS_Processor*>(Processors[processor_id]);
 
-			processor->Remove_Process_From_Processor(P);
+			processor->Remove_Process_From_Processor(LP);
+
+			terminate(LP);
 		}
-		
-		
-		terminate(P);
+		if (RP != nullptr)
+		{
+			int processor_id = RP->getProcessorID();
+
+			FCFS_Processor* processor = static_cast<FCFS_Processor*>(Processors[processor_id]);
+
+			processor->Remove_Process_From_Processor(RP);
+
+			terminate(RP);
+		}		
 		
 	}
 	return;
@@ -290,7 +304,6 @@ void Scheduler::update_()
 	//  Updating Processors		//
 	for (int i = 0; i < pro_n; i++)
 	{
-		Processors[i]->Update();
 
 		// Forking // 
 
@@ -305,6 +318,9 @@ void Scheduler::update_()
 		{
 			terminate(p);
 		}
+		
+
+		Processors[i]->Update();
 
 	}
 

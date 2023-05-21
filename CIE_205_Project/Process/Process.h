@@ -37,7 +37,8 @@ class Process
 
 	bool executing;
 	bool done;
-	Process* Child;
+	Process* RChild;
+	Process* LChild;
 
 
 public:
@@ -97,7 +98,7 @@ public:
 
 	void update_();
 
-	Process* terminate(const int&);
+	void terminate(const int&, Process* &, Process* &);
 
 	///////////////////////////////////////////////////////////////////////////////////////////
 
