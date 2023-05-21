@@ -20,8 +20,7 @@ Process::Process(int ID, int AT, int CT,int DL, LinkedQueue<Pair<int, int>> IO_P
 	Executing_Time = 0;
 	IOCounter = 0;
 	executing = false;
-	LChild = nullptr;
-	RChild = nullptr;
+	Child = nullptr;
 	done = false;
 
 }
@@ -164,9 +163,9 @@ bool Process::updateIO()
 
 Process* Process::fork_process(const int & clock, int &Id)
 {
-	if (LChild != nullptr && RChild != nullptr) return nullptr;
-	int id = Id ;
+	if (Child != nullptr) return nullptr;
 	Id++;
+	int id = Id ;
 	int ct = Remaining_Time;
 	int at = clock;
 	srand(time(0));
@@ -175,14 +174,7 @@ Process* Process::fork_process(const int & clock, int &Id)
 
 	Process* P = new Process(id, at, dl,ct, IO);
 
-	if (LChild = nullptr)
-	{
-		LChild = P;
-	}
-	else
-	{
-		RChild = P;
-	}
+	Child = P;
 
 	return P;
 }
@@ -207,14 +199,13 @@ void Process::update_()
 	}
 }
 
-void Process::terminate(const int &time, Process* & LP, Process* & RP)
+Process * Process::terminate(const int &time)
 {
 	this->setProcessorID(-1);
 	this->setTT(time);
 	this->setTRT();
 	this->setExecuting(false);
 	
-	LP = LChild;
-	RP = RChild;
+	return Child;
 
 }
