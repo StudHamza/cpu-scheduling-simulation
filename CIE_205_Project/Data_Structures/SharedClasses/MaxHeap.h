@@ -218,7 +218,7 @@ ostream& operator<<(ostream& os, const maxHeap<T>& L) {
     {
         for (int i = 0; i <= L.leaf; i++)
         {
-            os << L.heap[i].left << ", ";
+            os << *(L.heap[i].left) << ", ";
         }
         return os;
     }

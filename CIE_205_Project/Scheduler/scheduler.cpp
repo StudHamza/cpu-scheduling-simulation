@@ -79,6 +79,24 @@ void Scheduler::new_ready_scheduler(Process*& p)
 
 
 
+void Scheduler::Add_To_FCFS(Process*& p)
+{
+	int min_index = 0;
+
+	int min_num = Processors[0]->getLength();
+
+	for (int i = 1; i < FCFS-1; i++) {
+
+		if (Processors[i] && Processors[i]->getType()=="FCFS")
+		{
+			int val = Processors[i]->getLength();
+
+			if (val < min_num) { min_num = val; min_index = i; }
+		}
+	}
+	Processors[min_index]->Add_Process_To_RDY(p);
+}
+
 
 void Scheduler::checkIOs()
 {
@@ -174,39 +192,60 @@ void Scheduler::FCFS_RR_migration()
 
 void Scheduler::terminate(Process*& p)
 {
-	p->setProcessorID(-1);
-	p->setTT(time);
-	p->setTRT();
-	TRM.InsertEnd(p);
+	if (p != nullptr)
+	{
+
+
+		Process* P = p->terminate(time);	//Kills orphans
+		TRM.InsertEnd(p);
+
+		//Remove child
+		if (P != nullptr)
+		{
+			int processor_id = P->getProcessorID();
+
+			FCFS_Processor* processor = static_cast<FCFS_Processor*>(Processors[processor_id]);
+
+			processor->Remove_Process_From_Processor(P);
+		}
+		
+		
+		terminate(P);
+		
+	}
+	return;
 }
 
 void Scheduler::kill_process()
 {
-	if (SIGKILL.isEmpty()) return;
 
 	Pair<int, int> t;
-	SIGKILL.peek(t);
 
-	while (t.right == time)
+	if (SIGKILL.peek(t))
 	{
-		SIGKILL.dequeue(t);
-		Process* p = allProcesses[t.left];	//Get process
-
-		int id = p->getProcessorID();	//get processor ID
-
-		if (id != -1)
+		if (t.right == time)	//left is id, right is time
 		{
+			SIGKILL.dequeue(t);
+			Process* p = allProcesses[t.left];	//Get process
+			int id = p->getProcessorID();	//get processor ID
+
+			if (id < 0) return;
+
 			if (Processors[id]->getType() == "FCFS")
 			{
 				FCFS_Processor* temp = static_cast<FCFS_Processor*>(Processors[id]);
 
 				temp->Remove_Process_From_Processor(p);
 
-				TRM.InsertBeg(p);
+				terminate(p);
+
+				kill_process();
 			}
-			if (!SIGKILL.peek(t))break;
+
 		}
+		return;
 	}
+
 }
 
 
@@ -256,7 +295,7 @@ void Scheduler::update_()
 		// Forking // 
 
 		/* Only on FCFS*/
-		//fork(Processors[i]);
+		fork(Processors[i]);
 
 		// Termination //
 
@@ -271,7 +310,7 @@ void Scheduler::update_()
 
 	//  Kill signal check  \\
 
-	//kill_process();
+	kill_process();
 
 
 
@@ -320,7 +359,7 @@ void Scheduler::setProcessors(string& myText)
 		if (i == 0) {
 			FCFS = stoi(var);
 			for (int i = 0; i < FCFS; i++) {
-				Processors[p_count] = new FCFS_Processor(p_count , Fork_Probability);
+				Processors[p_count] = new FCFS_Processor(p_count);
 				p_count++;
 			}
 		}
@@ -411,9 +450,13 @@ void Scheduler::setConstants(string &myText)
 
 		myText = myText.erase(0, var.size() + 1);
 		if (i == 1) { RTF = stoi(var); }
-		if (i == 2 ) { MaxW = stoi(var); }
-		if (i == 3) { STL = stoi(var); }
-		if (i == 4) { Fork_Probability = stoi(var); }
+		else if (i == 2 ) { MaxW = stoi(var); }
+		else if (i == 3) { STL = stoi(var); }
+		else if (i == 4) { 
+			Fork_Probability = stoi(var);
+			
+		
+		}
 
 	}
 }
@@ -501,14 +544,12 @@ bool Scheduler::Is_Finished()
 
 bool Scheduler::Done()
 {
-	for (int i = 0; i < processes_number; i++)
-	{
-		if(allProcesses[i]->getRT() != 0) return false;
-	}
+	
+	if (TRM.GetSize() == this->processes_number) return true;
 
 	// Check in ALL processes done  TT //
 
-	return true;
+	return false;
 }
 
 
@@ -518,18 +559,22 @@ void Scheduler::fork(Processor * & p)
 {
 	if (dynamic_cast<FCFS_Processor*>(p))
 	{
-		bool fork = static_cast<FCFS_Processor*>(p)->Fork();
+		bool fork = static_cast<FCFS_Processor*>(p)->Fork(Fork_Probability);
 
 		if (fork)
 		{
 
-			Process* P; 
-			if (p->getRunning(P))
+			Process* P = nullptr; 
+			
+			if (p->getRunning(P))	// if a process is running
 			{
-				P =P->fork_process(time);
+				P =P->fork_process(time, processes_number);
 			} 
-
-			new_ready_scheduler(P);
+			
+			if (P != nullptr) // Check if it can fork
+			{
+				Add_To_FCFS(P);
+			}
 		}
 	}
 }

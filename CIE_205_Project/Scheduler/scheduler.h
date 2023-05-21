@@ -64,6 +64,7 @@ private:
 
 
 	//Memebers//
+	void Add_To_FCFS(Process*&); //Used for forking
 
 	void checkIOs();	//Check for ios in running list
 

@@ -20,6 +20,7 @@ Process::Process(int ID, int AT, int CT, LinkedQueue<Pair<int, int>> IO_Pairs)
 	IOCounter = 0;
 	executing = false;
 	Child = nullptr;
+	done = false;
 
 }
 
@@ -59,6 +60,10 @@ int const Process::getProcessorID()
 	return ProcessorID;
 }
 
+bool const Process::isDone()
+{
+	return done;
+}
 
 bool const Process::checkIO()
 {
@@ -83,6 +88,7 @@ void Process::setTRT()
 void Process::setTT(int t)
 {
 	Termination_Time = t;
+	this->done = true;
 }
 
 void Process::setResponseT(const int tclock)
@@ -149,9 +155,11 @@ bool Process::updateIO()
 
 // Called only in the FCFS run and Using fork probability 
 
-Process* Process::fork_process(const int & clock)
+Process* Process::fork_process(const int & clock, int &Id)
 {
-	int id = PID + 1000;
+	if (Child != nullptr) return nullptr;
+	Id++;
+	int id = Id ;
 	int ct = Remaining_Time;
 	int at = clock;
 	
@@ -182,4 +190,15 @@ void Process::update_()
 		Remaining_Time--;
 		Executing_Time++;
 	}
+}
+
+Process * Process::terminate(const int &time)
+{
+	this->setProcessorID(-1);
+	this->setTT(time);
+	this->setTRT();
+	this->setExecuting(false);
+	
+	return Child;
+
 }

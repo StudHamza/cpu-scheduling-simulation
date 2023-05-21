@@ -3,9 +3,8 @@
 
 
 
-FCFS_Processor::FCFS_Processor(int id , int fp) : Processor("FCFS", id)
+FCFS_Processor::FCFS_Processor(int id) : Processor("FCFS", id)
 {
-	fork_p = fp;
 }
 
 
@@ -63,13 +62,13 @@ void FCFS_Processor::Update()
 }
 
 
-bool FCFS_Processor::Fork()
+bool FCFS_Processor::Fork(int fp)
 {
 	srand(time(0));
 
 	int fork = rand() % 100;
 
-	if (fork >= fork_p) return true;
+	if (fork <= fp) return true;
 
 	return false;
 }

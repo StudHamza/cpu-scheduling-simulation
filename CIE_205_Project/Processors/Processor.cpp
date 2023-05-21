@@ -76,7 +76,7 @@ int Processor::getLength()
 
 bool Processor::getRunning(Process * &p)
 {
-	if (RunningProcess)
+	if (RunningProcess != nullptr)
 	{
 		p = RunningProcess;
 		return true;

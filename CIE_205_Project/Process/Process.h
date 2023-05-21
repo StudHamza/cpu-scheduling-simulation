@@ -35,6 +35,7 @@ class Process
 	LinkedQueue<Pair<int,int>> IO_pairs;
 
 	bool executing;
+	bool done;
 	Process* Child;
 
 
@@ -65,6 +66,8 @@ public:
 
 	const int getProcessorID();
 
+	const bool isDone();
+
 	// Setters //
 
 	void setTRT();
@@ -85,11 +88,13 @@ public:
 
 	bool updateIO();	//pops from pair and handels the counter
 
-	Process* fork_process(const int &);
+	Process* fork_process(const int &, int&);
 
 	void updateWT();		//updates waiting time
 
 	void update_();
+
+	Process* terminate(const int&);
 
 	///////////////////////////////////////////////////////////////////////////////////////////
 

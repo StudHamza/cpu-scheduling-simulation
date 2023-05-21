@@ -20,12 +20,10 @@ class FCFS_Processor : public Processor
 	}
 
 
-	int fork_p ;
-
 
 public:
 
-	FCFS_Processor(int , int);
+	FCFS_Processor(int);
 
 
 
@@ -34,7 +32,7 @@ public:
 
 
 	// Called by Scheduler to create //
-	bool Fork();
+	bool Fork(int);
 
 
 
