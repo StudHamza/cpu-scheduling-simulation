@@ -80,6 +80,7 @@ void Scheduler::new_ready_scheduler(Process*& p)
 
 
 
+
 void Scheduler::Add_To_FCFS(Process*& p)
 {
 	int min_index = 0;

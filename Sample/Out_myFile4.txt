@@ -1,12 +1,12 @@
 TT   PID  AT   CT   IO_D WT   RT   TRT  
 6    0    1    5    0    0    0    6    
-5    5    2    3    0    5    3    5    
+5    5    2    2    0    5    2    5    
 6    1    2    5    0    0    0    6    
 16   2    2    10   0    5    0    16   
-10   6    8    15   0    10   15   10   
+10   6    8    12   0    10   12   10   
 17   3    2    10   0    6    0    17   
 Processes: 6
-Avg WT = 4.33333, Avg RT = 3, Avg RT = 10
+Avg WT = 4.33333, Avg RT = 2.33333, Avg RT = 10
 Forked Process: 33.3333%
 Killed Process: 0%
 Processors: 2 [1 FCFS, 1 SJF, 0 RR, 0 EDF]

@@ -1,0 +1,15 @@
+TT   PID  AT   CT   IO_D WT   RT   TRT  
+4    0    1    10   0    0    6    4    
+5    1    1    10   0    0    5    5    
+5    2    1    10   0    0    5    5    
+11   3    1    20   0    0    9    11   
+Processes: 4
+Avg WT = 0, Avg RT = 6.25, Avg RT = 6.25
+Forked Process: 0%
+Killed Process: 100%
+Processors: 5 [5 FCFS, 0 SJF, 0 RR, 0 EDF]
+Processors Load
+P1=16%, P2=20%, P3=20%, P4=44%, P5=0%, 
+Processors Utiliz
+P1=30.7692%, P2=38.4615%, P3=38.4615%, P4=84.6154%, P5=0%, 
+Avg Utilization = 38.4615%
