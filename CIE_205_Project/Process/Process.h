@@ -76,6 +76,8 @@ public:
 
 	int getTRT() const;
 
+	int getIODuration() const;
+
 	bool isDone() const;
 
 	// Setters //

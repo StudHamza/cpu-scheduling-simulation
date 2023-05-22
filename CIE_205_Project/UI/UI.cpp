@@ -18,6 +18,7 @@ void UI::GetFileName()
     {
         if (cpu->read_file(name))
         {
+            filename = name;
             return;
         }
         cin.clear();
@@ -133,6 +134,8 @@ void UI::Start()
         cpu->update_();
        
     }
+
+    cpu->write_statistics(filename);
 
     cout <<endl <<" // Simulation Ends, Output file created  //"<<endl;
 

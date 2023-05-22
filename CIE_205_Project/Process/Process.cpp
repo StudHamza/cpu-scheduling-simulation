@@ -19,6 +19,7 @@ Process::Process(int ID, int AT, int CT,int DL, LinkedQueue<Pair<int, int>> IO_P
 	ProcessorID = -1;
 	Executing_Time = 0;
 	IOCounter = 0;
+	IO_Duration = 0;
 	executing = false;
 	Child = nullptr;
 	done = false;
@@ -75,6 +76,13 @@ int Process::getTRT() const
 {
 	return this->Turn_Around_Time;
 }
+
+int Process::getIODuration() const
+{
+	return this->IO_Duration;
+}
+
+
 
 bool Process::isDone() const
 {

@@ -14,6 +14,7 @@ private:
     Mode mode;
     int time;
     Scheduler *cpu;
+    string filename;
 
     void GetFileName();
     void SetMode();

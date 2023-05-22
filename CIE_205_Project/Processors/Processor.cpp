@@ -92,6 +92,18 @@ bool Processor::isOverHeat()
 	return (overHeatCounter >0);
 }
 
+
+int Processor::getBusy()
+{
+	return this->BUSY;
+}
+
+int Processor::getIDE()
+{
+	return this->IDE;
+}
+
+
 // Setters
 
 void Processor::setOverHeat(int oh)

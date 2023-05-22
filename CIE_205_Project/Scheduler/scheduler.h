@@ -9,6 +9,7 @@
 #include "../Data_Structures/HashTable.h"
 
 #include <fstream>
+#include <iomanip>
 
 
 
@@ -82,7 +83,7 @@ private:
 
 	void terminate(Process*&); //CT is done (process is executed)
 
-	void write_statistics(); //called along with terminate function, will append to file
+	
 
 	void fork(Processor * &);
 
@@ -111,6 +112,9 @@ public:
 	bool Done();
 
 	friend ostream& operator<< (ostream& out, const Scheduler& Sch);
+
+	void write_statistics(string &); //called along with terminate function, will append to file
+
 
 
 

@@ -575,3 +575,113 @@ Scheduler::~Scheduler()
 
 }
 
+
+
+
+
+
+
+
+
+
+//    Output file    //
+
+
+void Scheduler::write_statistics(string &name)
+{
+	ofstream outputFile("../Sample/Out_" + name + ".txt");
+
+
+
+	outputFile << left << setw(5) << "TT";
+	outputFile << left << setw(5) << "PID";
+	outputFile << left << setw(5) << "AT";
+	outputFile << left << setw(5) << "CT";
+	outputFile << left << setw(5) << "IO_D";
+	outputFile << left << setw(5) << "WT";
+	outputFile << left << setw(5) << "RT";
+	outputFile << left << setw(5) << "TRT" << endl;
+
+	for (int i = 0; i < TRM.GetSize(); i++)
+	{
+		outputFile << left << setw(5) << TRM[i]->getTT();
+		outputFile << left << setw(5) << TRM[i]->getID();
+		outputFile << left << setw(5) << TRM[i]->getAT();
+		outputFile << left << setw(5) << TRM[i]->getCT();
+		outputFile << left << setw(5) << TRM[i]->getIODuration();
+		outputFile << left << setw(5) << TRM[i]->getWT();
+		outputFile << left << setw(5) << TRM[i]->getRT();
+		outputFile << left << setw(5) << TRM[i]->getTRT() <<  endl;
+
+	}
+
+	outputFile << "Processes: " << processes_number << endl;
+
+	double avgWT = 0;
+	for (int i = 0; i < TRM.GetSize(); i++)
+	{
+		avgWT += TRM[i]->getWT();
+	}
+	avgWT = avgWT / (double)processes_number;
+
+	outputFile << "Avg WT = " << avgWT << ", ";
+
+
+	double avgRT = 0;
+	for (int i = 0; i < TRM.GetSize(); i++)
+	{
+		avgRT += TRM[i]->getRT();
+	}
+	avgRT = avgRT / (double)processes_number;
+
+	outputFile << "Avg RT = " << avgRT << ", ";
+
+
+	double avgTRT = 0;
+	for (int i = 0; i < TRM.GetSize(); i++)
+	{
+		avgTRT +=TRM[i]->getTRT();
+	}
+	avgTRT = avgTRT /(double) processes_number;
+
+	outputFile << "Avg RT = " << avgTRT << endl;
+
+
+	outputFile << "Forked Process: " << (Process_Forked / (double)processes_number) * 100 << "%" << endl;
+	outputFile << "Killed Process: " << (Process_Killed / (double)processes_number) * 100 << "%" << endl;
+
+	outputFile << "Processors: " << FCFS + SJF + RR + EDF << " [" << FCFS << " FCFS, " << SJF << " SJF, " << RR << " RR, " << EDF << " EDF]" << endl;
+	outputFile << "Processors Load" << endl;
+
+	double busy = 0;
+	double totalTRT = 0;
+	for (size_t i = 0; i < processes_number; i++)
+	{
+		totalTRT += TRM[i]->getTRT();
+	}
+	for (int i = 0; i < pro_n; i++)
+	{
+
+		busy = Processors[i]->getBusy();
+		outputFile << "P" << i + 1 << "=" << (busy / (double)totalTRT)*100 << "%, ";
+	}
+	outputFile << endl;
+
+
+	double avgUtiliz = 0;
+	double util = 0;
+	outputFile << "Processors Utiliz" << endl;
+	for (int i = 0; i < pro_n; i++)
+	{
+		util = (Processors[i]->getBusy()) / (double)(Processors[i]->getBusy() + Processors[i]->getIDE()) ;
+		
+		util *= 100;
+		avgUtiliz +=  util ;
+		outputFile << "P" << i + 1 << "=" << util << "%, ";
+	}
+	outputFile << endl;
+
+
+	outputFile << "Avg Utilization = " << avgUtiliz / (FCFS + SJF + RR + EDF) << "%";
+
+}

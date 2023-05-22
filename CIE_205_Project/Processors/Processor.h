@@ -70,6 +70,10 @@ public:
 
 	bool isOverHeat();
 
+	int getBusy();
+
+	int getIDE();
+
 	// Setter //
 	void setOverHeat(int);
 

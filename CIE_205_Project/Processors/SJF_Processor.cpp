@@ -48,7 +48,7 @@ void SJF_Processor::Update()
 	clock++;
 
 	// Update Running Process //
-	if (RDY.isEmpty() && RunningProcess == nullptr) return;
+	if (RDY.isEmpty() && RunningProcess == nullptr) { this->IDE++; return; };
 
 	if (RunningProcess != nullptr)
 	{
@@ -58,6 +58,7 @@ void SJF_Processor::Update()
 		/* if(RunningProcess->checkIO() then popIO and Remove form running  */
 
 		RunningProcess->update_();
+		this->Length--;
 	}
 	else if (!RDY.isEmpty())
 	{

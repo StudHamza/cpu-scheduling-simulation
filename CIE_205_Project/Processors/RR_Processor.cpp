@@ -11,12 +11,13 @@ void RR_Processor::Update()
 	clock++;
 
 	// Update Running Process //
-
+	if (RDY.isEmpty() && RunningProcess == nullptr) { this->IDE++; return; };
 	// Slice time is not done yet and process is still running //
 	if (RunningProcess != nullptr && slice_counter!=0)
 	{
 		this->BUSY++;
 		RunningProcess->update_();
+		this->Length--;
 		slice_counter--;
 	}
 	// Slice time is up during process running //

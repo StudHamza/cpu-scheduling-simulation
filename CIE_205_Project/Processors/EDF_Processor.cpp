@@ -39,7 +39,7 @@ void EDF_Processor::Update()
 	// First OverHeat: Empty processor
 	if(overHeatCounter == OverHeat)
 
-	if (RDY.isEmpty() && RunningProcess == nullptr) return;
+	if (RDY.isEmpty() && RunningProcess == nullptr) { this->IDE++; return; };
 
 	
 	if (RunningProcess != nullptr)
@@ -58,6 +58,7 @@ void EDF_Processor::Update()
 		/* if(RunningProcess->checkIO() then popIO and Remove form running  */
 
 		RunningProcess->update_();
+		this->Length--;
 	}
 	else if (!RDY.isEmpty())
 	{
