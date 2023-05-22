@@ -15,6 +15,10 @@ class EDF_Processor : public Processor
 	}
 
 	bool CompareDeadline();
+
+	//For OverHeat//
+	//void EmptyProcessor() override;
+
 public:
 
 	EDF_Processor(int ID);
@@ -27,6 +31,7 @@ public:
 	// ONLY used by RR, EDF and Scheduler //
 
 	bool Remove_process_From_RUN(Process*& p);
+
 
 	void Update() override;
 

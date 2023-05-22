@@ -11,6 +11,7 @@
 Scheduler::Scheduler()
 {
 	DONE = false;
+	Process_Killed = 0;
 
 }
 
@@ -67,7 +68,7 @@ void Scheduler::new_ready_scheduler(Process*& p)
 
 	for (int i = 1; i < pro_n; i++) {
 
-		if (Processors[i])
+		if (!Processors[i]->isOverHeat())
 		{
 			int val = Processors[i]->getLength();
 
@@ -87,7 +88,7 @@ void Scheduler::Add_To_FCFS(Process*& p)
 
 	for (int i = 1; i < FCFS-1; i++) {
 
-		if (Processors[i] && Processors[i]->getType()=="FCFS")
+		if (!Processors[i]->isOverHeat() && Processors[i]->getType() == "FCFS")
 		{
 			int val = Processors[i]->getLength();
 
@@ -107,7 +108,7 @@ void Scheduler::checkIOs()
 		{
 			if (Processors[i]->Check_IO(p))
 			{
-				p->setProcessorID(-1);
+				p->setProcessorID(-2);
 
 				BLK.enqueue(p);
 			}
@@ -151,39 +152,7 @@ void Scheduler::RR_SJF_migration()
 
 
 void Scheduler::FCFS_RR_migration()
-{
-	//for (int i = 0; i < FCFS; i++)
-	//{
-	//	if (Processors[i]->getType() == "FCFS")
-	//	{
-
-	//		LinkedQueue<Process*> P = static_cast<FCFS_Processor*>(Processors[i])->getRDY();
-	//		while (!P.isEmpty())
-	//		{
-	//			Process* temp;
-	//			P.dequeue(temp);
-	//			if (temp->getWT() > MaxW) {
-
-	//				int min_index = 0;
-
-	//				int min_num = Processors[SJF - 1]->Get_Time_Expected_To_Finish();
-
-	//				for (int i = SJF; i < RR; i++) {
-
-	//					if ((Processors[i]->getType()) == "RR")
-	//					{
-	//						int val = Processors[i]->Get_Time_Expected_To_Finish();
-
-	//						if (val < min_num) { min_num = val; min_index = i; }
-	//					}
-	//				}
-	//				Processors[min_index]->Add_Process_To_RDY(temp, time);
-	//			}
-
-	//		}
-	//	}
-	//}
-}
+{}
 
 
 
@@ -196,35 +165,21 @@ void Scheduler::terminate(Process*& p)
 	{
 
 
-		Process* LP = nullptr;
-		Process* RP = nullptr;
-
-
-		p->terminate(time, LP,RP);	//Kills orphans
-
+		Process* P = p->terminate(time);	//Kills orphans
 		TRM.InsertEnd(p);
 
 		//Remove child
-		if (LP != nullptr)
+		if (P != nullptr)
 		{
-			int processor_id = LP->getProcessorID();
+			int processor_id = P->getProcessorID();
 
 			FCFS_Processor* processor = static_cast<FCFS_Processor*>(Processors[processor_id]);
 
-			processor->Remove_Process_From_Processor(LP);
-
-			terminate(LP);
+			processor->Remove_Process_From_Processor(P);
 		}
-		if (RP != nullptr)
-		{
-			int processor_id = RP->getProcessorID();
-
-			FCFS_Processor* processor = static_cast<FCFS_Processor*>(Processors[processor_id]);
-
-			processor->Remove_Process_From_Processor(RP);
-
-			terminate(RP);
-		}		
+		
+		
+		terminate(P);
 		
 	}
 	return;
@@ -252,6 +207,8 @@ void Scheduler::kill_process()
 				temp->Remove_Process_From_Processor(p);
 
 				terminate(p);
+
+				this->Process_Killed++;
 
 				kill_process();
 			}
@@ -304,6 +261,7 @@ void Scheduler::update_()
 	//  Updating Processors		//
 	for (int i = 0; i < pro_n; i++)
 	{
+		
 
 		// Forking // 
 
@@ -318,10 +276,8 @@ void Scheduler::update_()
 		{
 			terminate(p);
 		}
-		
 
 		Processors[i]->Update();
-
 	}
 
 	//  Kill signal check  \\
@@ -461,17 +417,20 @@ ostream& operator << (ostream& out, const Scheduler& Sch)
 void Scheduler::setConstants(string &myText)
 {
 	string var;
-	for(int i =1 ; i<5 ; i++){
+	for(int i =1 ; i<6 ; i++){
 		var = myText.substr(0, myText.find(" "));
 
 		myText = myText.erase(0, var.size() + 1);
 		if (i == 1) { RTF = stoi(var); }
 		else if (i == 2 ) { MaxW = stoi(var); }
 		else if (i == 3) { STL = stoi(var); }
-		else if (i == 4) { 
-			Fork_Probability = stoi(var);
-			
-		
+		else if (i == 4) { Fork_Probability = stoi(var); }
+		else if (i == 5) {
+			int oh = stoi(var);
+			for (int i = 0; i < pro_n; i++)
+			{
+				Processors[i]->setOverHeat(oh);
+			}
 		}
 
 	}
@@ -591,6 +550,7 @@ void Scheduler::fork(Processor * & p)
 			
 			if (P != nullptr) // Check if it can fork
 			{
+				this->Process_Forked++;
 				Add_To_FCFS(P);
 			}
 		}

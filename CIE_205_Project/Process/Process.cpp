@@ -66,6 +66,16 @@ int Process::getDeadLine() const
 	return this->DeadLine;
 }
 
+int Process::getTT() const
+{
+	return this->Turn_Around_Time;
+}
+
+int Process::getTRT() const
+{
+	return this->Turn_Around_Time;
+}
+
 bool Process::isDone() const
 {
 	return done;
@@ -196,6 +206,11 @@ void Process::update_()
 	{
 		Remaining_Time--;
 		Executing_Time++;
+	}
+
+	if (this->ProcessorID == -2)
+	{
+		this->IO_Duration++;
 	}
 }
 

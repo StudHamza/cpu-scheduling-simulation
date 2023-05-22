@@ -6,3 +6,9 @@ myFile2 ----> I/O
 
 // Guide //
 AT ID CT IO DL
+
+In Processors: Typ1 Typ2 Typ3 Typ4 
+
+In setting Constants: RTF MaxW STL FP OverHeatNum
+
+BlockList ID is -2

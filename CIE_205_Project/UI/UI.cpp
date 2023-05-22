@@ -133,6 +133,7 @@ void UI::Start()
         cpu->update_();
        
     }
+
     cout <<endl <<" // Simulation Ends, Output file created  //"<<endl;
 
 }

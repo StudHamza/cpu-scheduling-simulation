@@ -12,6 +12,7 @@ Processor::Processor(string t ,int id)
 	this->IDE = 0;
 	this->RunningProcess = nullptr;
 	this->Length = 0;
+	this->overHeatCounter = 0;
 }
 
 
@@ -83,4 +84,17 @@ bool Processor::getRunning(Process * &p)
 	}
 	
 	else return false;
+}
+
+
+bool Processor::isOverHeat()
+{
+	return (overHeatCounter >0);
+}
+
+// Setters
+
+void Processor::setOverHeat(int oh)
+{
+	this->OverHeat = oh;
 }

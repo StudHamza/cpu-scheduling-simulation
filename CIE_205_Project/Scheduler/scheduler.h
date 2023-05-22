@@ -19,6 +19,8 @@ private:
 	int time;
 	int pro_n;
 	int processes_number;
+	int Process_Killed;
+	int Process_Forked;
 
 	int RRTimeSlice;
 

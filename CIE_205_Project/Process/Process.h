@@ -32,12 +32,15 @@ class Process
 	int Response_Time;
 	int Turn_Around_Time;
 	int Waiting_Time;
+	int IO_Duration;
 
 	LinkedQueue<Pair<int,int>> IO_pairs;
 
 	bool executing;
 	bool done;
 	Process* Child;
+
+
 
 
 public:
@@ -68,6 +71,10 @@ public:
 	int getProcessorID() const;
 
 	int getDeadLine() const;
+
+	int getTT() const;
+
+	int getTRT() const;
 
 	bool isDone() const;
 

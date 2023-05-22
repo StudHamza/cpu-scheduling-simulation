@@ -36,7 +36,9 @@ void EDF_Processor::Update()
 
 	// Update Running Process //
 
-	
+	// First OverHeat: Empty processor
+	if(overHeatCounter == OverHeat)
+
 	if (RDY.isEmpty() && RunningProcess == nullptr) return;
 
 	
@@ -118,3 +120,9 @@ bool EDF_Processor::Remove_process_From_RUN(Process*& p)
 	}
 	return false;
 }
+
+
+
+
+
+

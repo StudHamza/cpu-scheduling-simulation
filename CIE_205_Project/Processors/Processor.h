@@ -25,7 +25,8 @@ protected:
 	string type;
 
 	// OverHeating //
-
+	int OverHeat;
+	int overHeatCounter;
 	
 	Process* RunningProcess;
 
@@ -35,7 +36,7 @@ protected:
 	int IDE; 
 
 
-	Processor(string, int ID);
+	Processor(string, int ID );
 
 	virtual void Add_Next_Process_To_Run() = 0;
 
@@ -50,6 +51,7 @@ public:
 
 	virtual void Update() = 0;
 
+	//virtual void EmptyProcessor() = 0;
 
 	virtual bool Add_Process_To_RDY(Process* &p) = 0;
 
@@ -59,11 +61,17 @@ public:
 
 	bool Check_Running_process_If_Finished(Process * &);
 
+	// Getters //
 	string getType();
 
 	int getLength();
 
 	bool getRunning(Process * &);
+
+	bool isOverHeat();
+
+	// Setter //
+	void setOverHeat(int);
 
 };
 
